@@ -1,0 +1,12 @@
+..\..\output\svpwm_dq.o: ..\..\Drivers\SYSTEM\motor\Svpwm_dq.c
+..\..\output\svpwm_dq.o: ..\..\Drivers\SYSTEM\motor\Svpwm_dq.h
+..\..\output\svpwm_dq.o: ..\..\Drivers\./SYSTEM/sys/sys.h
+..\..\output\svpwm_dq.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
+..\..\output\svpwm_dq.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\svpwm_dq.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\svpwm_dq.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\svpwm_dq.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\svpwm_dq.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\svpwm_dq.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\svpwm_dq.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\..\output\svpwm_dq.o: ..\..\Drivers\SYSTEM\motor\IQ_math.h

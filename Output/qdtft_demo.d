@@ -1,0 +1,15 @@
+..\..\output\qdtft_demo.o: ..\..\Drivers\SYSTEM\lcd\QDTFT_demo.c
+..\..\output\qdtft_demo.o: ..\..\Drivers\./SYSTEM/sys/sys.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\qdtft_demo.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\SYSTEM\lcd\lcd_drive.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\SYSTEM\lcd\GUI.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\./SYSTEM/delay/delay.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\SYSTEM\lcd\Picture.h
+..\..\output\qdtft_demo.o: ..\..\Drivers\SYSTEM\lcd\QDTFT_demo.h
