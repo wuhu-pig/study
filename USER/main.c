@@ -42,7 +42,8 @@ int main(void)
 			if(TaskTimePare.Tim10ms_flag == 1)
 			{
 				
-				printf("d:%f,%f,%d,%d\n",shaft_angle,degress,ADCSampPare.PhaseW_Curr,ADCSampPare.EA_Curr);
+				//printf("d:%f,%f,%d,%d\n",shaft_angle,degress,ADCSampPare.PhaseW_Curr,ADCSampPare.EA_Curr);
+				printf("d:%f,%f,%f\n",Ua,Ub,Uc);
 			//	printf("d: %f\n",shaft_angle);
 			}
 			CLEAR_flag();

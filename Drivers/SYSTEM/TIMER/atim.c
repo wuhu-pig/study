@@ -96,7 +96,11 @@ void atim_timx_cplm_pwm_init(uint16_t arr, uint16_t psc)
     ATIM_TIMX_CPLM_CHY_GPIO_CLK_ENABLE_A();   /* 通道X对应IO口时钟使能 */
     ATIM_TIMX_CPLM_CHYN_GPIO_CLK_ENABLE_A();  /* 通道X互补通道对应IO口时钟使能 */
 		/*B_Phase*/
+	  ATIM_TIMX_CPLM_CHY_GPIO_CLK_ENABLE_B();   /* 通道X对应IO口时钟使能 */
+    ATIM_TIMX_CPLM_CHYN_GPIO_CLK_ENABLE_B();  /* 通道X互补通道对应IO口时钟使能 */
 		/*C_Phase*/
+	   ATIM_TIMX_CPLM_CHY_GPIO_CLK_ENABLE_C();   /* 通道X对应IO口时钟使能 */
+    ATIM_TIMX_CPLM_CHYN_GPIO_CLK_ENABLE_C();  /* 通道X互补通道对应IO口时钟使能 */
 	
     ATIM_TIMX_CPLM_BKIN_GPIO_CLK_ENABLE();  /* 通道X刹车输入对应IO口时钟使能 */
     ATIM_TIMX_CPLM_CLK_ENABLE();            /* 使能定时器时钟 */
@@ -122,11 +126,11 @@ void atim_timx_cplm_pwm_init(uint16_t arr, uint16_t psc)
     sys_gpio_af_set(ATIM_TIMX_CPLM_CHY_GPIO_PORT_A,  ATIM_TIMX_CPLM_CHY_GPIO_PIN_A,  ATIM_TIMX_CPLM_CHY_GPIO_AF_A);   /* IO口复用功能选择 必须设置对!! */
     sys_gpio_af_set(ATIM_TIMX_CPLM_CHYN_GPIO_PORT_A, ATIM_TIMX_CPLM_CHYN_GPIO_PIN_A, ATIM_TIMX_CPLM_CHYN_GPIO_AF_A);  /* IO口复用功能选择 必须设置对!! */
 		
-		sys_gpio_af_set(ATIM_TIMX_CPLM_CHY_GPIO_PORT_A,  ATIM_TIMX_CPLM_CHY_GPIO_PIN_B,  ATIM_TIMX_CPLM_CHY_GPIO_AF_B);   /* IO口复用功能选择 必须设置对!! */
-    sys_gpio_af_set(ATIM_TIMX_CPLM_CHYN_GPIO_PORT_A, ATIM_TIMX_CPLM_CHYN_GPIO_PIN_B, ATIM_TIMX_CPLM_CHYN_GPIO_AF_B);  /* IO口复用功能选择 必须设置对!! */
+		sys_gpio_af_set(ATIM_TIMX_CPLM_CHY_GPIO_PORT_B,  ATIM_TIMX_CPLM_CHY_GPIO_PIN_B,  ATIM_TIMX_CPLM_CHY_GPIO_AF_B);   /* IO口复用功能选择 必须设置对!! */
+    sys_gpio_af_set(ATIM_TIMX_CPLM_CHYN_GPIO_PORT_B, ATIM_TIMX_CPLM_CHYN_GPIO_PIN_B, ATIM_TIMX_CPLM_CHYN_GPIO_AF_B);  /* IO口复用功能选择 必须设置对!! */
 		
-		sys_gpio_af_set(ATIM_TIMX_CPLM_CHY_GPIO_PORT_A,  ATIM_TIMX_CPLM_CHY_GPIO_PIN_C,  ATIM_TIMX_CPLM_CHY_GPIO_AF_C);   /* IO口复用功能选择 必须设置对!! */
-    sys_gpio_af_set(ATIM_TIMX_CPLM_CHYN_GPIO_PORT_A, ATIM_TIMX_CPLM_CHYN_GPIO_PIN_C, ATIM_TIMX_CPLM_CHYN_GPIO_AF_C);  /* IO口复用功能选择 必须设置对!! */
+		sys_gpio_af_set(ATIM_TIMX_CPLM_CHY_GPIO_PORT_C,  ATIM_TIMX_CPLM_CHY_GPIO_PIN_C,  ATIM_TIMX_CPLM_CHY_GPIO_AF_C);   /* IO口复用功能选择 必须设置对!! */
+    sys_gpio_af_set(ATIM_TIMX_CPLM_CHYN_GPIO_PORT_C, ATIM_TIMX_CPLM_CHYN_GPIO_PIN_C, ATIM_TIMX_CPLM_CHYN_GPIO_AF_C);  /* IO口复用功能选择 必须设置对!! */
 		
     sys_gpio_af_set(ATIM_TIMX_CPLM_BKIN_GPIO_PORT, ATIM_TIMX_CPLM_BKIN_GPIO_PIN, ATIM_TIMX_CPLM_BKIN_GPIO_AF);  /* IO口复用功能选择 必须设置对!! */
 
@@ -153,7 +157,9 @@ void atim_timx_cplm_pwm_init(uint16_t arr, uint16_t psc)
 		
 		}
 
-     
+			ATIM_TIMX_CPLM->CR2 = ~(7 << 4);  // 清除 MMS 位
+			ATIM_TIMX_CPLM->CR2 |=  (4 << 4);  // 选择 OC1REF（MMS = 100）
+		
     ATIM_TIMX_CPLM->BDTR |= 0 << 16;    /* BKF[3:0]=0,BKIN检测不滤波 */
     ATIM_TIMX_CPLM->BDTR |= 1 << 14;    /* 使能AOE位，允许刹车后自动恢复输出 */
     ATIM_TIMX_CPLM->BDTR |= 0 << 13;    /* BKP = 0, BKIN低电平有效 */
@@ -161,13 +167,12 @@ void atim_timx_cplm_pwm_init(uint16_t arr, uint16_t psc)
 
     ATIM_TIMX_CPLM->CR1 |= 1 << 7;      /* ARPE使能 */
     ATIM_TIMX_CPLM->CR1 |= 2 << 8;      /* CKD[1:0] = 10, tDTS = 4 * tCK_INT = Ft / 4 = 42Mhz*/
-    ATIM_TIMX_CPLM->CR1 |= 1 << 0;      /* 使能定时器TIMX */
 		
 		
 		 // 1. 使能更新中断
     ATIM_TIMX_CPLM->DIER |= 1 << 0;   // 使能更新中断(UIE)
-		    // 2. 配置NVIC (寄存器版本)
-    // 设置中断优先级
+		// 2. 配置NVIC (寄存器版本)
+			// 设置中断优先级
     NVIC_SetPriority(TIM1_UP_TIM10_IRQn, 1 << 4); // 优先级1 (STM32优先级寄存器使用高4位)
     NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);           // 使能TIM1更新中断
     
