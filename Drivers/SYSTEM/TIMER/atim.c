@@ -157,30 +157,29 @@ void atim_timx_cplm_pwm_init(uint16_t arr, uint16_t psc)
 		
 		}
 
-			ATIM_TIMX_CPLM->CR2 = ~(7 << 4);  // 清除 MMS 位
-			ATIM_TIMX_CPLM->CR2 |=  (4 << 4);  // 选择 OC1REF（MMS = 100）
-		
-    ATIM_TIMX_CPLM->BDTR |= 0 << 16;    /* BKF[3:0]=0,BKIN检测不滤波 */
-    ATIM_TIMX_CPLM->BDTR |= 1 << 14;    /* 使能AOE位，允许刹车后自动恢复输出 */
-    ATIM_TIMX_CPLM->BDTR |= 0 << 13;    /* BKP = 0, BKIN低电平有效 */
-    ATIM_TIMX_CPLM->BDTR |= 1 << 12;    /* BKE = 1, 使能BKIN检测 */
+    // 关键修改部分
+    ATIM_TIMX_CPLM->CR1 &= ~(0x03 << 5);        // 清除CMS位
+    ATIM_TIMX_CPLM->CR1 |=  (0x01 << 5);        // CMS=01 (中心对齐模式1)
+    ATIM_TIMX_CPLM->CR1 |=  (0x01 << 7);        // ARPE使能
+    ATIM_TIMX_CPLM->CR1 |=  (0x02 << 8);        // CKD=10 (时钟分频)
 
-    ATIM_TIMX_CPLM->CR1 |= 1 << 7;      /* ARPE使能 */
-    ATIM_TIMX_CPLM->CR1 |= 2 << 8;      /* CKD[1:0] = 10, tDTS = 4 * tCK_INT = Ft / 4 = 42Mhz*/
-		
-		
-		 // 1. 使能更新中断
-    ATIM_TIMX_CPLM->DIER |= 1 << 0;   // 使能更新中断(UIE)
-		// 2. 配置NVIC (寄存器版本)
-			// 设置中断优先级
-    NVIC_SetPriority(TIM1_UP_TIM10_IRQn, 1 << 4); // 优先级1 (STM32优先级寄存器使用高4位)
-    NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);           // 使能TIM1更新中断
-    
-    // 3. 清除更新标志位
-    ATIM_TIMX_CPLM->SR &= ~(1 << 0);  // 清除UIF标志
-    
-    // ... [保持原有的定时器使能和其他配置] ...
-    ATIM_TIMX_CPLM->CR1 |= 1 << 0;    // 使能定时器TIMX
+    // 配置TRGO在中心点触发(计数器为0时)
+    ATIM_TIMX_CPLM->CR2 &= ~(0x07 << 4);        // 清除MMS位
+    ATIM_TIMX_CPLM->CR2 |=  (0x02 << 4);        // MMS=010 (更新事件作为TRGO)
+
+    // 刹车配置
+    ATIM_TIMX_CPLM->BDTR |= 0 << 16;            // BKF[3:0]=0 (不滤波)
+    ATIM_TIMX_CPLM->BDTR |= 1 << 14;            // AOE=1 (自动恢复输出)
+    ATIM_TIMX_CPLM->BDTR |= 0 << 13;            // BKP=0 (低电平有效)
+    ATIM_TIMX_CPLM->BDTR |= 1 << 12;            // BKE=1 (刹车使能)
+
+    // 中断配置
+    ATIM_TIMX_CPLM->DIER |= 1 << 0;             // 使能更新中断(UIE)
+    ATIM_TIMX_CPLM->SR  &= ~(1 << 0);           // 清除更新标志
+    NVIC_SetPriority(TIM8_UP_TIM13_IRQn, 1);    // 设置中断优先级
+    NVIC_EnableIRQ(TIM8_UP_TIM13_IRQn);         // 使能中断通道
+
+    ATIM_TIMX_CPLM->CR1 |= 1 << 0;              // 使能定时器
 }
 
 /**
@@ -230,6 +229,18 @@ void TIM1_UP_TIM10_IRQHandler(void)
         // 这里添加您的ADC启动和FOC计算代码
         // ADC_StartConversion();
         // FOC_Calculate();
+    }
+}
+
+// 在stm32f4xx_it.c中添加
+void TIM8_UP_TIM13_IRQHandler(void)
+{
+    if (ATIM_TIMX_CPLM->SR & TIM_SR_UIF) {
+        // 清除中断标志
+        ATIM_TIMX_CPLM->SR &= ~TIM_SR_UIF;
+        
+        // 这里添加您的处理代码
+        // 例如：HAL_GPIO_TogglePin(GPIOx, GPIO_PIN_x); // 测试用
     }
 }
 

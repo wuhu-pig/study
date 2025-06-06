@@ -67,7 +67,12 @@ void adc_init(void)
 
     ADC_ADCX->CR2 |= 0 << 1;        /* 单次转换模式 */
     ADC_ADCX->CR2 |= 0 << 11;       /* 右对齐 */
-    ADC_ADCX->CR2 |= 0 << 28;       /* 软件触发 */
+		
+    // 设置为由 TIM8_TRGO 触发 ADC 转换
+		ADC_ADCX->CR2 &= ~(3 << 28); // EXTEN[1:0] 清零
+		ADC_ADCX->CR2 |= (2 << 28);  // EXTEN = 01，触发方式为上升沿
+		ADC_ADCX->CR2 &= ~(0xF << 24);  // EXTSEL[3:0] 清零
+		ADC_ADCX->CR2 |= ((0xE << 24));   // EXTSEL = 1110，选择 TIM8_TRGO 作为触发源（对应参考手册）
     
     ADC_ADCX->SQR1 &= ~(0XF << 20); /* L[3:0]清零 */
     ADC_ADCX->SQR1 |= 0 << 20;      /* 1个转换在规则序列中 也就是只转换规则序列1 */
@@ -149,6 +154,15 @@ void ADC_ADCX_DMASx_IRQHandler(void)
     {
         g_adc_dma_sta = 1;          /* 标记DMA传输完成 */
         ADC_ADCX_DMASx_CLR_TC();    /* 清除DMA 数据流 传输完成中断标志 */
+    }
+}
+
+void ADC_IRQHandler(void)
+{
+    if (ADC1->SR & ADC_SR_EOC)  // 检查是否是ADC1结束转换中断
+    {
+        uint16_t value = ADC1->DR;  // 读取转换值，同时清除EOC标志
+        // 在这里处理采样值，比如存储、滤波、触发其他处理等
     }
 }
 

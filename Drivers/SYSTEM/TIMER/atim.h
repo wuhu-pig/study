@@ -48,7 +48,7 @@
 
 #define ATIM_TIMX_NPWM                          TIM8
 #define ATIM_TIMX_NPWM_IRQn                     TIM8_UP_TIM13_IRQn
-#define ATIM_TIMX_NPWM_IRQHandler               TIM8_UP_TIM13_IRQHandler
+//#define ATIM_TIMX_NPWM_IRQHandler               TIM8_UP_TIM13_IRQHandler
 #define ATIM_TIMX_NPWM_CHY                      1                                           /* 通道Y,  1<= Y <=4 */
 #define ATIM_TIMX_NPWM_CHY_CCRX                 TIM8->CCR1                                  /* 通道Y的输出比较寄存器 */
 #define ATIM_TIMX_NPWM_CHY_CLK_ENABLE()         do{ RCC->APB2ENR |= 1 << 1; }while(0)       /* TIM8 时钟使能 */

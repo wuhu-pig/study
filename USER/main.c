@@ -24,8 +24,9 @@ int main(void)
     usart_init(84, 115200);                 /* 串口初始化为115200 */
     led_init(); 														//LED初始化                         	
 		iic_init();															//I2C初始化
-		adc_nch_dma_init((uint32_t)&g_adc_dma_buf); /* 初始化ADC DMA采集 */
-		adc_dma_enable(ADC_DMA_BUF_SIZE);  	 /* 启动ADC DMA采集 5v对应4096 */
+		//adc_nch_dma_init((uint32_t)&g_adc_dma_buf); /* 初始化ADC DMA采集 */
+		//adc_dma_enable(ADC_DMA_BUF_SIZE);  	 /* 启动ADC DMA采集 5v对应4096 */
+		adc_init(); 
 		Lcd_Init();
 		motor_init();
     atim_timx_cplm_pwm_init(1000 - 1, 168 - 1); /* 168/4=42Mhz的计数频率 1Khz的周期. */  //1ms
