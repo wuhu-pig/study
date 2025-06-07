@@ -1,0 +1,15 @@
+..\..\output\motor.o: ..\..\Drivers\SYSTEM\motor\motor.c
+..\..\output\motor.o: ..\..\Drivers\./SYSTEM/sys/sys.h
+..\..\output\motor.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
+..\..\output\motor.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\motor.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\motor.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\motor.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\motor.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\motor.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\motor.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\..\output\motor.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\math.h
+..\..\output\motor.o: ..\..\Drivers\SYSTEM\motor\motor.h
+..\..\output\motor.o: ..\..\Drivers\SYSTEM\motor\status.h
+..\..\output\motor.o: ..\..\Drivers\SYSTEM\adc\adc.h
+..\..\output\motor.o: ..\..\Drivers\SYSTEM\TIMER\atim.h

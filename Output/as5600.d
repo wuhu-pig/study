@@ -1,0 +1,13 @@
+..\..\output\as5600.o: ..\..\Drivers\SYSTEM\AS5600\as5600.c
+..\..\output\as5600.o: ..\..\Drivers\SYSTEM\AS5600\as5600.h
+..\..\output\as5600.o: ..\..\Drivers\./SYSTEM/sys/sys.h
+..\..\output\as5600.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
+..\..\output\as5600.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\as5600.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\as5600.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\as5600.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\as5600.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\as5600.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\as5600.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\..\output\as5600.o: ..\..\Drivers\./SYSTEM/delay/delay.h
+..\..\output\as5600.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdio.h

@@ -1,0 +1,10 @@
+..\..\output\misc.o: ..\..\Drivers\STM32F4xx_StdPeriph_Driver\src\misc.c
+..\..\output\misc.o: ..\..\Drivers\STM32F4xx_StdPeriph_Driver\inc\misc.h
+..\..\output\misc.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h
+..\..\output\misc.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\misc.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\misc.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\misc.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\misc.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\misc.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\misc.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
