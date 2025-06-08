@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include;..\..\Drivers\CMSIS\Include;..\..\Drivers;..\..\Middlewares;..\..\User;..\..\Drivers\SYSTEM\AS5600;..\..\Drivers\SYSTEM\TIMER;..\..\Drivers\BSP\LED;..\..\Drivers\BSP\BEEP;..\..\Drivers\BSP\EXTI;..\..\Drivers\BSP\KEY;..\..\Drivers\SYSTEM\motor;..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include;..\..\Drivers\STM32F4xx_StdPeriph_Driver\inc;..\..\Drivers\SYSTEM\adc;..\..\Drivers\SYSTEM\dma;..\..\Drivers\SYSTEM\lcd</IncludePath>
+              <IncludePath>..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include;..\..\Drivers\CMSIS\Include;..\..\Drivers;..\..\Middlewares;..\..\User;..\..\Drivers\SYSTEM\as5600;..\..\Drivers\SYSTEM\timer;..\..\Drivers\SYSTEM\led;..\..\Drivers\SYSTEM\delay;..\..\Drivers\SYSTEM\sys;..\..\Drivers\SYSTEM\usart;..\..\Drivers\SYSTEM\motor;..\..\Drivers\SYSTEM\spi;..\..\Drivers\STM32F4xx_StdPeriph_Driver\inc;..\..\Drivers\SYSTEM\adc;..\..\Drivers\SYSTEM\dma;..\..\Drivers\SYSTEM\lcd;..\..\Drivers\SYSTEM\i2c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -404,11 +404,6 @@
           <GroupName>Drivers/SYSTEM</GroupName>
           <Files>
             <File>
-              <FileName>led.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Drivers\BSP\LED\led.c</FilePath>
-            </File>
-            <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Drivers\SYSTEM\delay\delay.c</FilePath>
@@ -439,14 +434,24 @@
               <FilePath>..\..\Drivers\SYSTEM\TIMER\gtim.c</FilePath>
             </File>
             <File>
-              <FileName>dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Drivers\SYSTEM\dma\dma.c</FilePath>
-            </File>
-            <File>
               <FileName>adc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Drivers\SYSTEM\adc\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Drivers\SYSTEM\led\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Drivers\SYSTEM\spi\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Drivers\SYSTEM\i2c\i2c.c</FilePath>
             </File>
           </Files>
         </Group>

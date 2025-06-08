@@ -1,80 +1,6 @@
-/**
- ****************************************************************************************************
- * @file        atim.c
- * @author      正点原子团队(ALIENTEK)
- * @version     V1.2
- * @date        2021-12-31
- * @brief       高级定时器 驱动代码
- * @license     Copyright (c) 2020-2032, 广州市星翼电子科技有限公司
- ****************************************************************************************************
- * @attention
- *
- * 实验平台:正点原子 STM32F407开发板
- * 在线视频:www.yuanzige.com
- * 技术论坛:www.openedv.com
- * 公司网址:www.alientek.com
- * 购买地址:openedv.taobao.com
- *
- * 修改说明
- * V1.0 20211231
- * 第一次发布
- * V1.1 20211231
- * 1, 新增atim_timx_comp_pwm_init函数, 实现输出比较模式PWM输出功能
- * V1.2 20211231
- * 1, 增加atim_timx_cplm_pwm_init函数
- * 2, 增加atim_timx_cplm_pwm_set函数
- *
- ****************************************************************************************************
- */
-
 #include "atim.h"
 #include "led.h"
-
-// 在文件头部添加中断服务函数声明
-void TIM1_UP_TIM10_IRQHandler(void);
-
-
-/* g_npwm_remain表示当前还剩下多少个脉冲要发送
- * 每次最多发送256个脉冲
- */
-static uint32_t g_npwm_remain = 0;
-
-/**
- * @brief       高级定时器TIMX NPWM中断服务函数
- * @param       无
- * @retval      无
- */
-void ATIM_TIMX_NPWM_IRQHandler(void)
-{
-    uint16_t npwm = 0;
-
-    if (ATIM_TIMX_NPWM->SR & 0X0001)    /* 溢出中断, 且RCR=0 */
-    {
-        if (g_npwm_remain > 256)        /* 还有大于256个脉冲需要发送 */
-        {
-            g_npwm_remain = g_npwm_remain - 256;
-            npwm = 256;
-        }
-        else if (g_npwm_remain % 256)   /* 还有位数（不到256）个脉冲要发送 */
-        {
-            npwm = g_npwm_remain % 256;
-            g_npwm_remain = 0;          /* 没有脉冲了 */
-        }
-
-        if (npwm)   /* 有脉冲要发送 */
-        {
-            ATIM_TIMX_NPWM->RCR = npwm - 1; /* 设置重复计数寄存器值为npwm-1, 即npwm个脉冲 */
-            ATIM_TIMX_NPWM->EGR |= 1 << 0;  /* 产生一次更新事件,以更新RCR寄存器 */
-            ATIM_TIMX_NPWM->CR1 |= 1 << 0;  /* 使能定时器TIMX */
-        }
-        else
-        {
-            ATIM_TIMX_NPWM->CR1 &= ~(1 << 0);   /* 关闭定时器TIMX */
-        }
-    }
-
-    ATIM_TIMX_NPWM->SR &= ~(1 << 0);    /* 清除中断标志位 */
-}
+#include "adc.h"
 
 /**
  * @brief       高级定时器TIMX 互补输出 初始化函数（使用PWM模式1）
@@ -217,30 +143,15 @@ void atim_timx_cplm_pwm_set(uint16_t ccr, uint8_t dtg, uint8_t channel)
     }
 }
 
-// 新增中断服务函数实现
-void TIM1_UP_TIM10_IRQHandler(void)
-{
-    if (ATIM_TIMX_CPLM->SR & 0x01)  // 检查更新中断标志
-    {
-        ATIM_TIMX_CPLM->SR &= ~(0x01);  // 清除更新中断标志
-				//LED1_TOGGLE();
-        
-        // 执行ADC采样和FOC运算
-        // 这里添加您的ADC启动和FOC计算代码
-        // ADC_StartConversion();
-        // FOC_Calculate();
-    }
-}
-
 // 在stm32f4xx_it.c中添加
 void TIM8_UP_TIM13_IRQHandler(void)
 {
     if (ATIM_TIMX_CPLM->SR & TIM_SR_UIF) {
         // 清除中断标志
         ATIM_TIMX_CPLM->SR &= ~TIM_SR_UIF;
-        
+				LED0_TOGGLE();
+       // adc_dma_enable(ADC_DMA_BUF_SIZE);
         // 这里添加您的处理代码
         // 例如：HAL_GPIO_TogglePin(GPIOx, GPIO_PIN_x); // 测试用
     }
 }
-

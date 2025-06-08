@@ -9,7 +9,7 @@
 ..\..\output\gtim.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
 ..\..\output\gtim.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
 ..\..\output\gtim.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
-..\..\output\gtim.o: ..\..\Drivers\BSP\LED\led.h
+..\..\output\gtim.o: ..\..\Drivers\SYSTEM\led\led.h
 ..\..\output\gtim.o: ..\..\Drivers\SYSTEM\motor\motor.h
 ..\..\output\gtim.o: ..\..\Drivers\SYSTEM\motor\status.h
 ..\..\output\gtim.o: ..\..\Drivers\SYSTEM\adc\adc.h

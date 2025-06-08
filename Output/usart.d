@@ -1,5 +1,5 @@
 ..\..\output\usart.o: ..\..\Drivers\SYSTEM\usart\usart.c
-..\..\output\usart.o: ..\..\Drivers\./SYSTEM/sys/sys.h
+..\..\output\usart.o: ..\..\Drivers\SYSTEM\sys\sys.h
 ..\..\output\usart.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
 ..\..\output\usart.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
 ..\..\output\usart.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -8,5 +8,5 @@
 ..\..\output\usart.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
 ..\..\output\usart.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
 ..\..\output\usart.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
-..\..\output\usart.o: ..\..\Drivers\./SYSTEM/usart/usart.h
+..\..\output\usart.o: ..\..\Drivers\SYSTEM\usart\usart.h
 ..\..\output\usart.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdio.h

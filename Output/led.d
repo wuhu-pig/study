@@ -1,5 +1,5 @@
-..\..\output\led.o: ..\..\Drivers\BSP\LED\led.c
-..\..\output\led.o: ..\..\Drivers\./BSP/LED/led.h
+..\..\output\led.o: ..\..\Drivers\SYSTEM\led\led.c
+..\..\output\led.o: ..\..\Drivers\SYSTEM\led\led.h
 ..\..\output\led.o: ..\..\Drivers\./SYSTEM/sys/sys.h
 ..\..\output\led.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
 ..\..\output\led.o: ..\..\Drivers\CMSIS\Include\core_cm4.h

@@ -12,4 +12,4 @@
 ..\..\output\motor.o: ..\..\Drivers\SYSTEM\motor\motor.h
 ..\..\output\motor.o: ..\..\Drivers\SYSTEM\motor\status.h
 ..\..\output\motor.o: ..\..\Drivers\SYSTEM\adc\adc.h
-..\..\output\motor.o: ..\..\Drivers\SYSTEM\TIMER\atim.h
+..\..\output\motor.o: ..\..\Drivers\SYSTEM\timer\atim.h

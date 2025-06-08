@@ -3,6 +3,7 @@
 #include "math.h"
 #include "motor.h"
 #include "atim.h"
+#include "adc.h"
 
 /********************** 变      量 ***************************/
 float voltage_power_supply=12;
@@ -42,7 +43,7 @@ status_t Offset_CurrentReading(void)
             adcx[j] = sum / (ADC_DMA_BUF_SIZE / 6);    /* 取平均值 */
         }
         g_adc_dma_sta = 0;  /* 清除DMA采集完成状态标志 */
-        adc_dma_enable(ADC_DMA_BUF_SIZE);   /* 启动下一次ADC DMA采集 */
+        //adc_dma_enable(ADC_DMA_BUF_SIZE);   /* 启动下一次ADC DMA采集 */
         
         
         ADCSampPare.OffsetPhaseW_Curr = adcx[0];
@@ -73,7 +74,7 @@ void ADC_Sample(void)
             adcx[j] = sum / (ADC_DMA_BUF_SIZE / 6);    /* 取平均值 */
         }
         g_adc_dma_sta = 0;  /* 清除DMA采集完成状态标志 */
-        adc_dma_enable(ADC_DMA_BUF_SIZE);   /* 启动下一次ADC DMA采集 */     
+//        adc_dma_enable(ADC_DMA_BUF_SIZE);   /* 启动下一次ADC DMA采集 */     
     }
      
     ADCSampPare.PhaseW_Curr  = (adcx[0]-ADCSampPare.OffsetPhaseW_Curr);     
