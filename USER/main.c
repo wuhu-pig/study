@@ -26,8 +26,8 @@ int main(void)
 		//iic_init();															//I2C初始化
 		//Lcd_Init();
 		//motor_init();
-		SPI2_GPIO_SlaveInit();
-		SPI2_SlaveInit();
+		SPI2_GPIO_MasterInit();
+    SPI2_MasterInit();
 		AS5600_Init();
 		adc_init();
     dma_init();
@@ -35,25 +35,10 @@ int main(void)
 		gtim_timx_int_init(100-1, 8400 - 1); /* 84 000 000 / 84 00 = 10 000 10Khz的计数频率，计数5K次为500ms */	//1ms
 		while (1)
     {
-//			Programe_Run();												//AS5600编码器
 			RunSystimer();
-//			
-//			if(TaskTimePare.Tim1s_flag == 1)
-//			{
-//					
-//			}
 			if(TaskTimePare.Tim10ms_flag == 1)
 			{
-				angle = AS5600_ReadRawAngle();
-				if (angle == 0xFFFF) {
-						printf("AS5600 读取失败！\n");
-				} else {
-						printf("角度值: %d\n", angle);
-				}
-//				
-//				//printf("d:%f,%f,%d,%d\n",shaft_angle,degress,ADCSampPare.PhaseW_Curr,ADCSampPare.EA_Curr);
-//				printf("d:%f,%f,%f\n",Ua,Ub,Uc);
-//			//	printf("d: %f\n",shaft_angle);
+
 			}
 			CLEAR_flag();
     }
