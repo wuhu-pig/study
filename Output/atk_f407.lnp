@@ -16,6 +16,7 @@
 "..\..\output\pi_cale.o"
 "..\..\output\svpwm_dq.o"
 "..\..\output\motor.o"
+"..\..\output\foc.o"
 "..\..\output\gui.o"
 "..\..\output\lcd_drive.o"
 "..\..\output\qdtft_demo.o"
