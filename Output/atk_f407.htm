@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\..\Output\atk_f407.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\..\Output\atk_f407.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Wed Jun 11 21:14:35 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Wed Jun 11 21:29:55 2025
 <BR><P>
 <H3>Maximum Stack Usage =        324 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -831,7 +831,7 @@ Global Symbols
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
 <P><STRONG><a name="[39]"></a>TIM8_UP_TIM13_IRQHandler</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, atim.o(i.TIM8_UP_TIM13_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 272<LI>Call Chain = TIM8_UP_TIM13_IRQHandler &rArr; foc_main &rArr; inverse_park_transform &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_d2iz
+<BR><BR>[Stack]<UL><LI>Max Depth = 296<LI>Call Chain = TIM8_UP_TIM13_IRQHandler &rArr; foc_main &rArr; inverse_park_transform &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_d2iz
 </UL>
 <BR>[Calls]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_main
 </UL>
@@ -983,15 +983,15 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_foc_algorithm_main
 </UL>
 
-<P><STRONG><a name="[ac]"></a>_normalizeAngle</STRONG> (Thumb, 120 bytes, Stack size 32 bytes, motor.o(i._normalizeAngle))
+<P><STRONG><a name="[ac]"></a>_normalizeAngle</STRONG> (Thumb, 88 bytes, Stack size 32 bytes, foc.o(i._normalizeAngle))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = _normalizeAngle &rArr; __hardfp_fmod &rArr; __mathlib_dbl_invalid &rArr; __aeabi_ddiv
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
-<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 </UL>
-<BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPhaseVoltage
+<BR>[Called By]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_main
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPhaseVoltage
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_foc_algorithm_main
 </UL>
 
@@ -1034,18 +1034,20 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 </UL>
 
-<P><STRONG><a name="[c1]"></a>foc_init</STRONG> (Thumb, 158 bytes, Stack size 0 bytes, foc.o(i.foc_init))
+<P><STRONG><a name="[c1]"></a>foc_init</STRONG> (Thumb, 166 bytes, Stack size 0 bytes, foc.o(i.foc_init))
 <BR><BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[94]"></a>foc_main</STRONG> (Thumb, 140 bytes, Stack size 24 bytes, foc.o(i.foc_main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = foc_main &rArr; inverse_park_transform &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_d2iz
+<P><STRONG><a name="[94]"></a>foc_main</STRONG> (Thumb, 186 bytes, Stack size 48 bytes, foc.o(i.foc_main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 288<LI>Call Chain = foc_main &rArr; inverse_park_transform &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_d2iz
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;speed_rampup
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inverse_park_transform
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inverse_clarke_transform
+<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_normalizeAngle
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 </UL>
 <BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM8_UP_TIM13_IRQHandler
@@ -1118,11 +1120,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[93]"></a>motor_foc_algorithm_main</STRONG> (Thumb, 254 bytes, Stack size 32 bytes, motor.o(i.motor_foc_algorithm_main))
+<P><STRONG><a name="[93]"></a>motor_foc_algorithm_main</STRONG> (Thumb, 280 bytes, Stack size 32 bytes, motor.o(i.motor_foc_algorithm_main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 296<LI>Call Chain = motor_foc_algorithm_main &rArr; setPhaseVoltage &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_d2iz
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPhaseVoltage
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_normalizeAngle
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_normalizeAngle
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPhaseVoltage
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_electricalAngle
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
@@ -1133,11 +1135,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM3_IRQHandler
 </UL>
 
-<P><STRONG><a name="[c6]"></a>setPhaseVoltage</STRONG> (Thumb, 508 bytes, Stack size 80 bytes, motor.o(i.setPhaseVoltage))
+<P><STRONG><a name="[c6]"></a>setPhaseVoltage</STRONG> (Thumb, 534 bytes, Stack size 80 bytes, motor.o(i.setPhaseVoltage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 264<LI>Call Chain = setPhaseVoltage &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_d2iz
 </UL>
-<BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPwm
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_normalizeAngle
+<BR>[Calls]<UL><LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_normalizeAngle
+<LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPwm
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sqrt
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sin
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
@@ -1159,10 +1161,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPhaseVoltage
 </UL>
 
-<P><STRONG><a name="[b2]"></a>speed_rampup</STRONG> (Thumb, 104 bytes, Stack size 24 bytes, foc.o(i.speed_rampup))
-<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = speed_rampup &rArr; __aeabi_d2f
+<P><STRONG><a name="[b2]"></a>speed_rampup</STRONG> (Thumb, 168 bytes, Stack size 24 bytes, foc.o(i.speed_rampup))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = speed_rampup &rArr; __aeabi_dsub
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 </UL>
@@ -1257,8 +1260,8 @@ Global Symbols
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;speed_rampup
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inverse_park_transform
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inverse_clarke_transform
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPhaseVoltage
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_normalizeAngle
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPhaseVoltage
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_foc_algorithm_main
 </UL>
 
@@ -1270,10 +1273,10 @@ Global Symbols
 <P><STRONG><a name="[a3]"></a>__aeabi_dadd</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, daddsub_clz.o(x$fpl$dadd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_dadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;speed_rampup
+<BR>[Called By]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;foc_main
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;speed_rampup
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inverse_clarke_transform
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPhaseVoltage
-<LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_normalizeAngle
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_foc_algorithm_main
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
@@ -1420,7 +1423,8 @@ Global Symbols
 <P><STRONG><a name="[a2]"></a>__aeabi_dsub</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, daddsub_clz.o(x$fpl$dsub))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = __aeabi_dsub
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inverse_clarke_transform
+<BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;speed_rampup
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inverse_clarke_transform
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPhaseVoltage
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
@@ -1440,8 +1444,8 @@ Global Symbols
 <LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;speed_rampup
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inverse_park_transform
 <LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;inverse_clarke_transform
-<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPhaseVoltage
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_normalizeAngle
+<LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setPhaseVoltage
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_foc_algorithm_main
 </UL>
 

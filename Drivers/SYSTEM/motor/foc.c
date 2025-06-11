@@ -27,6 +27,7 @@ void foc_init(void)
 	my_motor.pid.output_limit=100;//输出限幅	
 	
 	my_motor.control.maxspeed=MAXSPEED;
+	my_motor.control.targetspeed=1;
 	//电机状态初始化
 	my_motor.state=MOTOR_STOPPED;
 }
@@ -34,9 +35,12 @@ void speed_rampup(void)
 {
 	if(my_motor.control.speed<=my_motor.control.maxspeed)
 	{
-		if(my_motor.control.speed<=my_motor.control.targetspeed)
+		if(my_motor.control.speed<my_motor.control.targetspeed)
 			{
 				my_motor.control.speed+=RAMPSTEP;
+			}else if(my_motor.control.speed > my_motor.control.targetspeed)
+			{
+				my_motor.control.speed-=RAMPSTEP;
 			}
 	}else
 	{
@@ -59,11 +63,15 @@ void inverse_clarke_transform(float alpha, float beta, float *a, float *b, float
     *c = -0.5 * alpha - SQRT3_BY_2 * beta;
 }
 
+float _normalizeAngle(float angle){
+    float a = fmod(angle, 2*PI);   //取余，将角度限制在一个周期内，超出部分舍去
+    return a >= 0 ? a : (a + 2*PI);  
+}
 void foc_main(void)
 {
 	speed_rampup();//速度rampup
 	my_motor.control.speed_el=my_motor.control.speed*my_motor.params.Poles;//得到电气角速度
-	my_motor.control.angle_el=my_motor.control.speed_el*Ts;//得到角度
+	my_motor.control.angle_el=_normalizeAngle(my_motor.control.speed_el*Ts+my_motor.control.angle_el);//得到角度
 	inverse_park_transform(0,Vref/3,my_motor.control.angle_el,(float *)&my_motor.control.voltage1.valpha,(float *)&my_motor.control.voltage1.vbeta);
 	inverse_clarke_transform(my_motor.control.voltage1.valpha,my_motor.control.voltage1.vbeta,(float *)&my_motor.control.voltage2.va,(float *)&my_motor.control.voltage2.vb,(float *)&my_motor.control.voltage2.vc);
 	

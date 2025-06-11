@@ -28,26 +28,19 @@ Project File Date:  06/11/2025
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\1.sofeware\keil5\ARM\ARMCC\Bin'
 Build target 'USART'
 compiling foc.c...
-..\..\Drivers\SYSTEM\motor\foc.c(39): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+..\..\Drivers\SYSTEM\motor\foc.c(40): warning:  #1035-D: single-precision operand implicitly converted to double-precision
   				my_motor.control.speed+=RAMPSTEP;
-..\..\Drivers\SYSTEM\motor\foc.c(66): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  	my_motor.control.angle_el=my_motor.control.speed_el*Ts;//得到角度
-..\..\Drivers\SYSTEM\motor\foc.c(70): warning:  #1-D: last line of file ends without a newline
+..\..\Drivers\SYSTEM\motor\foc.c(43): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  				my_motor.control.speed-=RAMPSTEP;
+..\..\Drivers\SYSTEM\motor\foc.c(74): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  	my_motor.control.angle_el=_normalizeAngle(my_motor.control.speed_el*Ts+my_motor.control.angle_el);//得到角度
+..\..\Drivers\SYSTEM\motor\foc.c(78): warning:  #1-D: last line of file ends without a newline
   }
-..\..\Drivers\SYSTEM\motor\foc.c: 3 warnings, 0 errors
-compiling atim.c...
-compiling main.c...
-..\..\Drivers\SYSTEM\motor\foc.h(6): warning:  #47-D: incompatible redefinition of macro "PI"  (declared at line 14 of "..\..\Drivers\SYSTEM\motor\motor.h")
-  #define PI          	3.14159265358979323846f
-..\..\User\main.c(22): warning:  #177-D: variable "t"  was declared but never referenced
-  		float t = 0;
-..\..\User\main.c(23): warning:  #177-D: variable "retval"  was declared but never referenced
-  		status_t retval;
-..\..\User\main.c: 3 warnings, 0 errors
+..\..\Drivers\SYSTEM\motor\foc.c: 4 warnings, 0 errors
 linking...
-Program Size: Code=16936 RO-data=888 RW-data=156 ZI-data=2116  
+Program Size: Code=17080 RO-data=888 RW-data=156 ZI-data=2116  
 FromELF: creating hex file...
-"..\..\Output\atk_f407.axf" - 0 Error(s), 6 Warning(s).
+"..\..\Output\atk_f407.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 

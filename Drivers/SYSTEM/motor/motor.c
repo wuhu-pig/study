@@ -92,10 +92,10 @@ void motor_init(void)
     Offset_CurrentReading();   //电流采样校准
 }
 
-float _normalizeAngle(float angle){
-    float a = fmod(angle, 2*PI);   //取余，将角度限制在一个周期内，超出部分舍去
-    return a >= 0 ? a : (a + 2*PI);  
-}
+//float _normalizeAngle(float angle){
+//    float a = fmod(angle, 2*PI);   //取余，将角度限制在一个周期内，超出部分舍去
+//    return a >= 0 ? a : (a + 2*PI);  
+//}
 
 // 电角度计算
 float _electricalAngle(float shaft_angle, int pole_pairs) {
