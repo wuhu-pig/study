@@ -21,68 +21,33 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.9.0
 Dialog DLL:      TCM.DLL V1.53.0.0
  
 <h2>Project:</h2>
-C:\Users\yourfather\Desktop\stm32f407\github\20250609\study\Projects\MDK-ARM\atk_f407.uvprojx
-Project File Date:  06/09/2025
+C:\Users\yourfather\Desktop\stm32f407\github\20250611\study\Projects\MDK-ARM\atk_f407.uvprojx
+Project File Date:  06/11/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\1.sofeware\keil5\ARM\ARMCC\Bin'
-Rebuild target 'USART'
-assembling startup_stm32f407xx.s...
-compiling delay.c...
-compiling usart.c...
-compiling sys.c...
-compiling led.c...
-compiling gtim.c...
-compiling atim.c...
-compiling spi.c...
-..\..\Drivers\SYSTEM\spi\spi.c(98): warning:  #1-D: last line of file ends without a newline
-  }
-..\..\Drivers\SYSTEM\spi\spi.c: 1 warning, 0 errors
-compiling main.c...
-..\..\User\main.c(20): warning:  #177-D: variable "t"  was declared but never referenced
-  		float t = 0;
-..\..\User\main.c(21): warning:  #177-D: variable "retval"  was declared but never referenced
-  		status_t retval;
-..\..\User\main.c: 2 warnings, 0 errors
-compiling adc.c...
-compiling as5600.c...
-..\..\Drivers\SYSTEM\AS5600\as5600.c(324): warning:  #68-D: integer conversion resulted in a change of sign
-      uint8_t retVal = -1;
-..\..\Drivers\SYSTEM\AS5600\as5600.c(340): warning:  #68-D: integer conversion resulted in a change of sign
-      uint16_t retVal = -1;
-..\..\Drivers\SYSTEM\AS5600\as5600.c(599): warning:  #68-D: integer conversion resulted in a change of sign
-                  retVal = -3;
-..\..\Drivers\SYSTEM\AS5600\as5600.c(604): warning:  #68-D: integer conversion resulted in a change of sign
-              retVal = -2;
-..\..\Drivers\SYSTEM\AS5600\as5600.c(607): warning:  #68-D: integer conversion resulted in a change of sign
-          retVal = -1;
-..\..\Drivers\SYSTEM\AS5600\as5600.c(627): warning:  #68-D: integer conversion resulted in a change of sign
-              retVal = -2;
-..\..\Drivers\SYSTEM\AS5600\as5600.c(632): warning:  #68-D: integer conversion resulted in a change of sign
-          retVal = -1;
-..\..\Drivers\SYSTEM\AS5600\as5600.c: 7 warnings, 0 errors
-compiling i2c.c...
-..\..\Drivers\SYSTEM\i2c\i2c.c(161): warning:  #61-D: integer operation result is out of range
-      GPIOB->AFR[0] &= ~((0xF << (6 * 4)) | (0xF << (7 * 4)));
-..\..\Drivers\SYSTEM\i2c\i2c.c: 1 warning, 0 errors
-compiling Axis_transform.c...
-compiling IQ_math.c...
-compiling PI_Cale.c...
-compiling motor.c...
-..\..\Drivers\SYSTEM\motor\motor.c(149): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-      if(ramp_voltage > target_voltage * 0.5) {
-..\..\Drivers\SYSTEM\motor\motor.c(153): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  					angle_step+=0.00001;
-..\..\Drivers\SYSTEM\motor\motor.c: 2 warnings, 0 errors
+Build target 'USART'
 compiling foc.c...
-compiling GUI.c...
-compiling QDTFT_demo.c...
-compiling Svpwm_dq.c...
-compiling lcd_drive.c...
+..\..\Drivers\SYSTEM\motor\foc.c(39): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  				my_motor.control.speed+=RAMPSTEP;
+..\..\Drivers\SYSTEM\motor\foc.c(66): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  	my_motor.control.angle_el=my_motor.control.speed_el*Ts;//µÃµ½½Ç¶È
+..\..\Drivers\SYSTEM\motor\foc.c(70): warning:  #1-D: last line of file ends without a newline
+  }
+..\..\Drivers\SYSTEM\motor\foc.c: 3 warnings, 0 errors
+compiling atim.c...
+compiling main.c...
+..\..\Drivers\SYSTEM\motor\foc.h(6): warning:  #47-D: incompatible redefinition of macro "PI"  (declared at line 14 of "..\..\Drivers\SYSTEM\motor\motor.h")
+  #define PI          	3.14159265358979323846f
+..\..\User\main.c(22): warning:  #177-D: variable "t"  was declared but never referenced
+  		float t = 0;
+..\..\User\main.c(23): warning:  #177-D: variable "retval"  was declared but never referenced
+  		status_t retval;
+..\..\User\main.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=12072 RO-data=712 RW-data=156 ZI-data=1948  
+Program Size: Code=16936 RO-data=888 RW-data=156 ZI-data=2116  
 FromELF: creating hex file...
-"..\..\Output\atk_f407.axf" - 0 Error(s), 13 Warning(s).
+"..\..\Output\atk_f407.axf" - 0 Error(s), 6 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -94,7 +59,7 @@ Package Vendor: Keil
 <h2>Collection of Component include folders:</h2>
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

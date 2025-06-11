@@ -1,7 +1,7 @@
 #include "atim.h"
 #include "led.h"
 #include "adc.h"
-
+#include "foc.h"
 /**
  * @brief       高级定时器TIMX 互补输出 初始化函数（使用PWM模式1）
  * @note
@@ -150,6 +150,7 @@ void TIM8_UP_TIM13_IRQHandler(void)
         // 清除中断标志
         ATIM_TIMX_CPLM->SR &= ~TIM_SR_UIF;
 				LED0_TOGGLE();
+				foc_main();
        // adc_dma_enable(ADC_DMA_BUF_SIZE);
         // 这里添加您的处理代码
         // 例如：HAL_GPIO_TogglePin(GPIOx, GPIO_PIN_x); // 测试用

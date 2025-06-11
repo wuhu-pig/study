@@ -13,6 +13,8 @@
 #include "motor.h"
 #include "i2c.h"
 #include "spi.h"
+#include "foc.h"
+
                   /* DMA传输状态标志, 0,未完成; 1, 已完成 */
 uint16_t angle;
 int main(void)
@@ -33,12 +35,13 @@ int main(void)
     dma_init();
     atim_timx_cplm_pwm_init(1000 - 1, 168 - 1); /* 168/4=42Mhz的计数频率 1Khz的周期. */  //1ms
 		gtim_timx_int_init(100-1, 8400 - 1); /* 84 000 000 / 84 00 = 10 000 10Khz的计数频率，计数5K次为500ms */	//1ms
+		foc_init();
 		while (1)
     {
 			RunSystimer();
 			if(TaskTimePare.Tim10ms_flag == 1)
 			{
-
+					printf("d:%f,%f,%f\n",my_motor.control.voltage2.va,my_motor.control.voltage2.vb,my_motor.control.voltage2.vc);
 			}
 			CLEAR_flag();
     }

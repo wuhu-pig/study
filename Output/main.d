@@ -24,3 +24,4 @@
 ..\..\output\main.o: ..\..\Drivers\SYSTEM\motor\status.h
 ..\..\output\main.o: ..\..\Drivers\SYSTEM\i2c\i2c.h
 ..\..\output\main.o: ..\..\Drivers\SYSTEM\spi\spi.h
+..\..\output\main.o: ..\..\Drivers\SYSTEM\motor\foc.h

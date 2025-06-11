@@ -11,3 +11,4 @@
 ..\..\output\atim.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
 ..\..\output\atim.o: ..\..\Drivers\SYSTEM\led\led.h
 ..\..\output\atim.o: ..\..\Drivers\SYSTEM\adc\adc.h
+..\..\output\atim.o: ..\..\Drivers\SYSTEM\motor\foc.h
