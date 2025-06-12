@@ -1,0 +1,12 @@
+..\..\output\foc.o: ..\..\Drivers\SYSTEM\motor\foc.c
+..\..\output\foc.o: ..\..\Drivers\SYSTEM\motor\foc.h
+..\..\output\foc.o: ..\..\Drivers\SYSTEM\sys\sys.h
+..\..\output\foc.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
+..\..\output\foc.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\foc.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\foc.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\foc.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\foc.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\foc.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\foc.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\..\output\foc.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\math.h

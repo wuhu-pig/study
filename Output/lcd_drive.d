@@ -1,0 +1,12 @@
+..\..\output\lcd_drive.o: ..\..\Drivers\SYSTEM\lcd\lcd_drive.c
+..\..\output\lcd_drive.o: ..\..\Drivers\./SYSTEM/sys/sys.h
+..\..\output\lcd_drive.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
+..\..\output\lcd_drive.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\lcd_drive.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\lcd_drive.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\lcd_drive.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\lcd_drive.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\lcd_drive.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\lcd_drive.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\..\output\lcd_drive.o: ..\..\Drivers\./SYSTEM/lcd/lcd_drive.h
+..\..\output\lcd_drive.o: ..\..\Drivers\./SYSTEM/delay/delay.h

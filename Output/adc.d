@@ -1,0 +1,14 @@
+..\..\output\adc.o: ..\..\Drivers\SYSTEM\adc\adc.c
+..\..\output\adc.o: ..\..\Drivers\SYSTEM\adc\adc.h
+..\..\output\adc.o: ..\..\Drivers\./SYSTEM/sys/sys.h
+..\..\output\adc.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
+..\..\output\adc.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\adc.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\adc.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\adc.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\adc.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\adc.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\adc.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\..\output\adc.o: ..\..\Drivers\SYSTEM\led\led.h
+..\..\output\adc.o: ..\..\Drivers\SYSTEM\dma\dma.h
+..\..\output\adc.o: ..\..\Drivers\SYSTEM\delay\delay.h

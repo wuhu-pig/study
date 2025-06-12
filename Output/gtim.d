@@ -1,0 +1,15 @@
+..\..\output\gtim.o: ..\..\Drivers\SYSTEM\TIMER\gtim.c
+..\..\output\gtim.o: ..\..\Drivers\SYSTEM\TIMER\gtim.h
+..\..\output\gtim.o: ..\..\Drivers\./SYSTEM/sys/sys.h
+..\..\output\gtim.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
+..\..\output\gtim.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\gtim.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\gtim.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\gtim.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\gtim.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\gtim.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\gtim.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\..\output\gtim.o: ..\..\Drivers\SYSTEM\led\led.h
+..\..\output\gtim.o: ..\..\Drivers\SYSTEM\motor\motor.h
+..\..\output\gtim.o: ..\..\Drivers\SYSTEM\motor\status.h
+..\..\output\gtim.o: ..\..\Drivers\SYSTEM\adc\adc.h

@@ -1,0 +1,26 @@
+--cpu=Cortex-M4.fp.sp
+"..\..\output\startup_stm32f407xx.o"
+"..\..\output\main.o"
+"..\..\output\delay.o"
+"..\..\output\sys.o"
+"..\..\output\usart.o"
+"..\..\output\as5600.o"
+"..\..\output\atim.o"
+"..\..\output\gtim.o"
+"..\..\output\adc.o"
+"..\..\output\led.o"
+"..\..\output\spi.o"
+"..\..\output\i2c.o"
+"..\..\output\axis_transform.o"
+"..\..\output\iq_math.o"
+"..\..\output\pi_cale.o"
+"..\..\output\svpwm_dq.o"
+"..\..\output\motor.o"
+"..\..\output\foc.o"
+"..\..\output\gui.o"
+"..\..\output\lcd_drive.o"
+"..\..\output\qdtft_demo.o"
+--strict --scatter "..\..\Output\atk_f407.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "..\..\Output\atk_f407.map" -o ..\..\Output\atk_f407.axf

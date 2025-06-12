@@ -1,0 +1,14 @@
+..\..\output\gui.o: ..\..\Drivers\SYSTEM\lcd\GUI.c
+..\..\output\gui.o: ..\..\Drivers\./SYSTEM/sys/sys.h
+..\..\output\gui.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
+..\..\output\gui.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\gui.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\gui.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\gui.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\gui.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\gui.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\gui.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\..\output\gui.o: ..\..\Drivers\SYSTEM\lcd\lcd_drive.h
+..\..\output\gui.o: ..\..\Drivers\SYSTEM\lcd\GUI.h
+..\..\output\gui.o: ..\..\Drivers\./SYSTEM/delay/delay.h
+..\..\output\gui.o: ..\..\Drivers\SYSTEM\lcd\font.h

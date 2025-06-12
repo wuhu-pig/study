@@ -1,0 +1,14 @@
+..\..\output\atim.o: ..\..\Drivers\SYSTEM\TIMER\atim.c
+..\..\output\atim.o: ..\..\Drivers\SYSTEM\TIMER\atim.h
+..\..\output\atim.o: ..\..\Drivers\SYSTEM\sys\sys.h
+..\..\output\atim.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
+..\..\output\atim.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\atim.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\atim.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\atim.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\atim.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\atim.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\atim.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\..\output\atim.o: ..\..\Drivers\SYSTEM\led\led.h
+..\..\output\atim.o: ..\..\Drivers\SYSTEM\adc\adc.h
+..\..\output\atim.o: ..\..\Drivers\SYSTEM\motor\foc.h

@@ -1,0 +1,12 @@
+..\..\output\i2c.o: ..\..\Drivers\SYSTEM\i2c\i2c.c
+..\..\output\i2c.o: ..\..\Drivers\SYSTEM\i2c\i2c.h
+..\..\output\i2c.o: ..\..\Drivers\SYSTEM\sys\sys.h
+..\..\output\i2c.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f407xx.h
+..\..\output\i2c.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\i2c.o: D:\1.sofeware\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\..\output\i2c.o: ..\..\Drivers\CMSIS\Include\cmsis_version.h
+..\..\output\i2c.o: ..\..\Drivers\CMSIS\Include\cmsis_compiler.h
+..\..\output\i2c.o: ..\..\Drivers\CMSIS\Include\cmsis_armcc.h
+..\..\output\i2c.o: ..\..\Drivers\CMSIS\Include\mpu_armv7.h
+..\..\output\i2c.o: ..\..\Drivers\CMSIS\Device\ST\STM32F4xx\Include\system_stm32f4xx.h
+..\..\output\i2c.o: ..\..\Drivers\SYSTEM\delay\delay.h
