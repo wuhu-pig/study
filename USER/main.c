@@ -41,7 +41,7 @@ int main(void)
 			RunSystimer();
 			if(TaskTimePare.Tim10ms_flag == 1)
 			{
-					printf("d:%f,%f,%f\n",my_motor.control.voltage2.va,my_motor.control.voltage2.vb,my_motor.control.voltage2.vc);
+					printf("d:%d,%d,%d\n",my_motor.control.CCR.ccra,my_motor.control.CCR.ccrb,my_motor.control.CCR.ccrc);
 			}
 			CLEAR_flag();
     }

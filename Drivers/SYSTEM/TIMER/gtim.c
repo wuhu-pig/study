@@ -79,7 +79,7 @@ void GTIM_TIMX_INT_IRQHandler(void)
         
 				TaskTimePare.IntClock_1ms=1;
 //				LED1_TOGGLE();
-				motor_foc_algorithm_main();
+				//motor_foc_algorithm_main();
 //				ADC_Sample();
 				
 				TaskTimePare.Tim1ms_flag=1;

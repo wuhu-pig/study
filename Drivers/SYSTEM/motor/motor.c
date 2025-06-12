@@ -4,7 +4,7 @@
 #include "motor.h"
 #include "atim.h"
 #include "adc.h"
-
+#include "foc.h"
 /********************** 变      量 ***************************/
 float voltage_power_supply=12;
 float shaft_angle=0,open_loop_timestamp=0;
@@ -111,15 +111,15 @@ void setPwm(float Ua, float Ub, float Uc) {
     dc_c = _constrain(Uc / voltage_power_supply, 0.0f , 1.0f );
     
     //printf("d: %f, %f, %f\n",dc_a*4200,dc_b*4200,dc_c*4200);
-    //写入PWM到PWM 0 1 2 通道
-    atim_timx_cplm_pwm_set((int)(dc_a*1000),100,1);
-    atim_timx_cplm_pwm_set((int)(dc_b*1000),100,2);
-    atim_timx_cplm_pwm_set((int)(dc_c*1000),100,3);
+//    //写入PWM到PWM 0 1 2 通道
+//    atim_timx_cplm_pwm_set((int)(dc_a*1000),100,1);
+//    atim_timx_cplm_pwm_set((int)(dc_b*1000),100,2);
+//    atim_timx_cplm_pwm_set((int)(dc_c*1000),100,3);
 }
 
 void setPhaseVoltage(float Uq,float Ud, float angle_el) 
 {
-    angle_el = _normalizeAngle(angle_el + zero_electric_angle);
+    //angle_el = _normalizeAngle(angle_el + zero_electric_angle);
     // 逆Park变换
     Ualpha =  -Uq*sin(angle_el); 
     Ubeta =   Uq*cos(angle_el); 
@@ -156,7 +156,7 @@ void motor_foc_algorithm_main()
 				}				
     }
     
-    shaft_angle = _normalizeAngle(shaft_angle + angle_step);
+    //shaft_angle = _normalizeAngle(shaft_angle + angle_step);
     setPhaseVoltage(ramp_voltage, 0, _electricalAngle(shaft_angle, motorpoles));
 }
 

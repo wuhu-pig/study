@@ -11,11 +11,11 @@
 extern ADCSamp  ADCSampPare;
 
 #define motorpoles 7
-#define PI 3.1415926535897932384626433832795
+//#define PI 3.1415926535897932384626433832795
 extern float voltage_power_supply;
 extern float shaft_angle,open_loop_timestamp;
 extern float zero_electric_angle,Ualpha,Ubeta,Ua,Ub,Uc,dc_a,dc_b,dc_c;
-#define _constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
+//#define _constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
 
 extern status_t Offset_CurrentReading(void);
 extern void motor_init(void);

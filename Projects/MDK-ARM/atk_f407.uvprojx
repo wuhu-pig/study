@@ -479,11 +479,6 @@
               <FilePath>..\..\Drivers\SYSTEM\motor\Svpwm_dq.c</FilePath>
             </File>
             <File>
-              <FileName>motor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\Drivers\SYSTEM\motor\motor.c</FilePath>
-            </File>
-            <File>
               <FileName>foc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\Drivers\SYSTEM\motor\foc.c</FilePath>

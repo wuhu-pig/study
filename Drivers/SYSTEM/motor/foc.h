@@ -9,11 +9,13 @@
 #define ONE_BY_SQRT3 	0.57735026919f
 #define SQRT3_BY_2  	0.86602540378f
 
-#define RAMPSTEP 			0.005
+#define RAMPSTEP 			0.01
 #define MAXSPEED 			5					//单位 rad/s  2*2pi/60=2*2*180/60=12度/s
 #define Ts 						0.001			//1ms
 #define Vref 					12				//电源电压12v
+#define Vrefby2 			6					//电源电压12v
 
+#define _constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
 
 // 电流采样结构体
 typedef struct {
@@ -29,6 +31,13 @@ typedef struct {
     float vb;
     float vc;
 } PhaseVoltage_t;
+
+// 电流采样结构体
+typedef struct {
+    uint16_t ccra;
+    uint16_t ccrb;
+    uint16_t ccrc;
+} PhaseCcr_t;
 
 // 电压向量结构体
 typedef struct {
@@ -108,9 +117,10 @@ typedef struct {
 	VoltageDQ_t voltage0;
 	Voltageabeta_t voltage1;
 	PhaseVoltage_t voltage2;
+	PhaseCcr_t  CCR;
 	float current;
 	float maxcurrent;
-	float maxspeed;
+ 	float maxspeed;
 } Motor_Control;
 
 typedef struct{

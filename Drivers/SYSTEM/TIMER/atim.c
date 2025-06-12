@@ -119,12 +119,12 @@ void atim_timx_cplm_pwm_init(uint16_t arr, uint16_t psc)
  *   @note      tDTS = 1 / (Ft /  CKD[1:0]) = 1 / 42M = 23.8ns
  * @retval      无
  */
-void atim_timx_cplm_pwm_set(uint16_t ccr, uint8_t dtg, uint8_t channel)
+void atim_timx_cplm_pwm_set(uint16_t ccr, uint8_t channel)
 {
     /* 清零 DTG[7:0] */
     ATIM_TIMX_CPLM->BDTR &= ~(0XFF << 0);
     /* 设置 DTG[7:0] */
-    ATIM_TIMX_CPLM->BDTR |= dtg << 0;
+    ATIM_TIMX_CPLM->BDTR |= 100 << 0;
     /* 使能主输出 */
     ATIM_TIMX_CPLM->BDTR |= 1 << 15;
     /* 设置比较寄存器 */

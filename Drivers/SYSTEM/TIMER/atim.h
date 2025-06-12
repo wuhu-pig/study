@@ -62,7 +62,7 @@
 /******************************************************************************************/
 
 void atim_timx_cplm_pwm_init(uint16_t arr, uint16_t psc);   /* 高级定时器 互补输出 初始化函数 */
-void atim_timx_cplm_pwm_set(uint16_t ccr, uint8_t dtg, uint8_t channel);
+void atim_timx_cplm_pwm_set(uint16_t ccr, uint8_t channel);
 #endif
 
 

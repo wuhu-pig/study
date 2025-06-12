@@ -21,26 +21,24 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.9.0
 Dialog DLL:      TCM.DLL V1.53.0.0
  
 <h2>Project:</h2>
-C:\Users\yourfather\Desktop\stm32f407\github\20250611\study\Projects\MDK-ARM\atk_f407.uvprojx
-Project File Date:  06/11/2025
+C:\Users\yourfather\Desktop\stm32f407\github\20250612\dev\study\Projects\MDK-ARM\atk_f407.uvprojx
+Project File Date:  06/12/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\1.sofeware\keil5\ARM\ARMCC\Bin'
 Build target 'USART'
 compiling foc.c...
-..\..\Drivers\SYSTEM\motor\foc.c(40): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  				my_motor.control.speed+=RAMPSTEP;
 ..\..\Drivers\SYSTEM\motor\foc.c(43): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  				my_motor.control.speed-=RAMPSTEP;
-..\..\Drivers\SYSTEM\motor\foc.c(74): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-  	my_motor.control.angle_el=_normalizeAngle(my_motor.control.speed_el*Ts+my_motor.control.angle_el);//得到角度
-..\..\Drivers\SYSTEM\motor\foc.c(78): warning:  #1-D: last line of file ends without a newline
+  				my_motor.control.speed+=RAMPSTEP;
+..\..\Drivers\SYSTEM\motor\foc.c(84): warning:  #1035-D: single-precision operand implicitly converted to double-precision
+  	my_motor.control.angle_el=_normalizeAngle(my_motor.control.speed_el*Ts+my_motor.control.angle_el);//得到弧度
+..\..\Drivers\SYSTEM\motor\foc.c(88): warning:  #1-D: last line of file ends without a newline
   }
-..\..\Drivers\SYSTEM\motor\foc.c: 4 warnings, 0 errors
+..\..\Drivers\SYSTEM\motor\foc.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=17080 RO-data=888 RW-data=156 ZI-data=2116  
+Program Size: Code=11976 RO-data=712 RW-data=12 ZI-data=2124  
 FromELF: creating hex file...
-"..\..\Output\atk_f407.axf" - 0 Error(s), 4 Warning(s).
+"..\..\Output\atk_f407.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 
