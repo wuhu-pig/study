@@ -1,23 +1,23 @@
 /**
  ****************************************************************************************************
  * @file        sys.h
- * @author      ����ԭ���Ŷ�(ALIENTEK)
+ * @author      正点原子团队(ALIENTEK)
  * @version     V1.0
  * @date        2021-12-30
- * @brief       ϵͳ��ʼ������(����ʱ������/�жϹ���/GPIO���õ�)
- * @license     Copyright (c) 2020-2032, �������������ӿƼ����޹�˾
+ * @brief       系统初始化代码(包括时钟配置/中断管理/GPIO设置等)
+ * @license     Copyright (c) 2020-2032, 广州市星翼电子科技有限公司
  ****************************************************************************************************
  * @attention
  *
- * ʵ��ƽ̨:����ԭ�� STM32F407������
- * ������Ƶ:www.yuanzige.com
- * ������̳:www.openedv.com
- * ��˾��ַ:www.alientek.com
- * �����ַ:openedv.taobao.com
+ * 实验平台:正点原子 STM32F407开发板
+ * 在线视频:www.yuanzige.com
+ * 技术论坛:www.openedv.com
+ * 公司网址:www.alientek.com
+ * 购买地址:openedv.taobao.com
  *
- * �޸�˵��
+ * 修改说明
  * V1.0 20211230
- * ��һ�η���
+ * 第一次发布
  ****************************************************************************************************
  */
 
@@ -28,38 +28,38 @@
 #include "stm32f407xx.h"
 
 /**
- * SYS_SUPPORT_OS���ڶ���ϵͳ�ļ����Ƿ�֧��OS
- * 0,��֧��OS
- * 1,֧��OS
+ * SYS_SUPPORT_OS用于定义系统文件夹是否支持OS
+ * 0,不支持OS
+ * 1,支持OS
  */
 #define SYS_SUPPORT_OS              0
 
 
-/* sys_nvic_ex_configר�ú궨�� */
-#define SYS_GPIO_FTIR               1       /* �½��ش��� */
-#define SYS_GPIO_RTIR               2       /* �����ش��� */
-#define SYS_GPIO_BTIR               3       /* ������ش��� */
+/* sys_nvic_ex_config专用宏定义 */
+#define SYS_GPIO_FTIR               1       /* 下降沿触发 */
+#define SYS_GPIO_RTIR               2       /* 上升沿触发 */
+#define SYS_GPIO_BTIR               3       /* 任意边沿触发 */
 
-/* GPIO����ר�ú궨�� */
-#define SYS_GPIO_MODE_IN            0       /* ��ͨ����ģʽ */
-#define SYS_GPIO_MODE_OUT           1       /* ��ͨ���ģʽ */
-#define SYS_GPIO_MODE_AF            2       /* AF����ģʽ */
-#define SYS_GPIO_MODE_AIN           3       /* ģ������ģʽ */
+/* GPIO设置专用宏定义 */
+#define SYS_GPIO_MODE_IN            0       /* 普通输入模式 */
+#define SYS_GPIO_MODE_OUT           1       /* 普通输出模式 */
+#define SYS_GPIO_MODE_AF            2       /* AF功能模式 */
+#define SYS_GPIO_MODE_AIN           3       /* 模拟输入模式 */
 
-#define SYS_GPIO_SPEED_LOW          0       /* GPIO�ٶ�(����,2M) */
-#define SYS_GPIO_SPEED_MID          1       /* GPIO�ٶ�(����,25M) */
-#define SYS_GPIO_SPEED_FAST         2       /* GPIO�ٶ�(����,50M) */
-#define SYS_GPIO_SPEED_HIGH         3       /* GPIO�ٶ�(����,100M) */
+#define SYS_GPIO_SPEED_LOW          0       /* GPIO速度(低速,2M) */
+#define SYS_GPIO_SPEED_MID          1       /* GPIO速度(中速,25M) */
+#define SYS_GPIO_SPEED_FAST         2       /* GPIO速度(快速,50M) */
+#define SYS_GPIO_SPEED_HIGH         3       /* GPIO速度(高速,100M) */
 
-#define SYS_GPIO_PUPD_NONE          0       /* ���������� */
-#define SYS_GPIO_PUPD_PU            1       /* ���� */
-#define SYS_GPIO_PUPD_PD            2       /* ���� */
-#define SYS_GPIO_PUPD_RES           3       /* ���� */
+#define SYS_GPIO_PUPD_NONE          0       /* 不带上下拉 */
+#define SYS_GPIO_PUPD_PU            1       /* 上拉 */
+#define SYS_GPIO_PUPD_PD            2       /* 下拉 */
+#define SYS_GPIO_PUPD_RES           3       /* 保留 */
 
-#define SYS_GPIO_OTYPE_PP           0       /* ������� */
-#define SYS_GPIO_OTYPE_OD           1       /* ��©��� */
+#define SYS_GPIO_OTYPE_PP           0       /* 推挽输出 */
+#define SYS_GPIO_OTYPE_OD           1       /* 开漏输出 */
 
-/* GPIO����λ�ú궨��  */
+/* GPIO引脚位置宏定义  */
 #define SYS_GPIO_PIN0               1<<0
 #define SYS_GPIO_PIN1               1<<1
 #define SYS_GPIO_PIN2               1<<2
@@ -78,33 +78,33 @@
 #define SYS_GPIO_PIN15              1<<15
 
 
-/*��������*******************************************************************************************/
-/* ��̬����(����sys.c�����õ�) */
-static void sys_nvic_priority_group_config(uint8_t group);                      /* ����NVIC���� */
+/*函数申明*******************************************************************************************/
+/* 静态函数(仅在sys.c里面用到) */
+static void sys_nvic_priority_group_config(uint8_t group);                      /* 设置NVIC分组 */
 
 
-/* ��ͨ���� */
-void sys_nvic_set_vector_table(uint32_t baseaddr, uint32_t offset);             /* �����ж�ƫ���� */
-void sys_nvic_init(uint8_t pprio, uint8_t sprio, uint8_t ch, uint8_t group);    /* ����NVIC */
-void sys_nvic_ex_config(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint8_t tmode);   /* �ⲿ�ж����ú���,ֻ���GPIOA~GPIOK */
-void sys_gpio_af_set(GPIO_TypeDef *gpiox, uint16_t pinx, uint8_t afx);          /* GPIO���ù���ѡ������  */
+/* 普通函数 */
+void sys_nvic_set_vector_table(uint32_t baseaddr, uint32_t offset);             /* 设置中断偏移量 */
+void sys_nvic_init(uint8_t pprio, uint8_t sprio, uint8_t ch, uint8_t group);    /* 设置NVIC */
+void sys_nvic_ex_config(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint8_t tmode);   /* 外部中断配置函数,只针对GPIOA~GPIOK */
+void sys_gpio_af_set(GPIO_TypeDef *gpiox, uint16_t pinx, uint8_t afx);          /* GPIO复用功能选择设置  */
 void sys_gpio_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint32_t mode, 
-                  uint32_t otype, uint32_t ospeed, uint32_t pupd);              /*  GPIOͨ������ */
+                  uint32_t otype, uint32_t ospeed, uint32_t pupd);              /*  GPIO通用设置 */
 
-void sys_gpio_pin_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint8_t status);    /* ����GPIOĳ�����ŵ����״̬ */
-uint8_t sys_gpio_pin_get(GPIO_TypeDef *p_gpiox, uint16_t pinx);                 /* ��ȡGPIOĳ�����ŵ�״̬ */
-void sys_standby(void);         /* �������ģʽ */
-void sys_soft_reset(void);      /* ϵͳ����λ */
+void sys_gpio_pin_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint8_t status);    /* 设置GPIO某个引脚的输出状态 */
+uint8_t sys_gpio_pin_get(GPIO_TypeDef *p_gpiox, uint16_t pinx);                 /* 读取GPIO某个引脚的状态 */
+void sys_standby(void);         /* 进入待机模式 */
+void sys_soft_reset(void);      /* 系统软复位 */
 
-uint8_t sys_clock_set(uint32_t plln, uint32_t pllm, uint32_t pllp, uint32_t pllq);      /* ʱ�����ú��� */
-void sys_stm32_clock_init(uint32_t plln, uint32_t pllm, uint32_t pllp, uint32_t pllq);  /* ϵͳʱ�ӳ�ʼ������ */
-void sys_qspi_enable_memmapmode(uint8_t ftype); /* QSPI�����ڴ�ӳ��ģʽ */
+uint8_t sys_clock_set(uint32_t plln, uint32_t pllm, uint32_t pllp, uint32_t pllq);      /* 时钟设置函数 */
+void sys_stm32_clock_init(uint32_t plln, uint32_t pllm, uint32_t pllp, uint32_t pllq);  /* 系统时钟初始化函数 */
+void sys_qspi_enable_memmapmode(uint8_t ftype); /* QSPI进入内存映射模式 */
 
-/* ����Ϊ��ຯ�� */
-void sys_wfi_set(void);             /* ִ��WFIָ�� */
-void sys_intx_disable(void);        /* �ر������ж� */
-void sys_intx_enable(void);         /* ���������ж� */
-void sys_msr_msp(uint32_t addr);    /* ����ջ����ַ */
+/* 以下为汇编函数 */
+void sys_wfi_set(void);             /* 执行WFI指令 */
+void sys_intx_disable(void);        /* 关闭所有中断 */
+void sys_intx_enable(void);         /* 开启所有中断 */
+void sys_msr_msp(uint32_t addr);    /* 设置栈顶地址 */
 
 #endif
 

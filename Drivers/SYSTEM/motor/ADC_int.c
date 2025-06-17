@@ -1,18 +1,18 @@
 //############################################################
 // FILE:  ADC_int.c
-// Created on: 2017Äê1ÔÂ5ÈÕ
+// Created on: 2017å¹´1æœˆ5æ—¥
 // Author: XQ
 // summary: ADCSampPare
-// ADC²ÉÑù £¬Ê¹ÓÃ¶¨Ê±Æ÷1ÖĞ¶Ïº¯Êı³ö·¢ADCÖĞ¶Ï²ÉÑù 
-//±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//°æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿
-//DSP/STM32µç»ú¿ØÖÆ¿ª·¢°å
-//Ë¶Àúµç×Ó
-//ÍøÖ·: https://shuolidianzi.taobao.com
-//ĞŞ¸ÄÈÕÆÚ:2017/1/23
-//°æ±¾£ºV17.3-1
+// ADCé‡‡æ · ï¼Œä½¿ç”¨å®šæ—¶å™¨1ä¸­æ–­å‡½æ•°å‡ºå‘ADCä¸­æ–­é‡‡æ · 
+//æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
+//ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶
+//DSP/STM32ç”µæœºæ§åˆ¶å¼€å‘æ¿
+//ç¡•å†ç”µå­
+//ç½‘å€: https://shuolidianzi.taobao.com
+//ä¿®æ”¹æ—¥æœŸ:2017/1/23
+//ç‰ˆæœ¬ï¼šV17.3-1
 //Author-QQ: 616264123
-//µç»ú¿ØÖÆQQÈº£º314306105
+//ç”µæœºæ§åˆ¶QQç¾¤ï¼š314306105
 //############################################################
 #include "ADC_int.h"
 #include "GPIO_int.h"
@@ -35,31 +35,31 @@ void ADC1_Configuration(void)
 		
     ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
     ADC_InitStructure.ADC_ScanConvMode = ENABLE;
-    ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;  //Á¬Ğø×ª»»¿ªÆô
+    ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;  //è¿ç»­è½¬æ¢å¼€å¯
     ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
     ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
-    ADC_InitStructure.ADC_NbrOfChannel = 5;     //ÉèÖÃ×ª»»ĞòÁĞ³¤¶ÈÎª2
+    ADC_InitStructure.ADC_NbrOfChannel = 5;     //è®¾ç½®è½¬æ¢åºåˆ—é•¿åº¦ä¸º2
     ADC_Init(ADC1, &ADC_InitStructure);
     
 		RCC_ADCCLKConfig(RCC_PCLK2_Div4); // 72/2   
   
-    //³£¹æ×ª»»ĞòÁĞ1£ºÍ¨µÀ0    ²ÉÑùÊ±¼ä>1.6us,(7cycles)
+    //å¸¸è§„è½¬æ¢åºåˆ—1ï¼šé€šé“0    é‡‡æ ·æ—¶é—´>1.6us,(7cycles)
     ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_7Cycles5);
-    //³£¹æ×ª»»ĞòÁĞ2£ºÍ¨µÀ1   
+    //å¸¸è§„è½¬æ¢åºåˆ—2ï¼šé€šé“1   
     ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 2, ADC_SampleTime_7Cycles5);
-    //³£¹æ×ª»»ĞòÁĞ1£ºÍ¨µÀ2
+    //å¸¸è§„è½¬æ¢åºåˆ—1ï¼šé€šé“2
     ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 3, ADC_SampleTime_7Cycles5);
-    //³£¹æ×ª»»ĞòÁĞ2£ºÍ¨µÀ3   
+    //å¸¸è§„è½¬æ¢åºåˆ—2ï¼šé€šé“3   
     ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 4, ADC_SampleTime_7Cycles5);
-    //³£¹æ×ª»»ĞòÁĞ2£ºÍ¨µÀ8  
+    //å¸¸è§„è½¬æ¢åºåˆ—2ï¼šé€šé“8  
     ADC_RegularChannelConfig(ADC1, ADC_Channel_8, 5, ADC_SampleTime_7Cycles5);
   
     // Enable ADC1
     ADC_Cmd(ADC1, ENABLE);
-    // ¿ªÆôADCµÄDMAÖ§³Ö£¨ÒªÊµÏÖDMA¹¦ÄÜ£¬»¹Ğè¶ÀÁ¢ÅäÖÃDMAÍ¨µÀµÈ²ÎÊı£©
+    // å¼€å¯ADCçš„DMAæ”¯æŒï¼ˆè¦å®ç°DMAåŠŸèƒ½ï¼Œè¿˜éœ€ç‹¬ç«‹é…ç½®DMAé€šé“ç­‰å‚æ•°ï¼‰
     ADC_DMACmd(ADC1, ENABLE);
     
-    // ÏÂÃæÊÇADC×Ô¶¯Ğ£×¼£¬¿ª»úºóĞèÖ´ĞĞÒ»´Î£¬±£Ö¤¾«¶È
+    // ä¸‹é¢æ˜¯ADCè‡ªåŠ¨æ ¡å‡†ï¼Œå¼€æœºåéœ€æ‰§è¡Œä¸€æ¬¡ï¼Œä¿è¯ç²¾åº¦
     // Enable ADC1 reset calibaration register 
     ADC_ResetCalibration(ADC1);
     // Check the end of ADC1 reset calibration register
@@ -69,10 +69,10 @@ void ADC1_Configuration(void)
     ADC_StartCalibration(ADC1);
     // Check the end of ADC1 calibration
     while(ADC_GetCalibrationStatus(ADC1));
-    // ADC×Ô¶¯Ğ£×¼½áÊø---------------
-   //Æô¶¯µÚÒ»´ÎAD×ª»»
+    // ADCè‡ªåŠ¨æ ¡å‡†ç»“æŸ---------------
+   //å¯åŠ¨ç¬¬ä¸€æ¬¡ADè½¬æ¢
    ADC_SoftwareStartConvCmd(ADC1, ENABLE); 
-   //ÒòÎªÒÑ¾­ÅäÖÃºÃÁËDMA£¬½ÓÏÂÀ´AD×Ô¶¯Á¬Ğø×ª»»£¬½á¹û×Ô¶¯±£´æÔÚRegularConvData_Tab´¦   
+   //å› ä¸ºå·²ç»é…ç½®å¥½äº†DMAï¼Œæ¥ä¸‹æ¥ADè‡ªåŠ¨è¿ç»­è½¬æ¢ï¼Œç»“æœè‡ªåŠ¨ä¿å­˜åœ¨RegularConvData_Tabå¤„   
     
 }
 
@@ -87,31 +87,31 @@ void DMA_Configuration(void)
     DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)ADC1_DR_Address;
     DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)ADC_ConvertedValue;	 
     DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-    //BufferSize=2£¬ÒòÎªADC×ª»»ĞòÁĞÓĞ2¸öÍ¨µÀ
-    //Èç´ËÉèÖÃ£¬Ê¹ĞòÁĞ1½á¹û·ÅÔÚRegularConvData_Tab[0]£¬ĞòÁĞ2½á¹û·ÅÔÚRegularConvData_Tab[1]
+    //BufferSize=2ï¼Œå› ä¸ºADCè½¬æ¢åºåˆ—æœ‰2ä¸ªé€šé“
+    //å¦‚æ­¤è®¾ç½®ï¼Œä½¿åºåˆ—1ç»“æœæ”¾åœ¨RegularConvData_Tab[0]ï¼Œåºåˆ—2ç»“æœæ”¾åœ¨RegularConvData_Tab[1]
     DMA_InitStructure.DMA_BufferSize =5;
     DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
     DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
     DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
     DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
-    //Ñ­»·Ä£Ê½¿ªÆô£¬BufferĞ´Âúºó£¬×Ô¶¯»Øµ½³õÊ¼µØÖ·¿ªÊ¼´«Êä
+    //å¾ªç¯æ¨¡å¼å¼€å¯ï¼ŒBufferå†™æ»¡åï¼Œè‡ªåŠ¨å›åˆ°åˆå§‹åœ°å€å¼€å§‹ä¼ è¾“
     DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
     DMA_InitStructure.DMA_Priority = DMA_Priority_High;
     DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
     DMA_Init(DMA1_Channel1, &DMA_InitStructure);
-    //ÅäÖÃÍê³Éºó£¬Æô¶¯DMAÍ¨µÀ
+    //é…ç½®å®Œæˆåï¼Œå¯åŠ¨DMAé€šé“
     DMA_Cmd(DMA1_Channel1, ENABLE);
 }
 
  
  
-//Ğ£×¼×÷ÓÃ,µçÁ÷´«¸ĞÆ÷µÄÆ«ÒÆÖµÎª1.65V
+//æ ¡å‡†ä½œç”¨,ç”µæµä¼ æ„Ÿå™¨çš„åç§»å€¼ä¸º1.65V
 void Offset_CurrentReading(void)
 {
 	static uint8_t i;  
  
   /* ADC Channel used for current reading are read  in order to get zero currents ADC values*/
-  //16´Î²ÉÑùÇóÆ½¾ùÖµ£¬µçÁ÷´«¸ĞÆ÷³õÊ¼Ğ£×¼ 
+  //16æ¬¡é‡‡æ ·æ±‚å¹³å‡å€¼ï¼Œç”µæµä¼ æ„Ÿå™¨åˆå§‹æ ¡å‡† 
 for(i=16; i!=0; i--)   
   {
    

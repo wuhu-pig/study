@@ -1,23 +1,23 @@
 /**
  ****************************************************************************************************
  * @file        beep.h
- * @author      ÕıµãÔ­×ÓÍÅ¶Ó(ALIENTEK)
+ * @author      æ­£ç‚¹åŸå­å›¢é˜Ÿ(ALIENTEK)
  * @version     V1.0
  * @date        2021-12-30
- * @brief       ·äÃùÆ÷ Çı¶¯´úÂë
- * @license     Copyright (c) 2020-2032, ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾
+ * @brief       èœ‚é¸£å™¨ é©±åŠ¨ä»£ç 
+ * @license     Copyright (c) 2020-2032, å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸
  ****************************************************************************************************
  * @attention
  *
- * ÊµÑéÆ½Ì¨:ÕıµãÔ­×Ó STM32F407¿ª·¢°å
- * ÔÚÏßÊÓÆµ:www.yuanzige.com
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ¹«Ë¾ÍøÖ·:www.alientek.com
- * ¹ºÂòµØÖ·:openedv.taobao.com
+ * å®éªŒå¹³å°:æ­£ç‚¹åŸå­ STM32F407å¼€å‘æ¿
+ * åœ¨çº¿è§†é¢‘:www.yuanzige.com
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * å…¬å¸ç½‘å€:www.alientek.com
+ * è´­ä¹°åœ°å€:openedv.taobao.com
  *
- * ĞŞ¸ÄËµÃ÷
+ * ä¿®æ”¹è¯´æ˜
  * V1.0 20211230
- * µÚÒ»´Î·¢²¼
+ * ç¬¬ä¸€æ¬¡å‘å¸ƒ
  *
  ****************************************************************************************************
  */
@@ -28,22 +28,22 @@
 #include "./SYSTEM/sys/sys.h"
 
 /******************************************************************************************/
-/* Òı½Å ¶¨Òå */
+/* å¼•è„š å®šä¹‰ */
 
 #define BEEP_GPIO_PORT                  GPIOF
 #define BEEP_GPIO_PIN                   SYS_GPIO_PIN8
-#define BEEP_GPIO_CLK_ENABLE()          do{ RCC->AHB1ENR |= 1 << 5; }while(0)   /* PF¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define BEEP_GPIO_CLK_ENABLE()          do{ RCC->AHB1ENR |= 1 << 5; }while(0)   /* PFå£æ—¶é’Ÿä½¿èƒ½ */
 
 /******************************************************************************************/
 
-/* ·äÃùÆ÷¿ØÖÆ */
+/* èœ‚é¸£å™¨æ§åˆ¶ */
 #define BEEP(x)         sys_gpio_pin_set(BEEP_GPIO_PORT, BEEP_GPIO_PIN, x)
 
-/* BEEPÈ¡·´¶¨Òå */
+/* BEEPå–åå®šä¹‰ */
 #define BEEP_TOGGLE()   do{ BEEP_GPIO_PORT->ODR ^= BEEP_GPIO_PIN; }while(0)     /* BEEP = !BEEP */
 
 
-void beep_init(void);   /* ³õÊ¼»¯·äÃùÆ÷ */
+void beep_init(void);   /* åˆå§‹åŒ–èœ‚é¸£å™¨ */
 
 #endif
 

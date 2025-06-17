@@ -6,32 +6,32 @@ Motor_t my_motor;
 
 void foc_init(void)
 {
-	//²ÎÊý³õÊ¼»¯
+	//å‚æ•°åˆå§‹åŒ–
 	my_motor.params.Poles=7;
 	my_motor.params.KV=220;
-	my_motor.params.Maxcurrent=20;//×î´óµçÁ÷
-	my_motor.params.Maxvoltage=5.1;//×î´óµçÑ¹
-	my_motor.params.Phaseresitance=2.3;//Ïàµç×è
-	my_motor.params.Wireresistance=5.1;//Ïßµç×è
-	my_motor.params.WireLs=2.8;//Ïßµç¸Ð
-	my_motor.params.PhaseLs=0.86;//Ïàµç¸Ð	
-	my_motor.params.Kslf=0.01;//»¬Ä£ÔöÒæ	
-	my_motor.params.Freq=10000;//PWMÆµÂÊ
-	my_motor.params.LPF_cutoff=1000;//µÍÍ¨ÂË²¨Æ÷½ØÖ¹ÆµÂÊ
-	my_motor.params.sat_boundary=10;//±¥ºÍº¯Êý±ß½çÖµ
-	my_motor.params.Ls=my_motor.params.PhaseLs;//¶¨×Óµç¸Ð
-	my_motor.params.Rs=my_motor.params.Phaseresitance;//¶¨×Óµç×è
+	my_motor.params.Maxcurrent=20;//æœ€å¤§ç”µæµ
+	my_motor.params.Maxvoltage=5.1;//æœ€å¤§ç”µåŽ‹
+	my_motor.params.Phaseresitance=2.3;//ç›¸ç”µé˜»
+	my_motor.params.Wireresistance=5.1;//çº¿ç”µé˜»
+	my_motor.params.WireLs=2.8;//çº¿ç”µæ„Ÿ
+	my_motor.params.PhaseLs=0.86;//ç›¸ç”µæ„Ÿ	
+	my_motor.params.Kslf=0.01;//æ»‘æ¨¡å¢žç›Š	
+	my_motor.params.Freq=10000;//PWMé¢‘çŽ‡
+	my_motor.params.LPF_cutoff=1000;//ä½Žé€šæ»¤æ³¢å™¨æˆªæ­¢é¢‘çŽ‡
+	my_motor.params.sat_boundary=10;//é¥±å’Œå‡½æ•°è¾¹ç•Œå€¼
+	my_motor.params.Ls=my_motor.params.PhaseLs;//å®šå­ç”µæ„Ÿ
+	my_motor.params.Rs=my_motor.params.Phaseresitance;//å®šå­ç”µé˜»
 
-	//PID²ÎÊý³õÊ¼»¯	
-	my_motor.pid.kp=0.1;//±ÈÀýÏµÊý
-	my_motor.pid.ki=0.01;//»ý·ÖÏµÊý	
-	my_motor.pid.integral=0;//»ý·ÖÖµ
-	my_motor.pid.output_limit=100;//Êä³öÏÞ·ù	
+	//PIDå‚æ•°åˆå§‹åŒ–	
+	my_motor.pid.kp=0.1;//æ¯”ä¾‹ç³»æ•°
+	my_motor.pid.ki=0.01;//ç§¯åˆ†ç³»æ•°	
+	my_motor.pid.integral=0;//ç§¯åˆ†å€¼
+	my_motor.pid.output_limit=100;//è¾“å‡ºé™å¹…	
 	
 	my_motor.control.maxspeed=MAXSPEED;
 	my_motor.control.targetspeed=1;
 	my_motor.control.voltage0.vq=Vref/2;
-	//µç»ú×´Ì¬³õÊ¼»¯
+	//ç”µæœºçŠ¶æ€åˆå§‹åŒ–
 	my_motor.state=MOTOR_STOPPED;
 }
 void speed_rampup(void)
@@ -45,7 +45,7 @@ void speed_rampup(void)
 	}
 }
 	
-// ParkÄæ±ä»»£ºÁ½ÏàÐý×ª£¨dq£©¡úÁ½Ïà¾²Ö¹£¨¦Á¦Â£©[thetaµ¥Î»Îª»¡¶È]
+// Parké€†å˜æ¢ï¼šä¸¤ç›¸æ—‹è½¬ï¼ˆdqï¼‰â†’ä¸¤ç›¸é™æ­¢ï¼ˆÎ±Î²ï¼‰[thetaå•ä½ä¸ºå¼§åº¦]
 void inverse_park_transform(float d, float q, float theta, float *alpha, float *beta) 
 {
     float cos_theta = cos(theta);
@@ -54,7 +54,7 @@ void inverse_park_transform(float d, float q, float theta, float *alpha, float *
     *beta  = d * sin_theta + q * cos_theta;
 }
 
-// ClarkeÄæ±ä»»£ºÁ½Ïà¾²Ö¹£¨¦Á¦Â£©¡úÈýÏà¾²Ö¹£¨abc£©£¨¼ÙÉèÁãÐò·ÖÁ¿Îª0£©
+// Clarkeé€†å˜æ¢ï¼šä¸¤ç›¸é™æ­¢ï¼ˆÎ±Î²ï¼‰â†’ä¸‰ç›¸é™æ­¢ï¼ˆabcï¼‰ï¼ˆå‡è®¾é›¶åºåˆ†é‡ä¸º0ï¼‰
 void inverse_clarke_transform(float alpha, float beta, float *a, float *b, float *c) 
 {
     *a = alpha+Vrefby2;
@@ -64,7 +64,7 @@ void inverse_clarke_transform(float alpha, float beta, float *a, float *b, float
 
 float _normalizeAngle(float angle)
 {
-    float a = fmod(angle, 2*PI);   //È¡Óà£¬½«½Ç¶ÈÏÞÖÆÔÚÒ»¸öÖÜÆÚÄÚ£¬³¬³ö²¿·ÖÉáÈ¥
+    float a = fmod(angle, 2*PI);   //å–ä½™ï¼Œå°†è§’åº¦é™åˆ¶åœ¨ä¸€ä¸ªå‘¨æœŸå†…ï¼Œè¶…å‡ºéƒ¨åˆ†èˆåŽ»
     return a >= 0 ? a : (a + 2*PI);  
 }
 
@@ -79,9 +79,9 @@ void phasesetpwm(float *a, float *b, float *c,uint16_t *ccra,uint16_t *ccrb,uint
 }
 void foc_main(void)
 {
-	speed_rampup();//ËÙ¶Èrampup
-	my_motor.control.speed_el=my_motor.control.speed*my_motor.params.Poles;//µÃµ½µçÆø½ÇËÙ¶È
-	my_motor.control.angle_el=_normalizeAngle(my_motor.control.speed_el*Ts+my_motor.control.angle_el);//µÃµ½»¡¶È
+	speed_rampup();//é€Ÿåº¦rampup
+	my_motor.control.speed_el=my_motor.control.speed*my_motor.params.Poles;//å¾—åˆ°ç”µæ°”è§’é€Ÿåº¦
+	my_motor.control.angle_el=_normalizeAngle(my_motor.control.speed_el*Ts+my_motor.control.angle_el);//å¾—åˆ°å¼§åº¦
 	inverse_park_transform(0,my_motor.control.voltage0.vq,my_motor.control.angle_el,(float *)&my_motor.control.voltage1.valpha,(float *)&my_motor.control.voltage1.vbeta);
 	inverse_clarke_transform(my_motor.control.voltage1.valpha,my_motor.control.voltage1.vbeta,(float *)&my_motor.control.voltage2.va,(float *)&my_motor.control.voltage2.vb,(float *)&my_motor.control.voltage2.vc);
 	phasesetpwm((float *)&my_motor.control.voltage2.va,(float *)&my_motor.control.voltage2.vb,(float *)&my_motor.control.voltage2.vc,(uint16_t  *)&my_motor.control.CCR.ccra,(uint16_t  *)&my_motor.control.CCR.ccrb,(uint16_t  *)&my_motor.control.CCR.ccrc);

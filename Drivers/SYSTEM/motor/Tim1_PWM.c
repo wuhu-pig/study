@@ -1,18 +1,18 @@
 //############################################################
 // FILE: Tim1_PWM.c
-// Created on: 2017Äê1ÔÂ15ÈÕ
+// Created on: 2017å¹´1æœˆ15æ—¥
 // Author: XQ
 // summary: Tim1_PWM
-//  ¶¨Ê±Æ÷1µç»ú¿ØÖÆ£¬Õý½»±àÂëÆ÷µÄ¶¨Ê±Æ÷IO    
-//±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//°æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿
-//DSP/STM32µç»ú¿ØÖÆ¿ª·¢°å
-//Ë¶Àúµç×Ó
-//ÍøÖ·: https://shuolidianzi.taobao.com
-//ÐÞ¸ÄÈÕÆÚ:2017/1/24
-//°æ±¾£ºV17.3-1
+//  å®šæ—¶å™¨1ç”µæœºæŽ§åˆ¶ï¼Œæ­£äº¤ç¼–ç å™¨çš„å®šæ—¶å™¨IO    
+//æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
+//ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶
+//DSP/STM32ç”µæœºæŽ§åˆ¶å¼€å‘æ¿
+//ç¡•åŽ†ç”µå­
+//ç½‘å€: https://shuolidianzi.taobao.com
+//ä¿®æ”¹æ—¥æœŸ:2017/1/24
+//ç‰ˆæœ¬ï¼šV17.3-1
 //Author-QQ: 616264123
-//µç»ú¿ØÖÆQQÈº£º314306105
+//ç”µæœºæŽ§åˆ¶QQç¾¤ï¼š314306105
 //############################################################
 #include "Tim1_PWM.h"
 #include "Svpwm_dq.h"
@@ -32,27 +32,27 @@ void  Tim1_PWM_Init(void)
 	/* Enable TIM1 clock */
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);	
 	
-//TIM1Ê±»ùµ¥ÔªÅäÖÃ12500KHZ,Ò»¸öPWMÖÜÆÚÊÇ80us
+//TIM1æ—¶åŸºå•å…ƒé…ç½®12500KHZ,ä¸€ä¸ªPWMå‘¨æœŸæ˜¯80us
   TIM1_TimeBaseStructure.TIM_Prescaler=0;
-  TIM1_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_CenterAligned1 ;//ÖÐÑë¶ÔÆëÄ£Ê½ 1 ¼ÆÊýÄ£Ê½
-  TIM1_TimeBaseStructure.TIM_Period = PWM_PERIOD;//Ò²¾ÍÊÇARRÔ¤×°ÔØ¼Ä´æÆ÷ÀïÃæµÄÖµ=2250£¬
-  TIM1_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;//Êý×ÖÂË²¨Æ÷²ÉÑùÆµÂÊ
-  TIM1_TimeBaseStructure.TIM_RepetitionCounter = REP_RATE;//1¸öPWMÖÜÆÚ¸üÐÂÒ»´Î
+  TIM1_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_CenterAligned1 ;//ä¸­å¤®å¯¹é½æ¨¡å¼ 1 è®¡æ•°æ¨¡å¼
+  TIM1_TimeBaseStructure.TIM_Period = PWM_PERIOD;//ä¹Ÿå°±æ˜¯ARRé¢„è£…è½½å¯„å­˜å™¨é‡Œé¢çš„å€¼=2250ï¼Œ
+  TIM1_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;//æ•°å­—æ»¤æ³¢å™¨é‡‡æ ·é¢‘çŽ‡
+  TIM1_TimeBaseStructure.TIM_RepetitionCounter = REP_RATE;//1ä¸ªPWMå‘¨æœŸæ›´æ–°ä¸€æ¬¡
   TIM_TimeBaseInit(TIM1, &TIM1_TimeBaseStructure);
 	
-	/*ÉèÖÃÎªPWMÊä³ö±È½ÏÄ£Ê½*/
-	TIM1_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1; //Âö³å¿í¶Èµ÷ÖÆÄ£Ê½ 1
+	/*è®¾ç½®ä¸ºPWMè¾“å‡ºæ¯”è¾ƒæ¨¡å¼*/
+	TIM1_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1; //è„‰å†²å®½åº¦è°ƒåˆ¶æ¨¡å¼ 1
   TIM1_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable; 
 	TIM1_OCInitStructure.TIM_OutputNState = TIM_OutputNState_Enable;   
   	
-  TIM1_OCInitStructure.TIM_Pulse =1000; //±È½ÏÖµ
-  TIM1_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High; //Êä³ö¸ßµçÆ½ÓÐÐ§
+  TIM1_OCInitStructure.TIM_Pulse =1000; //æ¯”è¾ƒå€¼
+  TIM1_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High; //è¾“å‡ºé«˜ç”µå¹³æœ‰æ•ˆ
   TIM1_OCInitStructure.TIM_OCNPolarity = TIM_OCNPolarity_High; 
   TIM1_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Reset;
   TIM1_OCInitStructure.TIM_OCNIdleState = TIM_OCIdleState_Reset; 
   TIM_OC1Init(TIM1, &TIM1_OCInitStructure); 
  	
-  TIM1_OCInitStructure.TIM_Pulse = 1000; //±È½ÏÖµ
+  TIM1_OCInitStructure.TIM_Pulse = 1000; //æ¯”è¾ƒå€¼
   TIM_OC2Init(TIM1, &TIM1_OCInitStructure);
  
   TIM1_OCInitStructure.TIM_Pulse = 1000; //dummy value
@@ -68,36 +68,36 @@ void  Tim1_PWM_Init(void)
 
   TIM1_BDTRInitStructure.TIM_DeadTime = DEADTIME;//
   TIM1_BDTRInitStructure.TIM_Break = TIM_Break_Enable;
-  TIM1_BDTRInitStructure.TIM_BreakPolarity = TIM_BreakPolarity_Low;//µÍµçÆ½ÊäÈëÓÐÐ§
+  TIM1_BDTRInitStructure.TIM_BreakPolarity = TIM_BreakPolarity_Low;//ä½Žç”µå¹³è¾“å…¥æœ‰æ•ˆ
   TIM1_BDTRInitStructure.TIM_AutomaticOutput = TIM_AutomaticOutput_Disable;  
 
   TIM_BDTRConfig(TIM1, &TIM1_BDTRInitStructure);
   
-	TIM_ClearITPendingBit(TIM1, TIM_IT_Break);  //ÇåÖÐ¶Ï±êÖ¾Î»
-  TIM_ITConfig(TIM1,TIM_IT_Break ,ENABLE); //Ê¹ÄÜÖÐ¶Ï 
+	TIM_ClearITPendingBit(TIM1, TIM_IT_Break);  //æ¸…ä¸­æ–­æ ‡å¿—ä½
+  TIM_ITConfig(TIM1,TIM_IT_Break ,ENABLE); //ä½¿èƒ½ä¸­æ–­ 
 	
 	TIM_ClearFlag(TIM1, TIM_FLAG_Update);  
-	TIM_ClearITPendingBit(TIM1, TIM_IT_Update);  //ÇåÖÐ¶Ï±êÖ¾Î»
-  TIM_ITConfig(TIM1,TIM_IT_Update ,ENABLE); //´ò¿ªÖÐ¶Ï 
+	TIM_ClearITPendingBit(TIM1, TIM_IT_Update);  //æ¸…ä¸­æ–­æ ‡å¿—ä½
+  TIM_ITConfig(TIM1,TIM_IT_Update ,ENABLE); //æ‰“å¼€ä¸­æ–­ 
  
-  TIM_Cmd(TIM1, ENABLE);//¼ÆÊý¿ªÊ¼
+  TIM_Cmd(TIM1, ENABLE);//è®¡æ•°å¼€å§‹
 	TIM_CtrlPWMOutputs(TIM1, ENABLE);
 
 /* Configure one bit for preemption priority */
-	//Ñ¡ÔñÓÅÏÈ¼¶·Ö×é
+	//é€‰æ‹©ä¼˜å…ˆçº§åˆ†ç»„
   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	
-	//ÅäÖÃTIM1µÄÉ²³µÖÐ¶ÏÊ¹ÄÜ
+	//é…ç½®TIM1çš„åˆ¹è½¦ä¸­æ–­ä½¿èƒ½
 	NVIC_InitStructure.NVIC_IRQChannel = TIM1_BRK_IRQn;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;//Ö¸¶¨ÇÀÕ¼ÓÅÏÈ¼¶0
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;//Ö¸¶¨ÇÀÕ¼ÓÅÏÈ¼¶0
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;//æŒ‡å®šæŠ¢å ä¼˜å…ˆçº§0
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;//æŒ‡å®šæŠ¢å ä¼˜å…ˆçº§0
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
 	
-	//ÅäÖÃTIM1µÄ¸üÐÂÖÐ¶ÏÊ¹ÄÜ
+	//é…ç½®TIM1çš„æ›´æ–°ä¸­æ–­ä½¿èƒ½
 	NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_IRQn;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;//Ö¸¶¨ÇÀÕ¼ÓÅÏÈ¼¶1
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;//Ö¸¶¨ÏìÓ¦ÓÅÏÈ¼¶0
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;//æŒ‡å®šæŠ¢å ä¼˜å…ˆçº§1
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;//æŒ‡å®šå“åº”ä¼˜å…ˆçº§0
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
  
@@ -117,21 +117,21 @@ void  Svpwm_Outpwm(void)
 
 void Start_Motor(void)
 {
-  /*PWM¼Ä´æÆ÷Õ¼¿Õ±ÈÇåÁã*/
+  /*PWMå¯„å­˜å™¨å ç©ºæ¯”æ¸…é›¶*/
    TIM1->CCR1=0x00;
    TIM1->CCR2=0x00;
    TIM1->CCR3=0x00;
-   //Ê¹ÄÜPWMÊä³öÍ¨µÀOC1/OC1N/OC2/OC2N/OC3/OC3N
+   //ä½¿èƒ½PWMè¾“å‡ºé€šé“OC1/OC1N/OC2/OC2N/OC3/OC3N
    TIM1->CCER|=0x5555;	
 }
  
 void Stop_Motor(void)
 {
-  /*PWM¼Ä´æÆ÷Õ¼¿Õ±ÈÇåÁã*/
+  /*PWMå¯„å­˜å™¨å ç©ºæ¯”æ¸…é›¶*/
    TIM1->CCR1=PWM_PERIOD;
    TIM1->CCR2=PWM_PERIOD;
    TIM1->CCR3=PWM_PERIOD;
-   //²»Ê¹ÄÜPWMÊä³öÍ¨µÀOC1/OC1N/OC2/OC2N/OC3/OC3N
+   //ä¸ä½¿èƒ½PWMè¾“å‡ºé€šé“OC1/OC1N/OC2/OC2N/OC3/OC3N
    TIM1->CCER&=0xAAAA;	
 }
 

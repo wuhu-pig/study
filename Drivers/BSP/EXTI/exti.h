@@ -1,23 +1,23 @@
 /**
  ****************************************************************************************************
  * @file        exti.h
- * @author      ÕýµãÔ­×ÓÍÅ¶Ó(ALIENTEK)
+ * @author      æ­£ç‚¹åŽŸå­å›¢é˜Ÿ(ALIENTEK)
  * @version     V1.0
  * @date        2021-12-30
- * @brief       Íâ²¿ÖÐ¶Ï Çý¶¯´úÂë
- * @license     Copyright (c) 2020-2032, ¹ãÖÝÊÐÐÇÒíµç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾
+ * @brief       å¤–éƒ¨ä¸­æ–­ é©±åŠ¨ä»£ç 
+ * @license     Copyright (c) 2020-2032, å¹¿å·žå¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸
  ****************************************************************************************************
  * @attention
  *
- * ÊµÑéÆ½Ì¨:ÕýµãÔ­×Ó STM32F407¿ª·¢°å
- * ÔÚÏßÊÓÆµ:www.yuanzige.com
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ¹«Ë¾ÍøÖ·:www.alientek.com
- * ¹ºÂòµØÖ·:openedv.taobao.com
+ * å®žéªŒå¹³å°:æ­£ç‚¹åŽŸå­ STM32F407å¼€å‘æ¿
+ * åœ¨çº¿è§†é¢‘:www.yuanzige.com
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * å…¬å¸ç½‘å€:www.alientek.com
+ * è´­ä¹°åœ°å€:openedv.taobao.com
  *
- * ÐÞ¸ÄËµÃ÷
+ * ä¿®æ”¹è¯´æ˜Ž
  * V1.0 20211230
- * µÚÒ»´Î·¢²¼
+ * ç¬¬ä¸€æ¬¡å‘å¸ƒ
  *
  ****************************************************************************************************
  */
@@ -28,36 +28,36 @@
 #include "./SYSTEM/sys/sys.h"
 
 /******************************************************************************************/
-/* Òý½Å ºÍ ÖÐ¶Ï±àºÅ & ÖÐ¶Ï·þÎñº¯Êý ¶¨Òå */ 
+/* å¼•è„š å’Œ ä¸­æ–­ç¼–å· & ä¸­æ–­æœåŠ¡å‡½æ•° å®šä¹‰ */ 
 
 #define KEY0_INT_GPIO_PORT              GPIOE
 #define KEY0_INT_GPIO_PIN               SYS_GPIO_PIN4
-#define KEY0_INT_GPIO_CLK_ENABLE()      do{ RCC->AHB1ENR |= 1 << 4; }while(0)   /* PE¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define KEY0_INT_GPIO_CLK_ENABLE()      do{ RCC->AHB1ENR |= 1 << 4; }while(0)   /* PEå£æ—¶é’Ÿä½¿èƒ½ */
 #define KEY0_INT_IRQn                   EXTI4_IRQn
 #define KEY0_INT_IRQHandler             EXTI4_IRQHandler
 
 #define KEY1_INT_GPIO_PORT              GPIOE
 #define KEY1_INT_GPIO_PIN               SYS_GPIO_PIN3
-#define KEY1_INT_GPIO_CLK_ENABLE()      do{ RCC->AHB1ENR |= 1 << 4; }while(0)   /* PE¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define KEY1_INT_GPIO_CLK_ENABLE()      do{ RCC->AHB1ENR |= 1 << 4; }while(0)   /* PEå£æ—¶é’Ÿä½¿èƒ½ */
 #define KEY1_INT_IRQn                   EXTI3_IRQn
 #define KEY1_INT_IRQHandler             EXTI3_IRQHandler
 
 #define KEY2_INT_GPIO_PORT              GPIOE
 #define KEY2_INT_GPIO_PIN               SYS_GPIO_PIN2
-#define KEY2_INT_GPIO_CLK_ENABLE()      do{ RCC->AHB1ENR |= 1 << 4; }while(0)   /* PE¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define KEY2_INT_GPIO_CLK_ENABLE()      do{ RCC->AHB1ENR |= 1 << 4; }while(0)   /* PEå£æ—¶é’Ÿä½¿èƒ½ */
 #define KEY2_INT_IRQn                   EXTI2_IRQn
 #define KEY2_INT_IRQHandler             EXTI2_IRQHandler
 
 #define WKUP_INT_GPIO_PORT              GPIOA
 #define WKUP_INT_GPIO_PIN               SYS_GPIO_PIN0
-#define WKUP_INT_GPIO_CLK_ENABLE()      do{ RCC->AHB1ENR |= 1 << 0; }while(0)   /* PA¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define WKUP_INT_GPIO_CLK_ENABLE()      do{ RCC->AHB1ENR |= 1 << 0; }while(0)   /* PAå£æ—¶é’Ÿä½¿èƒ½ */
 #define WKUP_INT_IRQn                   EXTI0_IRQn
 #define WKUP_INT_IRQHandler             EXTI0_IRQHandler
 
 /******************************************************************************************/
 
 
-void extix_init(void);  /* Íâ²¿ÖÐ¶Ï³õÊ¼»¯ */
+void extix_init(void);  /* å¤–éƒ¨ä¸­æ–­åˆå§‹åŒ– */
 
 #endif
 

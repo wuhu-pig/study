@@ -1,58 +1,58 @@
 #include "stm32f4xx_hal.h"
 #include "motor_control.h"
 
-// È«¾Ö±äÁ¿
+// å…¨å±€å˜é‡
 Motor_Control motor_ctrl;
-float Vdc = 24.0f; // Ä¸ÏßµçÑ¹
+float Vdc = 24.0f; // æ¯çº¿ç”µå‹
 
-// ADC¶ÁÈ¡µçÁ÷Öµ
+// ADCè¯»å–ç”µæµå€¼
 float read_ADC_current(uint8_t channel) {
-    // ÕâÀïĞèÒª¸ù¾İÄúµÄÓ²¼şÊµÏÖADC¶ÁÈ¡
-    return 0.0f; // ·µ»ØÄ£ÄâÖµ
+    // è¿™é‡Œéœ€è¦æ ¹æ®æ‚¨çš„ç¡¬ä»¶å®ç°ADCè¯»å–
+    return 0.0f; // è¿”å›æ¨¡æ‹Ÿå€¼
 }
 
-// ÉèÖÃPWMÕ¼¿Õ±È
+// è®¾ç½®PWMå ç©ºæ¯”
 void set_PWM_duty(uint8_t channel, float duty) {
-    // ÕâÀïĞèÒª¸ù¾İÄúµÄÓ²¼şÊµÏÖPWMÉèÖÃ
+    // è¿™é‡Œéœ€è¦æ ¹æ®æ‚¨çš„ç¡¬ä»¶å®ç°PWMè®¾ç½®
 }
 
 int main(void) {
-    // Ó²¼ş³õÊ¼»¯
+    // ç¡¬ä»¶åˆå§‹åŒ–
     HAL_Init();
     SystemClock_Config();
     MX_ADC_Init();
-    MX_TIM1_Init(); // PWM¶¨Ê±Æ÷
-    MX_TIM2_Init(); // ¿ØÖÆ¶¨Ê±Æ÷
+    MX_TIM1_Init(); // PWMå®šæ—¶å™¨
+    MX_TIM2_Init(); // æ§åˆ¶å®šæ—¶å™¨
     
-    // ³õÊ¼»¯µç»ú¿ØÖÆ
+    // åˆå§‹åŒ–ç”µæœºæ§åˆ¶
     MotorControl_Init(&motor_ctrl);
     
-    // Æô¶¯µç»ú
+    // å¯åŠ¨ç”µæœº
     motor_ctrl.state = MOTOR_ALIGNMENT;
     motor_ctrl.start_time = HAL_GetTick();
     
-    // Ö÷Ñ­»·
+    // ä¸»å¾ªç¯
     while (1) {
-        // Ã¿PWMÖÜÆÚÖ´ĞĞÒ»´Î£¨ÓÉ¶¨Ê±Æ÷ÖĞ¶Ï´¥·¢£©
+        // æ¯PWMå‘¨æœŸæ‰§è¡Œä¸€æ¬¡ï¼ˆç”±å®šæ—¶å™¨ä¸­æ–­è§¦å‘ï¼‰
         
-        // 1. ¶ÁÈ¡µçÁ÷
+        // 1. è¯»å–ç”µæµ
         float Ia = read_ADC_current(0);
         float Ib = read_ADC_current(1);
         float Ic = read_ADC_current(2);
         
-        // 2. ¸üĞÂµç»ú¿ØÖÆ
+        // 2. æ›´æ–°ç”µæœºæ§åˆ¶
         MotorControl_Update(&motor_ctrl, Ia, Ib, Ic, Vdc, HAL_GetTick());
         
-        // 3. ´¦ÀíÆäËûÈÎÎñ...
+        // 3. å¤„ç†å…¶ä»–ä»»åŠ¡...
     }
 }
 
-// PWM¶¨Ê±Æ÷ÖĞ¶Ï´¦Àí
+// PWMå®šæ—¶å™¨ä¸­æ–­å¤„ç†
 void TIM1_UP_IRQHandler(void) {
     if(__HAL_TIM_GET_FLAG(&htim1, TIM_FLAG_UPDATE) != RESET) {
         __HAL_TIM_CLEAR_FLAG(&htim1, TIM_FLAG_UPDATE);
         
-        // ´¥·¢¿ØÖÆÑ­»·
-        // ... (ÉèÖÃ±êÖ¾Î»»òµ÷ÓÃ¿ØÖÆº¯Êı)
+        // è§¦å‘æ§åˆ¶å¾ªç¯
+        // ... (è®¾ç½®æ ‡å¿—ä½æˆ–è°ƒç”¨æ§åˆ¶å‡½æ•°)
     }
 }

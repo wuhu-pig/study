@@ -3,7 +3,7 @@
 
 #include "./SYSTEM/sys/sys.h"
 
-#define ADC_DMA_BUF_SIZE        50 * 6          /* ADC DMA²É¼¯ BUF´óÐ¡, Ó¦µÈÓÚADCÍ¨µÀÊýµÄÕûÊý±¶ */
+#define ADC_DMA_BUF_SIZE        50 * 6          /* ADC DMAé‡‡é›† BUFå¤§å°, åº”ç­‰äºŽADCé€šé“æ•°çš„æ•´æ•°å€ */
 
 typedef struct {
 	     int32_t   BUS_Curr ;     // DC Bus  Current
@@ -30,35 +30,35 @@ typedef struct {
 #define  ADCSamp_DEFAULTS  {0,0,0,0,0,0,0,0,268,756}
 
 /******************************************************************************************/
-/* ADC¼°Òý½Å ¶¨Òå */
+/* ADCåŠå¼•è„š å®šä¹‰ */
 
 #define ADC_ADCX_CHY_GPIO_PORT              GPIOA
 #define ADC_ADCX_CHY_GPIO_PIN               SYS_GPIO_PIN5 
-#define ADC_ADCX_CHY_GPIO_CLK_ENABLE()      do{ RCC->AHB1ENR |= 1 << 0; }while(0)   /* PA¿ÚÊ±ÖÓÊ¹ÄÜ */
+#define ADC_ADCX_CHY_GPIO_CLK_ENABLE()      do{ RCC->AHB1ENR |= 1 << 0; }while(0)   /* PAå£æ—¶é’Ÿä½¿èƒ½ */
 
 #define ADC_ADCX                            ADC1 
-#define ADC_ADCX_CHY                        5                                       /* Í¨µÀY,  0 <= Y <= 19 */ 
-#define ADC_ADCX_CHY_CLK_ENABLE()           do{ RCC->APB2ENR |= 1 << 8; }while(0)   /* ADC1 Ê±ÖÓÊ¹ÄÜ */
-#define ADC_CHANNEL_NUM  5  // ±ÈÈç²É¼¯3Â·ADCÍ¨µÀ
+#define ADC_ADCX_CHY                        5                                       /* é€šé“Y,  0 <= Y <= 19 */ 
+#define ADC_ADCX_CHY_CLK_ENABLE()           do{ RCC->APB2ENR |= 1 << 8; }while(0)   /* ADC1 æ—¶é’Ÿä½¿èƒ½ */
+#define ADC_CHANNEL_NUM  5  // æ¯”å¦‚é‡‡é›†3è·¯ADCé€šé“
 
 
-/* ADCµ¥Í¨µÀ/¶àÍ¨µÀ DMA²É¼¯ DMAÊý¾ÝÁ÷Ïà¹Ø ¶¨Òå 
- * ×¢Òâ: ÕâÀïÎÒÃÇµÄÍ¨µÀ»¹ÊÇÊ¹ÓÃÉÏÃæµÄ¶¨Òå.
+/* ADCå•é€šé“/å¤šé€šé“ DMAé‡‡é›† DMAæ•°æ®æµç›¸å…³ å®šä¹‰ 
+ * æ³¨æ„: è¿™é‡Œæˆ‘ä»¬çš„é€šé“è¿˜æ˜¯ä½¿ç”¨ä¸Šé¢çš„å®šä¹‰.
  */
 #define ADC_ADCX_DMASx                      DMA2_Stream4
-#define ADC_ADCX_DMASx_Channel              0                                       /* Í¨µÀ0 */
+#define ADC_ADCX_DMASx_Channel              0                                       /* é€šé“0 */
 #define ADC_ADCX_DMASx_IRQn                 DMA2_Stream4_IRQn
 #define ADC_ADCX_DMASx_IRQHandler           DMA2_Stream4_IRQHandler
 
-#define ADC_ADCX_DMASx_IS_TC()              ( DMA2->HISR & (1 << 5) )   /* ÅÐ¶Ï DMA2_Stream4 ´«ÊäÍê³É±êÖ¾, ÕâÊÇÒ»¸ö¼Ùº¯ÊýÐÎÊ½,
-                                                                         * ²»ÄÜµ±º¯ÊýÊ¹ÓÃ, Ö»ÄÜÓÃÔÚifµÈÓï¾äÀïÃæ 
+#define ADC_ADCX_DMASx_IS_TC()              ( DMA2->HISR & (1 << 5) )   /* åˆ¤æ–­ DMA2_Stream4 ä¼ è¾“å®Œæˆæ ‡å¿—, è¿™æ˜¯ä¸€ä¸ªå‡å‡½æ•°å½¢å¼,
+                                                                         * ä¸èƒ½å½“å‡½æ•°ä½¿ç”¨, åªèƒ½ç”¨åœ¨ifç­‰è¯­å¥é‡Œé¢ 
                                                                          */
-#define ADC_ADCX_DMASx_CLR_TC()             do{ DMA2->HIFCR |= 1 << 5; }while(0)    /* Çå³ý DMA2_Stream4 ´«ÊäÍê³É±êÖ¾ */
+#define ADC_ADCX_DMASx_CLR_TC()             do{ DMA2->HIFCR |= 1 << 5; }while(0)    /* æ¸…é™¤ DMA2_Stream4 ä¼ è¾“å®Œæˆæ ‡å¿— */
 
 /******************************************************************************************/
 extern  uint16_t g_adc_dma_buf[ADC_DMA_BUF_SIZE];       /* ADC DMA BUF */
 extern uint8_t g_adc_dma_sta;     
-extern uint16_t adc_buffer[ADC_CHANNEL_NUM];  // DMA°áÔËÄ¿±êµØÖ·
+extern uint16_t adc_buffer[ADC_CHANNEL_NUM];  // DMAæ¬è¿ç›®æ ‡åœ°å€
 extern void adc_init(void);
 extern void dma_init(void);
 #endif 

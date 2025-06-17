@@ -5,24 +5,24 @@
 extern "C" {
 #endif
 
-// PID¿ØÖÆÆ÷½á¹¹
+// PIDæ§åˆ¶å™¨ç»“æ„
 typedef struct {
-    float Kp;           // ±ÈÀıÔöÒæ
-    float Ki;           // »ı·ÖÔöÒæ
-    float Kd;           // Î¢·ÖÔöÒæ
-    float integral;     // »ı·ÖÏî
-    float prev_error;   // Ç°Ò»´ÎÎó²î
-    float output;       // Êä³öÖµ
-    float output_max;   // Êä³öÉÏÏŞ
-    float output_min;   // Êä³öÏÂÏŞ
-    float integral_max; // »ı·ÖÏîÉÏÏŞ
+    float Kp;           // æ¯”ä¾‹å¢ç›Š
+    float Ki;           // ç§¯åˆ†å¢ç›Š
+    float Kd;           // å¾®åˆ†å¢ç›Š
+    float integral;     // ç§¯åˆ†é¡¹
+    float prev_error;   // å‰ä¸€æ¬¡è¯¯å·®
+    float output;       // è¾“å‡ºå€¼
+    float output_max;   // è¾“å‡ºä¸Šé™
+    float output_min;   // è¾“å‡ºä¸‹é™
+    float integral_max; // ç§¯åˆ†é¡¹ä¸Šé™
 } PID_Controller;
 
-// ³õÊ¼»¯PID¿ØÖÆÆ÷
+// åˆå§‹åŒ–PIDæ§åˆ¶å™¨
 void PID_Init(PID_Controller *pid, float Kp, float Ki, float Kd, 
               float output_min, float output_max, float integral_max);
 
-// ¸üĞÂPID¿ØÖÆÆ÷
+// æ›´æ–°PIDæ§åˆ¶å™¨
 float PID_Update(PID_Controller *pid, float setpoint, float measurement, float dt);
 
 #ifdef __cplusplus

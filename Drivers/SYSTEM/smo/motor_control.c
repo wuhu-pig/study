@@ -1,122 +1,122 @@
 #include "motor_control.h"
 #include "foc_math.h"
 
-// ³õÊ¼»¯µç»ú¿ØÖÆ
+// åˆå§‹åŒ–ç”µæœºæ§åˆ¶
 void MotorControl_Init(Motor_Control *mc) {
     mc->state = MOTOR_STOPPED;
     mc->start_time = 0;
     mc->open_loop_angle = 0.0f;
-    mc->open_loop_freq = 1.0f; // ³õÊ¼¿ª»·ÆµÂÊ (Hz)
-    mc->open_loop_voltage = 1.0f; // ³õÊ¼¿ª»·µçÑ¹
+    mc->open_loop_freq = 1.0f; // åˆå§‹å¼€ç¯é¢‘ç‡ (Hz)
+    mc->open_loop_voltage = 1.0f; // åˆå§‹å¼€ç¯ç”µå‹
     
-    // ³õÊ¼»¯SMO²ÎÊı
-    mc->smo_params.Rs = 0.5f;        // µç»úµç×è (¦¸)
-    mc->smo_params.Ls = 0.001f;      // µç»úµç¸Ğ (H)
-    mc->smo_params.Kslf = 0.2f;      // »¬Ä£ÔöÒæ
-    mc->smo_params.Freq = 20000.0f;  // PWMÆµÂÊ (Hz)
-    mc->smo_params.POLES = 7;        // µç»ú¼«¶ÔÊı
-    mc->smo_params.LPF_cutoff = 50.0f; // µÍÍ¨ÂË²¨½ØÖ¹ÆµÂÊ (Hz)
-    mc->smo_params.sat_boundary = 0.05f; // ±¥ºÍº¯Êı±ß½çÖµ
+    // åˆå§‹åŒ–SMOå‚æ•°
+    mc->smo_params.Rs = 0.5f;        // ç”µæœºç”µé˜» (Î©)
+    mc->smo_params.Ls = 0.001f;      // ç”µæœºç”µæ„Ÿ (H)
+    mc->smo_params.Kslf = 0.2f;      // æ»‘æ¨¡å¢ç›Š
+    mc->smo_params.Freq = 20000.0f;  // PWMé¢‘ç‡ (Hz)
+    mc->smo_params.POLES = 7;        // ç”µæœºæå¯¹æ•°
+    mc->smo_params.LPF_cutoff = 50.0f; // ä½é€šæ»¤æ³¢æˆªæ­¢é¢‘ç‡ (Hz)
+    mc->smo_params.sat_boundary = 0.05f; // é¥±å’Œå‡½æ•°è¾¹ç•Œå€¼
     
-    // ³õÊ¼»¯SMO
+    // åˆå§‹åŒ–SMO
     SMO_Init(&mc->smo);
     
-    // ³õÊ¼»¯PID¿ØÖÆÆ÷
-    PID_Init(&mc->pid_speed, 0.1f, 0.01f, 0.001f, -10.0f, 10.0f, 1.0f); // ËÙ¶È»·
-    PID_Init(&mc->pid_id, 1.0f, 0.1f, 0.0f, -5.0f, 5.0f, 1.0f);         // dÖáµçÁ÷»·
-    PID_Init(&mc->pid_iq, 1.0f, 0.1f, 0.0f, -5.0f, 5.0f, 1.0f);         // qÖáµçÁ÷»·
+    // åˆå§‹åŒ–PIDæ§åˆ¶å™¨
+    PID_Init(&mc->pid_speed, 0.1f, 0.01f, 0.001f, -10.0f, 10.0f, 1.0f); // é€Ÿåº¦ç¯
+    PID_Init(&mc->pid_id, 1.0f, 0.1f, 0.0f, -5.0f, 5.0f, 1.0f);         // dè½´ç”µæµç¯
+    PID_Init(&mc->pid_iq, 1.0f, 0.1f, 0.0f, -5.0f, 5.0f, 1.0f);         // qè½´ç”µæµç¯
 }
 
-// µç»ú¿ØÖÆÖ÷Ñ­»·
+// ç”µæœºæ§åˆ¶ä¸»å¾ªç¯
 void MotorControl_Update(Motor_Control *mc, 
                          float Ia, float Ib, float Ic, 
                          float Vdc, uint32_t timestamp) {
     float Ialpha, Ibeta;
     float Id, Iq;
     float Valpha, Vbeta;
-    float Ualpha, Ubeta; // Êµ¼ÊÊ©¼ÓµÄµçÑ¹
+    float Ualpha, Ubeta; // å®é™…æ–½åŠ çš„ç”µå‹
     
-    // 1. Clarke±ä»»
+    // 1. Clarkeå˜æ¢
     Clarke_Transform(Ia, Ib, Ic, &Ialpha, &Ibeta);
     
     switch(mc->state) {
         case MOTOR_STOPPED:
-            // Í£Ö¹×´Ì¬£¬Êä³öÁãPWM
-            // ... (ÉèÖÃPWMÊä³öÎªÁã)
+            // åœæ­¢çŠ¶æ€ï¼Œè¾“å‡ºé›¶PWM
+            // ... (è®¾ç½®PWMè¾“å‡ºä¸ºé›¶)
             break;
             
         case MOTOR_ALIGNMENT:
-            // Ô¤¶¨Î»½×¶Î£¨¹Ì¶¨½Ç¶È£©
-            mc->smo.theta = 0.0f; // ¹Ì¶¨0¶ÈÎ»ÖÃ
+            // é¢„å®šä½é˜¶æ®µï¼ˆå›ºå®šè§’åº¦ï¼‰
+            mc->smo.theta = 0.0f; // å›ºå®š0åº¦ä½ç½®
             
-            // ÉèÖÃ¹Ì¶¨µçÑ¹
+            // è®¾ç½®å›ºå®šç”µå‹
             Valpha = mc->open_loop_voltage;
             Vbeta = 0.0f;
             
-            // ¼ì²éÊÇ·ñ½áÊøÔ¤¶¨Î»
-            if(timestamp - mc->start_time > 500) { // 500msºó½áÊøÔ¤¶¨Î»
+            // æ£€æŸ¥æ˜¯å¦ç»“æŸé¢„å®šä½
+            if(timestamp - mc->start_time > 500) { // 500msåç»“æŸé¢„å®šä½
                 mc->state = MOTOR_OPEN_LOOP;
                 mc->start_time = timestamp;
             }
             break;
             
         case MOTOR_OPEN_LOOP:
-            // ¿ª»·Æô¶¯½×¶Î£¨VF¿ØÖÆ£©
+            // å¼€ç¯å¯åŠ¨é˜¶æ®µï¼ˆVFæ§åˆ¶ï¼‰
             mc->open_loop_angle += mc->open_loop_freq / mc->smo_params.Freq * TWO_PI;
             if(mc->open_loop_angle > TWO_PI) mc->open_loop_angle -= TWO_PI;
             
-            // ÉèÖÃ¿ª»·µçÑ¹Ê¸Á¿
+            // è®¾ç½®å¼€ç¯ç”µå‹çŸ¢é‡
             Valpha = mc->open_loop_voltage * cosf(mc->open_loop_angle);
             Vbeta = mc->open_loop_voltage * sinf(mc->open_loop_angle);
             
-            // Öğ²½Ôö¼ÓÆµÂÊºÍµçÑ¹
-            if(timestamp - mc->start_time > 10) { // Ã¿10msÔö¼ÓÒ»´Î
-                mc->open_loop_freq += 0.1f; // ÆµÂÊÔö¼Ó0.1Hz
-                mc->open_loop_voltage += 0.01f; // µçÑ¹Ôö¼Ó0.01
+            // é€æ­¥å¢åŠ é¢‘ç‡å’Œç”µå‹
+            if(timestamp - mc->start_time > 10) { // æ¯10mså¢åŠ ä¸€æ¬¡
+                mc->open_loop_freq += 0.1f; // é¢‘ç‡å¢åŠ 0.1Hz
+                mc->open_loop_voltage += 0.01f; // ç”µå‹å¢åŠ 0.01
                 mc->start_time = timestamp;
             }
             
-            // µ±ÆµÂÊ´ïµ½Ò»¶¨ÖµÊ±ÇĞ»»µ½±Õ»·
-            if(mc->open_loop_freq > 5.0f) { // ´ïµ½5HzÊ±ÇĞ»»
+            // å½“é¢‘ç‡è¾¾åˆ°ä¸€å®šå€¼æ—¶åˆ‡æ¢åˆ°é—­ç¯
+            if(mc->open_loop_freq > 5.0f) { // è¾¾åˆ°5Hzæ—¶åˆ‡æ¢
                 mc->state = MOTOR_CLOSED_LOOP;
-                mc->smo.theta_prev = mc->open_loop_angle; // ³õÊ¼»¯½Ç¶È
+                mc->smo.theta_prev = mc->open_loop_angle; // åˆå§‹åŒ–è§’åº¦
             }
             break;
             
         case MOTOR_CLOSED_LOOP:
-            // ±Õ»·ÔËĞĞ£¨FOC¿ØÖÆ£©
+            // é—­ç¯è¿è¡Œï¼ˆFOCæ§åˆ¶ï¼‰
             
-            // 2. Park±ä»»
+            // 2. Parkå˜æ¢
             Park_Transform(Ialpha, Ibeta, mc->smo.theta, &Id, &Iq);
             
-            // 3. ¸üĞÂSMO¹Û²âÆ÷£¨ĞèÒªÊµ¼ÊÊ©¼ÓµÄµçÑ¹£©
+            // 3. æ›´æ–°SMOè§‚æµ‹å™¨ï¼ˆéœ€è¦å®é™…æ–½åŠ çš„ç”µå‹ï¼‰
             SMO_Update(&mc->smo, &mc->smo_params, Ia, Ib, Ualpha, Ubeta);
             SMO_EMF_Filter(&mc->smo, &mc->smo_params);
             SMO_GetPosition(&mc->smo, &mc->smo_params);
             
-            // 4. ËÙ¶È»·PID
-            float speed_ref = 1000.0f; // Ä¿±êËÙ¶È1000 RPM
+            // 4. é€Ÿåº¦ç¯PID
+            float speed_ref = 1000.0f; // ç›®æ ‡é€Ÿåº¦1000 RPM
             float Iq_ref = PID_Update(&mc->pid_speed, speed_ref, mc->smo.speed, 
                                      1.0f/mc->smo_params.Freq);
             
-            // 5. µçÁ÷»·PID
-            float Id_ref = 0.0f; // dÖáµçÁ÷ÉèÎª0£¨×î´ó×ª¾Ø¿ØÖÆ£©
+            // 5. ç”µæµç¯PID
+            float Id_ref = 0.0f; // dè½´ç”µæµè®¾ä¸º0ï¼ˆæœ€å¤§è½¬çŸ©æ§åˆ¶ï¼‰
             float Vd = PID_Update(&mc->pid_id, Id_ref, Id, 1.0f/mc->smo_params.Freq);
             float Vq = PID_Update(&mc->pid_iq, Iq_ref, Iq, 1.0f/mc->smo_params.Freq);
             
-            // 6. ÄæPark±ä»»
+            // 6. é€†Parkå˜æ¢
             Inv_Park_Transform(Vd, Vq, mc->smo.theta, &Valpha, &Vbeta);
             break;
     }
     
-    // 7. Éú³ÉSVPWM
+    // 7. ç”ŸæˆSVPWM
     float Ta, Tb, Tc;
     SVPWM_Generate(Valpha, Vbeta, Vdc, &Ta, &Tb, &Tc);
     
-    // 8. ¸üĞÂPWMÊä³ö£¨¸ù¾İÓ²¼şÊµÏÖ£©
-    // ... (ÉèÖÃ¶¨Ê±Æ÷Õ¼¿Õ±È)
+    // 8. æ›´æ–°PWMè¾“å‡ºï¼ˆæ ¹æ®ç¡¬ä»¶å®ç°ï¼‰
+    // ... (è®¾ç½®å®šæ—¶å™¨å ç©ºæ¯”)
     
-    // ±£´æÊµ¼ÊÊ©¼ÓµÄµçÑ¹ÓÃÓÚSMO
+    // ä¿å­˜å®é™…æ–½åŠ çš„ç”µå‹ç”¨äºSMO
     Ualpha = (Ta - 0.5f) * Vdc;
-    Ubeta = (Tb - 0.5f) * Vdc * ONE_BY_SQRT3; // ½üËÆ¼ÆËã
+    Ubeta = (Tb - 0.5f) * Vdc * ONE_BY_SQRT3; // è¿‘ä¼¼è®¡ç®—
 }

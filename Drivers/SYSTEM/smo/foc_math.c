@@ -1,8 +1,8 @@
 #include "foc_math.h"
 
-// ¿ìËÙatan2º¯ÊıÊµÏÖ
+// å¿«é€Ÿatan2å‡½æ•°å®ç°
 float fast_atan2(float y, float x) {
-    float abs_y = fabsf(y) + 1e-20f; // ±ÜÃâ³ıÒÔÁã
+    float abs_y = fabsf(y) + 1e-20f; // é¿å…é™¤ä»¥é›¶
     float angle;
     
     if (x >= 0) {
@@ -16,13 +16,13 @@ float fast_atan2(float y, float x) {
     return (y < 0) ? -angle : angle;
 }
 
-// Clarke±ä»»£¨ÈıÏà¡ú¦Á¦Â£©
+// Clarkeå˜æ¢ï¼ˆä¸‰ç›¸â†’Î±Î²ï¼‰
 void Clarke_Transform(float Ia, float Ib, float Ic, float *Ialpha, float *Ibeta) {
     *Ialpha = Ia;
-    *Ibeta = (Ia + 2 * Ib) * ONE_BY_SQRT3;  // 1/¡Ì3 ¡Ö 0.577
+    *Ibeta = (Ia + 2 * Ib) * ONE_BY_SQRT3;  // 1/âˆš3 â‰ˆ 0.577
 }
 
-// Park±ä»»£¨¦Á¦Â¡údq£©
+// Parkå˜æ¢ï¼ˆÎ±Î²â†’dqï¼‰
 void Park_Transform(float Ialpha, float Ibeta, float theta, float *Id, float *Iq) {
     float sin_t = sinf(theta);
     float cos_t = cosf(theta);
@@ -30,7 +30,7 @@ void Park_Transform(float Ialpha, float Ibeta, float theta, float *Id, float *Iq
     *Iq = -Ialpha * sin_t + Ibeta * cos_t;
 }
 
-// ÄæPark±ä»»£¨dq¡ú¦Á¦Â£©
+// é€†Parkå˜æ¢ï¼ˆdqâ†’Î±Î²ï¼‰
 void Inv_Park_Transform(float Vd, float Vq, float theta, float *Valpha, float *Vbeta) {
     float sin_t = sinf(theta);
     float cos_t = cosf(theta);
@@ -38,20 +38,20 @@ void Inv_Park_Transform(float Vd, float Vq, float theta, float *Valpha, float *V
     *Vbeta = Vd * sin_t + Vq * cos_t;
 }
 
-// SVPWMÉú³É
+// SVPWMç”Ÿæˆ
 void SVPWM_Generate(float Valpha, float Vbeta, float Vdc, 
                     float *Ta, float *Tb, float *Tc) {
-    // ¼ÆËãÈıÏàµçÑ¹
+    // è®¡ç®—ä¸‰ç›¸ç”µå‹
     float Va = Valpha;
     float Vb = -0.5f * Valpha + SQRT3_BY_2 * Vbeta;
     float Vc = -0.5f * Valpha - SQRT3_BY_2 * Vbeta;
     
-    // ¼ÆËãÆ«ÒÆÁ¿Ê¹ÖĞĞÄÎªÁã
+    // è®¡ç®—åç§»é‡ä½¿ä¸­å¿ƒä¸ºé›¶
     float Vmin = fminf(fminf(Va, Vb), Vc);
     float Vmax = fmaxf(fmaxf(Va, Vb), Vc);
     float Voffset = (Vmax + Vmin) * 0.5f;
     
-    // Ó¦ÓÃÆ«ÒÆ²¢¹éÒ»»¯µ½0-1·¶Î§
+    // åº”ç”¨åç§»å¹¶å½’ä¸€åŒ–åˆ°0-1èŒƒå›´
     *Ta = (Va - Voffset) / Vdc + 0.5f;
     *Tb = (Vb - Voffset) / Vdc + 0.5f;
     *Tc = (Vc - Voffset) / Vdc + 0.5f;

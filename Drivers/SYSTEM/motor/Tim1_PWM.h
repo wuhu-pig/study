@@ -1,17 +1,17 @@
 //############################################################
 // FILE: Tim1_PWM.h
-// Created on: 2017Äê1ÔÂ18ÈÕ
+// Created on: 2017å¹´1æœˆ18æ—¥
 // Author: XQ
 // summary: Tim1_PWM
-//±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//°æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿
-//DSP/STM32µç»ú¿ØÖÆ¿ª·¢°å
-//Ë¶Àúµç×Ó
-//ÍøÖ·: https://shuolidianzi.taobao.com
-//ĞŞ¸ÄÈÕÆÚ:2017/1/23
-//°æ±¾£ºV17.3-1
+//æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
+//ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶
+//DSP/STM32ç”µæœºæ§åˆ¶å¼€å‘æ¿
+//ç¡•å†ç”µå­
+//ç½‘å€: https://shuolidianzi.taobao.com
+//ä¿®æ”¹æ—¥æœŸ:2017/1/23
+//ç‰ˆæœ¬ï¼šV17.3-1
 //Author-QQ: 616264123
-//µç»ú¿ØÖÆQQÈº£º314306105
+//ç”µæœºæ§åˆ¶QQç¾¤ï¼š314306105
 //############################################################
    
 #ifndef _Tim1_PWM_H
@@ -25,7 +25,7 @@
 #define PWM_PERIOD ((u16) (CKTIM / (u32)(2 * PWM_FREQ *(PWM_PRSC+1)))) //72000000/(2*12500*(1))=2880  2880=PWM 100%
 /****	Power devices switching frequency  ****/
 
-#define PWM_FREQ ((u16)12500) // in Hz  (N.b.: pattern type is center aligned),²»ÊÇÖĞÑë¶ÔÆëÊ±12.5kHZ£¬ÖĞÑë¶ÔÆëÄ£Ê½ÊÇ
+#define PWM_FREQ ((u16)12500) // in Hz  (N.b.: pattern type is center aligned),ä¸æ˜¯ä¸­å¤®å¯¹é½æ—¶12.5kHZï¼Œä¸­å¤®å¯¹é½æ¨¡å¼æ˜¯
 #define PWM_HalfPerMax   ((u16)1440)
 #define REP_RATE (0)  
  // (N.b): Internal current loop is performed every (REP_RATE + 1)/(2*PWM_FREQ) seconds.               
@@ -34,11 +34,11 @@
 #define DEADTIME  (u16)((unsigned long long)CKTIM/2*(unsigned long long)DEADTIME_NS/1000000000uL)
 #define DEADTIME_NS	((u16) 1800)  //in nsec; range is [0...3500]  
 
-#define DCBUS_VOLTAGE			(int32_t)_IQ(24)		//   Q10¸ñÊ½,Ä¸ÏßµçÑ¹24V  24576 
+#define DCBUS_VOLTAGE			(int32_t)_IQ(24)		//   Q10æ ¼å¼,æ¯çº¿ç”µå‹24V  24576 
 
-#define STATOR_VOLTAGE		 (int32_t)_IQ(13.867) 		// Udc/¡Ì3* Q15  13.867   14190  ¸ñÊ½   
+#define STATOR_VOLTAGE		 (int32_t)_IQ(13.867) 		// Udc/âˆš3* Q15  13.867   14190  æ ¼å¼   
 
-#define MAX_STATOR_VOLTAGE	(int32_t)_IQ(13.5)  	 // Udc/¡Ì3*0.97 13.467   13765 Q15¸ñÊ½  
+#define MAX_STATOR_VOLTAGE	(int32_t)_IQ(13.5)  	 // Udc/âˆš3*0.97 13.467   13765 Q15æ ¼å¼  
 
 
 

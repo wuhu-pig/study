@@ -1,7 +1,7 @@
 #include "spi.h"
 #include "delay.h"
 
-// SPI2: Ö÷»ú GPIO ³õÊ¼»¯£¨SCK=MOSI=MISO£©
+// SPI2: ä¸»æœº GPIO åˆå§‹åŒ–ï¼ˆSCK=MOSI=MISOï¼‰
 void SPI2_GPIO_MasterInit(void) {
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN | RCC_AHB1ENR_GPIOCEN;
 
@@ -10,7 +10,7 @@ void SPI2_GPIO_MasterInit(void) {
     GPIOB->MODER |=  (2 << (13 * 2)); // AF
     GPIOB->AFR[1] &= ~(0xF << ((13 - 8) * 4));
     GPIOB->AFR[1] |=  (5 << ((13 - 8) * 4));
-    GPIOB->OSPEEDR |= (3 << (13 * 2)); // ¸ßËÙ
+    GPIOB->OSPEEDR |= (3 << (13 * 2)); // é«˜é€Ÿ
 
     // PC3 = MOSI
     GPIOC->MODER &= ~(3 << (3 * 2));
@@ -26,41 +26,41 @@ void SPI2_GPIO_MasterInit(void) {
     GPIOC->AFR[0] |=  (5 << (2 * 4));
     GPIOC->OSPEEDR |= (3 << (2 * 2));
 
-    // PB12 = NSS (ÊÖ¶¯¿ØÖÆ/Ó²¼þÆ¬Ñ¡)
+    // PB12 = NSS (æ‰‹åŠ¨æŽ§åˆ¶/ç¡¬ä»¶ç‰‡é€‰)
     GPIOB->MODER &= ~(3 << (12 * 2));
-    GPIOB->MODER |=  (1 << (12 * 2)); // ÆÕÍ¨Êä³öÄ£Ê½
+    GPIOB->MODER |=  (1 << (12 * 2)); // æ™®é€šè¾“å‡ºæ¨¡å¼
     GPIOB->OTYPER &= ~(1 << 12);
     GPIOB->OSPEEDR |= (3 << (12 * 2));
-    GPIOB->ODR |= (1 << 12); // Ä¬ÈÏÀ­¸ß²»Ñ¡ÖÐ
+    GPIOB->ODR |= (1 << 12); // é»˜è®¤æ‹‰é«˜ä¸é€‰ä¸­
 }
 
-// SPI2: Ö÷»úÄ£Ê½³õÊ¼»¯
+// SPI2: ä¸»æœºæ¨¡å¼åˆå§‹åŒ–
 void SPI2_MasterInit(void) {
     RCC->APB1ENR |= RCC_APB1ENR_SPI2EN;
 
     SPI2->CR1 = 0;
 
-    // CPOL=0, CPHA=0£¨SPIÄ£Ê½0£©
+    // CPOL=0, CPHA=0ï¼ˆSPIæ¨¡å¼0ï¼‰
     SPI2->CR1 &= ~(SPI_CR1_CPOL | SPI_CR1_CPHA);
 
-    // Ö÷»úÄ£Ê½
+    // ä¸»æœºæ¨¡å¼
     SPI2->CR1 |= SPI_CR1_MSTR;
 
-    // Èí¼þ NSS ¹ÜÀí
+    // è½¯ä»¶ NSS ç®¡ç†
     SPI2->CR1 |= SPI_CR1_SSM | SPI_CR1_SSI;
 
-    // ²¨ÌØÂÊ = Fpclk/8£¨¸ù¾ÝÄãµÄÊ±ÖÓ¿ÉÒÔÐÞ¸Ä£©
+    // æ³¢ç‰¹çŽ‡ = Fpclk/8ï¼ˆæ ¹æ®ä½ çš„æ—¶é’Ÿå¯ä»¥ä¿®æ”¹ï¼‰
     SPI2->CR1 |= (0x2 << 3);
 
-    // 8Î»Êý¾ÝÖ¡£¨Ä¬ÈÏ£©
+    // 8ä½æ•°æ®å¸§ï¼ˆé»˜è®¤ï¼‰
 
-    // MSB First£¨Ä¬ÈÏ£©
+    // MSB Firstï¼ˆé»˜è®¤ï¼‰
 
-    // ÆôÓÃ SPI
+    // å¯ç”¨ SPI
     SPI2->CR1 |= SPI_CR1_SPE;
 }
 
-// ·¢ËÍÒ»¸ö×Ö½Ú
+// å‘é€ä¸€ä¸ªå­—èŠ‚
 void SPI2_SendByte(uint8_t data) {
     while (!(SPI2->SR & SPI_SR_TXE));
     SPI2->DR = data;
@@ -68,7 +68,7 @@ void SPI2_SendByte(uint8_t data) {
     while (SPI2->SR & SPI_SR_BSY);
 }
 
-// ½ÓÊÕÒ»¸ö×Ö½Ú£¨Í¨³£ÓÃÓÚÈ«Ë«¹¤Ê±·¢ËÍ dummy Êý¾Ý»ñÈ¡¶Ô·½·¢ËÍµÄÊý¾Ý£©
+// æŽ¥æ”¶ä¸€ä¸ªå­—èŠ‚ï¼ˆé€šå¸¸ç”¨äºŽå…¨åŒå·¥æ—¶å‘é€ dummy æ•°æ®èŽ·å–å¯¹æ–¹å‘é€çš„æ•°æ®ï¼‰
 uint8_t SPI2_ReceiveByte(void) {
     while (!(SPI2->SR & SPI_SR_TXE));
     SPI2->DR = 0xFF; // dummy byte
@@ -76,7 +76,7 @@ uint8_t SPI2_ReceiveByte(void) {
     return SPI2->DR;
 }
 
-// ·¢ËÍ²¢½ÓÊÕÒ»¸ö×Ö½Ú£¨È«Ë«¹¤½»»»£©
+// å‘é€å¹¶æŽ¥æ”¶ä¸€ä¸ªå­—èŠ‚ï¼ˆå…¨åŒå·¥äº¤æ¢ï¼‰
 uint8_t SPI2_TransferByte(uint8_t data) {
     while (!(SPI2->SR & SPI_SR_TXE));
     SPI2->DR = data;
@@ -87,12 +87,12 @@ uint8_t SPI2_TransferByte(uint8_t data) {
 
 void SPI2_test(void)
 {
-	      GPIOB->ODR &= ~(1 << 12);  // Ñ¡ÖÐ´Ó»ú
+	      GPIOB->ODR &= ~(1 << 12);  // é€‰ä¸­ä»Žæœº
 
-        SPI2_SendByte(0x55); // ·¢ËÍ²âÊÔ×Ö½Ú
-        uint8_t recv = SPI2_ReceiveByte(); // ½ÓÊÕÏìÓ¦
+        SPI2_SendByte(0x55); // å‘é€æµ‹è¯•å­—èŠ‚
+        uint8_t recv = SPI2_ReceiveByte(); // æŽ¥æ”¶å“åº”
 
-        GPIOB->ODR |= (1 << 12);   // È¡ÏûÆ¬Ñ¡
+        GPIOB->ODR |= (1 << 12);   // å–æ¶ˆç‰‡é€‰
 
         delay_ms(500);
 }

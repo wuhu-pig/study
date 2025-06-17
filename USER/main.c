@@ -15,17 +15,17 @@
 #include "spi.h"
 #include "foc.h"
 
-                  /* DMA´«Êä×´Ì¬±êÖ¾, 0,Î´Íê³É; 1, ÒÑÍê³É */
+                  /* DMAä¼ è¾“çŠ¶æ€æ ‡å¿—, 0,æœªå®Œæˆ; 1, å·²å®Œæˆ */
 uint16_t angle;
 int main(void)
 {
 		float t = 0;
 		status_t retval;
-    sys_stm32_clock_init(336, 8, 2, 7);     /* ÉèÖÃÊ±ÖÓ,168Mhz */
-    delay_init(168);                        /* ÑÓÊ±³õÊ¼»¯ */
-    usart_init(84, 115200);                 /* ´®¿Ú³õÊ¼»¯Îª115200 */
-    led_init(); 														//LED³õÊ¼»¯                         	
-		//iic_init();															//I2C³õÊ¼»¯
+    sys_stm32_clock_init(336, 8, 2, 7);     /* è®¾ç½®æ—¶é’Ÿ,168Mhz */
+    delay_init(168);                        /* å»¶æ—¶åˆå§‹åŒ– */
+    usart_init(84, 115200);                 /* ä¸²å£åˆå§‹åŒ–ä¸º115200 */
+    led_init(); 														//LEDåˆå§‹åŒ–                         	
+		//iic_init();															//I2Cåˆå§‹åŒ–
 		//Lcd_Init();
 		//motor_init();
 		SPI2_GPIO_MasterInit();
@@ -33,8 +33,8 @@ int main(void)
 		AS5600_Init();
 		adc_init();
     dma_init();
-    atim_timx_cplm_pwm_init(1000 - 1, 168 - 1); /* 168/4=42MhzµÄ¼ÆÊıÆµÂÊ 1KhzµÄÖÜÆÚ. */  //1ms
-		gtim_timx_int_init(100-1, 8400 - 1); /* 84 000 000 / 84 00 = 10 000 10KhzµÄ¼ÆÊıÆµÂÊ£¬¼ÆÊı5K´ÎÎª500ms */	//1ms
+    atim_timx_cplm_pwm_init(1000 - 1, 168 - 1); /* 168/4=42Mhzçš„è®¡æ•°é¢‘ç‡ 1Khzçš„å‘¨æœŸ. */  //1ms
+		gtim_timx_int_init(100-1, 8400 - 1); /* 84 000 000 / 84 00 = 10 000 10Khzçš„è®¡æ•°é¢‘ç‡ï¼Œè®¡æ•°5Kæ¬¡ä¸º500ms */	//1ms
 		foc_init();
 		while (1)
     {

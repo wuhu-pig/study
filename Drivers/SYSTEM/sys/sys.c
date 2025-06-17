@@ -1,23 +1,23 @@
 /**
  ****************************************************************************************************
  * @file        sys.c
- * @author      ÕıµãÔ­×ÓÍÅ¶Ó(ALIENTEK)
+ * @author      æ­£ç‚¹åŸå­å›¢é˜Ÿ(ALIENTEK)
  * @version     V1.0
  * @date        2021-12-30
- * @brief       ÏµÍ³³õÊ¼»¯´úÂë(°üÀ¨Ê±ÖÓÅäÖÃ/ÖĞ¶Ï¹ÜÀí/GPIOÉèÖÃµÈ)
- * @license     Copyright (c) 2020-2032, ¹ãÖİÊĞĞÇÒíµç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾
+ * @brief       ç³»ç»Ÿåˆå§‹åŒ–ä»£ç (åŒ…æ‹¬æ—¶é’Ÿé…ç½®/ä¸­æ–­ç®¡ç†/GPIOè®¾ç½®ç­‰)
+ * @license     Copyright (c) 2020-2032, å¹¿å·å¸‚æ˜Ÿç¿¼ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸
  ****************************************************************************************************
  * @attention
  *
- * ÊµÑéÆ½Ì¨:ÕıµãÔ­×Ó STM32F407¿ª·¢°å
- * ÔÚÏßÊÓÆµ:www.yuanzige.com
- * ¼¼ÊõÂÛÌ³:www.openedv.com
- * ¹«Ë¾ÍøÖ·:www.alientek.com
- * ¹ºÂòµØÖ·:openedv.taobao.com
+ * å®éªŒå¹³å°:æ­£ç‚¹åŸå­ STM32F407å¼€å‘æ¿
+ * åœ¨çº¿è§†é¢‘:www.yuanzige.com
+ * æŠ€æœ¯è®ºå›:www.openedv.com
+ * å…¬å¸ç½‘å€:www.alientek.com
+ * è´­ä¹°åœ°å€:openedv.taobao.com
  *
- * ĞŞ¸ÄËµÃ÷
+ * ä¿®æ”¹è¯´æ˜
  * V1.0 20211230
- * µÚÒ»´Î·¢²¼
+ * ç¬¬ä¸€æ¬¡å‘å¸ƒ
  ****************************************************************************************************
  */
 
@@ -25,112 +25,112 @@
 
 
 /**
- * @brief       ÉèÖÃÖĞ¶ÏÏòÁ¿±íÆ«ÒÆµØÖ·
- * @param       baseaddr: »ùÖ·
- * @param       offset: Æ«ÒÆÁ¿(±ØĞëÊÇ0, »òÕß0X100µÄ±¶Êı)
- * @retval      ÎŞ
+ * @brief       è®¾ç½®ä¸­æ–­å‘é‡è¡¨åç§»åœ°å€
+ * @param       baseaddr: åŸºå€
+ * @param       offset: åç§»é‡(å¿…é¡»æ˜¯0, æˆ–è€…0X100çš„å€æ•°)
+ * @retval      æ— 
  */
 void sys_nvic_set_vector_table(uint32_t baseaddr, uint32_t offset)
 {
-    /* ÉèÖÃNVICµÄÏòÁ¿±íÆ«ÒÆ¼Ä´æÆ÷,VTORµÍ9Î»±£Áô,¼´[8:0]±£Áô */
+    /* è®¾ç½®NVICçš„å‘é‡è¡¨åç§»å¯„å­˜å™¨,VTORä½9ä½ä¿ç•™,å³[8:0]ä¿ç•™ */
     SCB->VTOR = baseaddr | (offset & (uint32_t)0xFFFFFE00);
 }
 
 /**
- * @brief       ÉèÖÃNVIC·Ö×é
- * @param       group: 0~4,¹²5×é, ÏêÏ¸½âÊÍ¼û: sys_nvic_initº¯Êı²ÎÊıËµÃ÷
- * @retval      ÎŞ
+ * @brief       è®¾ç½®NVICåˆ†ç»„
+ * @param       group: 0~4,å…±5ç»„, è¯¦ç»†è§£é‡Šè§: sys_nvic_initå‡½æ•°å‚æ•°è¯´æ˜
+ * @retval      æ— 
  */
 static void sys_nvic_priority_group_config(uint8_t group)
 {
     uint32_t temp, temp1;
-    temp1 = (~group) & 0x07;/* È¡ºóÈıÎ» */
+    temp1 = (~group) & 0x07;/* å–åä¸‰ä½ */
     temp1 <<= 8;
-    temp = SCB->AIRCR;      /* ¶ÁÈ¡ÏÈÇ°µÄÉèÖÃ */
-    temp &= 0X0000F8FF;     /* Çå¿ÕÏÈÇ°·Ö×é */
-    temp |= 0X05FA0000;     /* Ğ´ÈëÔ¿³× */
+    temp = SCB->AIRCR;      /* è¯»å–å…ˆå‰çš„è®¾ç½® */
+    temp &= 0X0000F8FF;     /* æ¸…ç©ºå…ˆå‰åˆ†ç»„ */
+    temp |= 0X05FA0000;     /* å†™å…¥é’¥åŒ™ */
     temp |= temp1;
-    SCB->AIRCR = temp;      /* ÉèÖÃ·Ö×é */
+    SCB->AIRCR = temp;      /* è®¾ç½®åˆ†ç»„ */
 }
 
 /**
- * @brief       ÉèÖÃNVIC(°üÀ¨·Ö×é/ÇÀÕ¼ÓÅÏÈ¼¶/×ÓÓÅÏÈ¼¶µÈ)
- * @param       pprio: ÇÀÕ¼ÓÅÏÈ¼¶(PreemptionPriority)
- * @param       sprio: ×ÓÓÅÏÈ¼¶(SubPriority)
- * @param       ch: ÖĞ¶Ï±àºÅ(Channel)
- * @param       group: ÖĞ¶Ï·Ö×é
- *   @arg       0, ×é0: 0Î»ÇÀÕ¼ÓÅÏÈ¼¶, 4Î»×ÓÓÅÏÈ¼¶
- *   @arg       1, ×é1: 1Î»ÇÀÕ¼ÓÅÏÈ¼¶, 3Î»×ÓÓÅÏÈ¼¶
- *   @arg       2, ×é2: 2Î»ÇÀÕ¼ÓÅÏÈ¼¶, 2Î»×ÓÓÅÏÈ¼¶
- *   @arg       3, ×é3: 3Î»ÇÀÕ¼ÓÅÏÈ¼¶, 1Î»×ÓÓÅÏÈ¼¶
- *   @arg       4, ×é4: 4Î»ÇÀÕ¼ÓÅÏÈ¼¶, 0Î»×ÓÓÅÏÈ¼¶
- * @note        ×¢ÒâÓÅÏÈ¼¶²»ÄÜ³¬¹ıÉè¶¨µÄ×éµÄ·¶Î§! ·ñÔò»áÓĞÒâÏë²»µ½µÄ´íÎó
- * @retval      ÎŞ
+ * @brief       è®¾ç½®NVIC(åŒ…æ‹¬åˆ†ç»„/æŠ¢å ä¼˜å…ˆçº§/å­ä¼˜å…ˆçº§ç­‰)
+ * @param       pprio: æŠ¢å ä¼˜å…ˆçº§(PreemptionPriority)
+ * @param       sprio: å­ä¼˜å…ˆçº§(SubPriority)
+ * @param       ch: ä¸­æ–­ç¼–å·(Channel)
+ * @param       group: ä¸­æ–­åˆ†ç»„
+ *   @arg       0, ç»„0: 0ä½æŠ¢å ä¼˜å…ˆçº§, 4ä½å­ä¼˜å…ˆçº§
+ *   @arg       1, ç»„1: 1ä½æŠ¢å ä¼˜å…ˆçº§, 3ä½å­ä¼˜å…ˆçº§
+ *   @arg       2, ç»„2: 2ä½æŠ¢å ä¼˜å…ˆçº§, 2ä½å­ä¼˜å…ˆçº§
+ *   @arg       3, ç»„3: 3ä½æŠ¢å ä¼˜å…ˆçº§, 1ä½å­ä¼˜å…ˆçº§
+ *   @arg       4, ç»„4: 4ä½æŠ¢å ä¼˜å…ˆçº§, 0ä½å­ä¼˜å…ˆçº§
+ * @note        æ³¨æ„ä¼˜å…ˆçº§ä¸èƒ½è¶…è¿‡è®¾å®šçš„ç»„çš„èŒƒå›´! å¦åˆ™ä¼šæœ‰æ„æƒ³ä¸åˆ°çš„é”™è¯¯
+ * @retval      æ— 
  */
 void sys_nvic_init(uint8_t pprio, uint8_t sprio, uint8_t ch, uint8_t group)
 {
     uint32_t temp;
-    sys_nvic_priority_group_config(group);  /* ÉèÖÃ·Ö×é */
+    sys_nvic_priority_group_config(group);  /* è®¾ç½®åˆ†ç»„ */
     temp = pprio << (4 - group);
     temp |= sprio & (0x0f >> group);
-    temp &= 0xf;                            /* È¡µÍËÄÎ» */
-    NVIC->ISER[ch / 32] |= 1 << (ch % 32);  /* Ê¹ÄÜÖĞ¶ÏÎ»(ÒªÇå³ıµÄ»°,ÉèÖÃICER¶ÔÓ¦Î»Îª1¼´¿É) */
-    NVIC->IP[ch] |= temp << 4;              /* ÉèÖÃÏìÓ¦ÓÅÏÈ¼¶ºÍÇÀ¶ÏÓÅÏÈ¼¶ */
+    temp &= 0xf;                            /* å–ä½å››ä½ */
+    NVIC->ISER[ch / 32] |= 1 << (ch % 32);  /* ä½¿èƒ½ä¸­æ–­ä½(è¦æ¸…é™¤çš„è¯,è®¾ç½®ICERå¯¹åº”ä½ä¸º1å³å¯) */
+    NVIC->IP[ch] |= temp << 4;              /* è®¾ç½®å“åº”ä¼˜å…ˆçº§å’ŒæŠ¢æ–­ä¼˜å…ˆçº§ */
 }
 
 /**
- * @brief       Íâ²¿ÖĞ¶ÏÅäÖÃº¯Êı, Ö»Õë¶ÔGPIOA~GPIOI
- * @note        ¸Ãº¯Êı»á×Ô¶¯¿ªÆô¶ÔÓ¦ÖĞ¶Ï, ÒÔ¼°ÆÁ±ÎÏß
- * @param       p_gpiox: GPIOA~GPIOG, GPIOÖ¸Õë
- * @param       pinx: 0X0000~0XFFFF, Òı½ÅÎ»ÖÃ, Ã¿¸öÎ»´ú±íÒ»¸öIO, µÚ0Î»´ú±íPx0, µÚ1Î»´ú±íPx1, ÒÀ´ÎÀàÍÆ. ±ÈÈç0X0101, ´ú±íÍ¬Ê±ÉèÖÃPx0ºÍPx8.
+ * @brief       å¤–éƒ¨ä¸­æ–­é…ç½®å‡½æ•°, åªé’ˆå¯¹GPIOA~GPIOI
+ * @note        è¯¥å‡½æ•°ä¼šè‡ªåŠ¨å¼€å¯å¯¹åº”ä¸­æ–­, ä»¥åŠå±è”½çº¿
+ * @param       p_gpiox: GPIOA~GPIOG, GPIOæŒ‡é’ˆ
+ * @param       pinx: 0X0000~0XFFFF, å¼•è„šä½ç½®, æ¯ä¸ªä½ä»£è¡¨ä¸€ä¸ªIO, ç¬¬0ä½ä»£è¡¨Px0, ç¬¬1ä½ä»£è¡¨Px1, ä¾æ¬¡ç±»æ¨. æ¯”å¦‚0X0101, ä»£è¡¨åŒæ—¶è®¾ç½®Px0å’ŒPx8.
  *   @arg       SYS_GPIO_PIN0~SYS_GPIO_PIN15, 1<<0 ~ 1<<15
- * @param       tmode: 1~3, ´¥·¢Ä£Ê½
- *   @arg       SYS_GPIO_FTIR, 1, ÏÂ½µÑØ´¥·¢
- *   @arg       SYS_GPIO_RTIR, 2, ÉÏÉıÑØ´¥·¢
- *   @arg       SYS_GPIO_BTIR, 3, ÈÎÒâµçÆ½´¥·¢
- * @retval      ÎŞ
+ * @param       tmode: 1~3, è§¦å‘æ¨¡å¼
+ *   @arg       SYS_GPIO_FTIR, 1, ä¸‹é™æ²¿è§¦å‘
+ *   @arg       SYS_GPIO_RTIR, 2, ä¸Šå‡æ²¿è§¦å‘
+ *   @arg       SYS_GPIO_BTIR, 3, ä»»æ„ç”µå¹³è§¦å‘
+ * @retval      æ— 
  */
 void sys_nvic_ex_config(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint8_t tmode)
 {
     uint8_t offset;
-    uint32_t gpio_num = 0;      /* gpio±àºÅ, 0~10, ´ú±íGPIOA~GPIOG */
+    uint32_t gpio_num = 0;      /* gpioç¼–å·, 0~10, ä»£è¡¨GPIOA~GPIOG */
     uint32_t pinpos = 0, pos = 0, curpin = 0;
 
-    gpio_num = ((uint32_t)p_gpiox - (uint32_t)GPIOA) / 0X400 ;/* µÃµ½gpio±àºÅ */
-    RCC->APB2ENR |= 1 << 14;    /* Ê¹ÄÜSYSCFGÊ±ÖÓ  */
+    gpio_num = ((uint32_t)p_gpiox - (uint32_t)GPIOA) / 0X400 ;/* å¾—åˆ°gpioç¼–å· */
+    RCC->APB2ENR |= 1 << 14;    /* ä½¿èƒ½SYSCFGæ—¶é’Ÿ  */
 
     for (pinpos = 0; pinpos < 16; pinpos++)
     {
-        pos = 1 << pinpos;      /* Ò»¸ö¸öÎ»¼ì²é */
-        curpin = pinx & pos;    /* ¼ì²éÒı½ÅÊÇ·ñÒªÉèÖÃ */
+        pos = 1 << pinpos;      /* ä¸€ä¸ªä¸ªä½æ£€æŸ¥ */
+        curpin = pinx & pos;    /* æ£€æŸ¥å¼•è„šæ˜¯å¦è¦è®¾ç½® */
 
-        if (curpin == pos)      /* ĞèÒªÉèÖÃ */
+        if (curpin == pos)      /* éœ€è¦è®¾ç½® */
         {
             offset = (pinpos % 4) * 4;
-            SYSCFG->EXTICR[pinpos / 4] &= ~(0x000F << offset);  /* Çå³ıÔ­À´ÉèÖÃ£¡£¡£¡ */
-            SYSCFG->EXTICR[pinpos / 4] |= gpio_num << offset;   /* EXTI.BITxÓ³Éäµ½gpiox.bitx */
+            SYSCFG->EXTICR[pinpos / 4] &= ~(0x000F << offset);  /* æ¸…é™¤åŸæ¥è®¾ç½®ï¼ï¼ï¼ */
+            SYSCFG->EXTICR[pinpos / 4] |= gpio_num << offset;   /* EXTI.BITxæ˜ å°„åˆ°gpiox.bitx */
 
-            EXTI->IMR |= 1 << pinpos;   /* ¿ªÆôline BITxÉÏµÄÖĞ¶Ï(Èç¹ûÒª½ûÖ¹ÖĞ¶Ï£¬Ôò·´²Ù×÷¼´¿É) */
+            EXTI->IMR |= 1 << pinpos;   /* å¼€å¯line BITxä¸Šçš„ä¸­æ–­(å¦‚æœè¦ç¦æ­¢ä¸­æ–­ï¼Œåˆ™åæ“ä½œå³å¯) */
 
-            if (tmode & 0x01) EXTI->FTSR |= 1 << pinpos;        /* line bitxÉÏÊÂ¼şÏÂ½µÑØ´¥·¢ */
+            if (tmode & 0x01) EXTI->FTSR |= 1 << pinpos;        /* line bitxä¸Šäº‹ä»¶ä¸‹é™æ²¿è§¦å‘ */
 
-            if (tmode & 0x02) EXTI->RTSR |= 1 << pinpos;        /* line bitxÉÏÊÂ¼şÉÏÉı½µÑØ´¥·¢ */
+            if (tmode & 0x02) EXTI->RTSR |= 1 << pinpos;        /* line bitxä¸Šäº‹ä»¶ä¸Šå‡é™æ²¿è§¦å‘ */
         }
     }
 }
 
 /**
- * @brief       GPIO¸´ÓÃ¹¦ÄÜÑ¡ÔñÉèÖÃ
- * @param       p_gpiox: GPIOA~GPIOI, GPIOÖ¸Õë
- * @param       pinx: 0X0000~0XFFFF, Òı½ÅÎ»ÖÃ, Ã¿¸öÎ»´ú±íÒ»¸öIO, µÚ0Î»´ú±íPx0, µÚ1Î»´ú±íPx1, ÒÀ´ÎÀàÍÆ. ±ÈÈç0X0101, ´ú±íÍ¬Ê±ÉèÖÃPx0ºÍPx8.
+ * @brief       GPIOå¤ç”¨åŠŸèƒ½é€‰æ‹©è®¾ç½®
+ * @param       p_gpiox: GPIOA~GPIOI, GPIOæŒ‡é’ˆ
+ * @param       pinx: 0X0000~0XFFFF, å¼•è„šä½ç½®, æ¯ä¸ªä½ä»£è¡¨ä¸€ä¸ªIO, ç¬¬0ä½ä»£è¡¨Px0, ç¬¬1ä½ä»£è¡¨Px1, ä¾æ¬¡ç±»æ¨. æ¯”å¦‚0X0101, ä»£è¡¨åŒæ—¶è®¾ç½®Px0å’ŒPx8.
  *   @arg       SYS_GPIO_PIN0~SYS_GPIO_PIN15, 1<<0 ~ 1<<15
- * @param       afx:0~15, ´ú±íAF0~AF15.
- *              AF0~15ÉèÖÃÇé¿ö(ÕâÀï½öÊÇÁĞ³ö³£ÓÃµÄ, ÏêÏ¸µÄÇë¼ûSTM32F407xxÊı¾İÊÖ²á, Table 7):
+ * @param       afx:0~15, ä»£è¡¨AF0~AF15.
+ *              AF0~15è®¾ç½®æƒ…å†µ(è¿™é‡Œä»…æ˜¯åˆ—å‡ºå¸¸ç”¨çš„, è¯¦ç»†çš„è¯·è§STM32F407xxæ•°æ®æ‰‹å†Œ, Table 7):
  *   @arg       AF0:MCO/SWD/SWCLK/RTC       AF1:TIM1/TIM2               AF2:TIM3~5                  AF3:TIM8~11
  *   @arg       AF4:I2C1~I2C3               AF5:SPI1/SPI2/I2S2          AF6:SPI3/I2S3               AF7:USART1~3
  *   @arg       AF8:USART4~6                AF9;CAN1/CAN2/TIM12~14      AF10:USB_OTG/USB_HS         AF11:ETH
  *   @arg       AF12:FSMC/SDIO/OTG_FS       AF13:DCIM                   AF14:                       AF15:EVENTOUT
- * @retval      ÎŞ
+ * @retval      æ— 
  */
 void sys_gpio_af_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint8_t afx)
 {
@@ -138,10 +138,10 @@ void sys_gpio_af_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint8_t afx)
 
     for (pinpos = 0; pinpos < 16; pinpos++)
     {
-        pos = 1 << pinpos;      /* Ò»¸ö¸öÎ»¼ì²é */
-        curpin = pinx & pos;    /* ¼ì²éÒı½ÅÊÇ·ñÒªÉèÖÃ */
+        pos = 1 << pinpos;      /* ä¸€ä¸ªä¸ªä½æ£€æŸ¥ */
+        curpin = pinx & pos;    /* æ£€æŸ¥å¼•è„šæ˜¯å¦è¦è®¾ç½® */
 
-        if (curpin == pos)      /* ĞèÒªÉèÖÃ */
+        if (curpin == pos)      /* éœ€è¦è®¾ç½® */
         {
             p_gpiox->AFR[pinpos >> 3] &= ~(0X0F << ((pinpos & 0X07) * 4));
             p_gpiox->AFR[pinpos >> 3] |= (uint32_t)afx << ((pinpos & 0X07) * 4);
@@ -150,35 +150,35 @@ void sys_gpio_af_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint8_t afx)
 }
 
 /**
- * @brief       GPIOÍ¨ÓÃÉèÖÃ
- * @param       p_gpiox: GPIOA~GPIOI, GPIOÖ¸Õë
- * @param       pinx: 0X0000~0XFFFF, Òı½ÅÎ»ÖÃ, Ã¿¸öÎ»´ú±íÒ»¸öIO, µÚ0Î»´ú±íPx0, µÚ1Î»´ú±íPx1, ÒÀ´ÎÀàÍÆ. ±ÈÈç0X0101, ´ú±íÍ¬Ê±ÉèÖÃPx0ºÍPx8.
+ * @brief       GPIOé€šç”¨è®¾ç½®
+ * @param       p_gpiox: GPIOA~GPIOI, GPIOæŒ‡é’ˆ
+ * @param       pinx: 0X0000~0XFFFF, å¼•è„šä½ç½®, æ¯ä¸ªä½ä»£è¡¨ä¸€ä¸ªIO, ç¬¬0ä½ä»£è¡¨Px0, ç¬¬1ä½ä»£è¡¨Px1, ä¾æ¬¡ç±»æ¨. æ¯”å¦‚0X0101, ä»£è¡¨åŒæ—¶è®¾ç½®Px0å’ŒPx8.
  *   @arg       SYS_GPIO_PIN0~SYS_GPIO_PIN15, 1<<0 ~ 1<<15
  *
- * @param       mode: 0~3; Ä£Ê½Ñ¡Ôñ, ÉèÖÃÈçÏÂ:
- *   @arg       SYS_GPIO_MODE_IN,  0, ÊäÈëÄ£Ê½(ÏµÍ³¸´Î»Ä¬ÈÏ×´Ì¬)
- *   @arg       SYS_GPIO_MODE_OUT, 1, Êä³öÄ£Ê½
- *   @arg       SYS_GPIO_MODE_AF,  2, ¸´ÓÃ¹¦ÄÜÄ£Ê½
- *   @arg       SYS_GPIO_MODE_AIN, 3, Ä£ÄâÊäÈëÄ£Ê½
+ * @param       mode: 0~3; æ¨¡å¼é€‰æ‹©, è®¾ç½®å¦‚ä¸‹:
+ *   @arg       SYS_GPIO_MODE_IN,  0, è¾“å…¥æ¨¡å¼(ç³»ç»Ÿå¤ä½é»˜è®¤çŠ¶æ€)
+ *   @arg       SYS_GPIO_MODE_OUT, 1, è¾“å‡ºæ¨¡å¼
+ *   @arg       SYS_GPIO_MODE_AF,  2, å¤ç”¨åŠŸèƒ½æ¨¡å¼
+ *   @arg       SYS_GPIO_MODE_AIN, 3, æ¨¡æ‹Ÿè¾“å…¥æ¨¡å¼
  *
- * @param       otype: 0 / 1; Êä³öÀàĞÍÑ¡Ôñ, ÉèÖÃÈçÏÂ:
- *   @arg       SYS_GPIO_OTYPE_PP, 0, ÍÆÍìÊä³ö
- *   @arg       SYS_GPIO_OTYPE_OD, 1, ¿ªÂ©Êä³ö
+ * @param       otype: 0 / 1; è¾“å‡ºç±»å‹é€‰æ‹©, è®¾ç½®å¦‚ä¸‹:
+ *   @arg       SYS_GPIO_OTYPE_PP, 0, æ¨æŒ½è¾“å‡º
+ *   @arg       SYS_GPIO_OTYPE_OD, 1, å¼€æ¼è¾“å‡º
  *
- * @param       ospeed: 0~3; Êä³öËÙ¶È, ÉèÖÃÈçÏÂ:
- *   @arg       SYS_GPIO_SPEED_LOW,  0, µÍËÙ
- *   @arg       SYS_GPIO_SPEED_MID,  1, ÖĞËÙ
- *   @arg       SYS_GPIO_SPEED_FAST, 2, ¿ìËÙ
- *   @arg       SYS_GPIO_SPEED_HIGH, 3, ¸ßËÙ
+ * @param       ospeed: 0~3; è¾“å‡ºé€Ÿåº¦, è®¾ç½®å¦‚ä¸‹:
+ *   @arg       SYS_GPIO_SPEED_LOW,  0, ä½é€Ÿ
+ *   @arg       SYS_GPIO_SPEED_MID,  1, ä¸­é€Ÿ
+ *   @arg       SYS_GPIO_SPEED_FAST, 2, å¿«é€Ÿ
+ *   @arg       SYS_GPIO_SPEED_HIGH, 3, é«˜é€Ÿ
  *
- * @param       pupd: 0~3: ÉÏÏÂÀ­ÉèÖÃ, ÉèÖÃÈçÏÂ:
- *   @arg       SYS_GPIO_PUPD_NONE, 0, ²»´øÉÏÏÂÀ­
- *   @arg       SYS_GPIO_PUPD_PU,   1, ÉÏÀ­
- *   @arg       SYS_GPIO_PUPD_PD,   2, ÏÂÀ­
- *   @arg       SYS_GPIO_PUPD_RES,  3, ±£Áô
+ * @param       pupd: 0~3: ä¸Šä¸‹æ‹‰è®¾ç½®, è®¾ç½®å¦‚ä¸‹:
+ *   @arg       SYS_GPIO_PUPD_NONE, 0, ä¸å¸¦ä¸Šä¸‹æ‹‰
+ *   @arg       SYS_GPIO_PUPD_PU,   1, ä¸Šæ‹‰
+ *   @arg       SYS_GPIO_PUPD_PD,   2, ä¸‹æ‹‰
+ *   @arg       SYS_GPIO_PUPD_RES,  3, ä¿ç•™
  *
- * @note:       ×¢Òâ: ÔÚÊäÈëÄ£Ê½(ÆÕÍ¨ÊäÈë/Ä£ÄâÊäÈë)ÏÂ, OTYPEºÍOSPEED²ÎÊıÎŞĞ§!!
- * @retval      ÎŞ
+ * @note:       æ³¨æ„: åœ¨è¾“å…¥æ¨¡å¼(æ™®é€šè¾“å…¥/æ¨¡æ‹Ÿè¾“å…¥)ä¸‹, OTYPEå’ŒOSPEEDå‚æ•°æ— æ•ˆ!!
+ * @retval      æ— 
  */
 void sys_gpio_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint32_t mode, uint32_t otype, uint32_t ospeed, uint32_t pupd)
 {
@@ -186,73 +186,73 @@ void sys_gpio_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint32_t mode, uint32_t 
 
     for (pinpos = 0; pinpos < 16; pinpos++)
     {
-        pos = 1 << pinpos;      /* Ò»¸ö¸öÎ»¼ì²é */
-        curpin = pinx & pos;    /* ¼ì²éÒı½ÅÊÇ·ñÒªÉèÖÃ */
+        pos = 1 << pinpos;      /* ä¸€ä¸ªä¸ªä½æ£€æŸ¥ */
+        curpin = pinx & pos;    /* æ£€æŸ¥å¼•è„šæ˜¯å¦è¦è®¾ç½® */
 
-        if (curpin == pos)      /* ĞèÒªÉèÖÃ */
+        if (curpin == pos)      /* éœ€è¦è®¾ç½® */
         {
-            p_gpiox->MODER &= ~(3 << (pinpos * 2)); /* ÏÈÇå³ıÔ­À´µÄÉèÖÃ */
-            p_gpiox->MODER |= mode << (pinpos * 2); /* ÉèÖÃĞÂµÄÄ£Ê½ */
+            p_gpiox->MODER &= ~(3 << (pinpos * 2)); /* å…ˆæ¸…é™¤åŸæ¥çš„è®¾ç½® */
+            p_gpiox->MODER |= mode << (pinpos * 2); /* è®¾ç½®æ–°çš„æ¨¡å¼ */
 
-            if ((mode == 0X01) || (mode == 0X02))   /* Èç¹ûÊÇÊä³öÄ£Ê½/¸´ÓÃ¹¦ÄÜÄ£Ê½ */
+            if ((mode == 0X01) || (mode == 0X02))   /* å¦‚æœæ˜¯è¾“å‡ºæ¨¡å¼/å¤ç”¨åŠŸèƒ½æ¨¡å¼ */
             {
-                p_gpiox->OSPEEDR &= ~(3 << (pinpos * 2));       /* Çå³ıÔ­À´µÄÉèÖÃ */
-                p_gpiox->OSPEEDR |= (ospeed << (pinpos * 2));   /* ÉèÖÃĞÂµÄËÙ¶ÈÖµ */
-                p_gpiox->OTYPER &= ~(1 << pinpos) ;             /* Çå³ıÔ­À´µÄÉèÖÃ */
-                p_gpiox->OTYPER |= otype << pinpos;             /* ÉèÖÃĞÂµÄÊä³öÄ£Ê½ */
+                p_gpiox->OSPEEDR &= ~(3 << (pinpos * 2));       /* æ¸…é™¤åŸæ¥çš„è®¾ç½® */
+                p_gpiox->OSPEEDR |= (ospeed << (pinpos * 2));   /* è®¾ç½®æ–°çš„é€Ÿåº¦å€¼ */
+                p_gpiox->OTYPER &= ~(1 << pinpos) ;             /* æ¸…é™¤åŸæ¥çš„è®¾ç½® */
+                p_gpiox->OTYPER |= otype << pinpos;             /* è®¾ç½®æ–°çš„è¾“å‡ºæ¨¡å¼ */
             }
 
-            p_gpiox->PUPDR &= ~(3 << (pinpos * 2)); /* ÏÈÇå³ıÔ­À´µÄÉèÖÃ */
-            p_gpiox->PUPDR |= pupd << (pinpos * 2); /* ÉèÖÃĞÂµÄÉÏÏÂÀ­ */
+            p_gpiox->PUPDR &= ~(3 << (pinpos * 2)); /* å…ˆæ¸…é™¤åŸæ¥çš„è®¾ç½® */
+            p_gpiox->PUPDR |= pupd << (pinpos * 2); /* è®¾ç½®æ–°çš„ä¸Šä¸‹æ‹‰ */
         }
     }
 }
 
 /**
- * @brief       ÉèÖÃGPIOÄ³¸öÒı½ÅµÄÊä³ö×´Ì¬
- * @param       p_gpiox: GPIOA~GPIOI, GPIOÖ¸Õë
- * @param       pinx: 0X0000~0XFFFF, Òı½ÅÎ»ÖÃ, Ã¿¸öÎ»´ú±íÒ»¸öIO, µÚ0Î»´ú±íPx0, µÚ1Î»´ú±íPx1, ÒÀ´ÎÀàÍÆ. ±ÈÈç0X0101, ´ú±íÍ¬Ê±ÉèÖÃPx0ºÍPx8.
+ * @brief       è®¾ç½®GPIOæŸä¸ªå¼•è„šçš„è¾“å‡ºçŠ¶æ€
+ * @param       p_gpiox: GPIOA~GPIOI, GPIOæŒ‡é’ˆ
+ * @param       pinx: 0X0000~0XFFFF, å¼•è„šä½ç½®, æ¯ä¸ªä½ä»£è¡¨ä¸€ä¸ªIO, ç¬¬0ä½ä»£è¡¨Px0, ç¬¬1ä½ä»£è¡¨Px1, ä¾æ¬¡ç±»æ¨. æ¯”å¦‚0X0101, ä»£è¡¨åŒæ—¶è®¾ç½®Px0å’ŒPx8.
  *   @arg       SYS_GPIO_PIN0~SYS_GPIO_PIN15, 1<<0 ~ 1<<15
- * @param       status: 0/1, Òı½Å×´Ì¬(½ö×îµÍÎ»ÓĞĞ§), ÉèÖÃÈçÏÂ:
- *   @arg       0, Êä³öµÍµçÆ½
- *   @arg       1, Êä³ö¸ßµçÆ½
- * @retval      ÎŞ
+ * @param       status: 0/1, å¼•è„šçŠ¶æ€(ä»…æœ€ä½ä½æœ‰æ•ˆ), è®¾ç½®å¦‚ä¸‹:
+ *   @arg       0, è¾“å‡ºä½ç”µå¹³
+ *   @arg       1, è¾“å‡ºé«˜ç”µå¹³
+ * @retval      æ— 
  */
 void sys_gpio_pin_set(GPIO_TypeDef *p_gpiox, uint16_t pinx, uint8_t status)
 {
     if (status & 0X01)
     {
-        p_gpiox->BSRR |= pinx;  /* ÉèÖÃGPIOxµÄpinxÎª1 */
+        p_gpiox->BSRR |= pinx;  /* è®¾ç½®GPIOxçš„pinxä¸º1 */
     }
     else
     {
-        p_gpiox->BSRR |= (uint32_t)pinx << 16;  /* ÉèÖÃGPIOxµÄpinxÎª0 */
+        p_gpiox->BSRR |= (uint32_t)pinx << 16;  /* è®¾ç½®GPIOxçš„pinxä¸º0 */
     }
 }
 
 /**
- * @brief       ¶ÁÈ¡GPIOÄ³¸öÒı½ÅµÄ×´Ì¬
- * @param       p_gpiox: GPIOA~GPIOG, GPIOÖ¸Õë
- * @param       pinx: 0X0000~0XFFFF, Òı½ÅÎ»ÖÃ, Ã¿¸öÎ»´ú±íÒ»¸öIO, µÚ0Î»´ú±íPx0, µÚ1Î»´ú±íPx1, ÒÀ´ÎÀàÍÆ. Ò»´ÎÖ»ÄÜ¶ÁÈ¡Ò»¸öGPIO£¡
+ * @brief       è¯»å–GPIOæŸä¸ªå¼•è„šçš„çŠ¶æ€
+ * @param       p_gpiox: GPIOA~GPIOG, GPIOæŒ‡é’ˆ
+ * @param       pinx: 0X0000~0XFFFF, å¼•è„šä½ç½®, æ¯ä¸ªä½ä»£è¡¨ä¸€ä¸ªIO, ç¬¬0ä½ä»£è¡¨Px0, ç¬¬1ä½ä»£è¡¨Px1, ä¾æ¬¡ç±»æ¨. ä¸€æ¬¡åªèƒ½è¯»å–ä¸€ä¸ªGPIOï¼
  *   @arg       SYS_GPIO_PIN0~SYS_GPIO_PIN15, 1<<0 ~ 1<<15
- * @retval      ·µ»ØÒı½Å×´Ì¬, 0, µÍµçÆ½; 1, ¸ßµçÆ½
+ * @retval      è¿”å›å¼•è„šçŠ¶æ€, 0, ä½ç”µå¹³; 1, é«˜ç”µå¹³
  */
 uint8_t sys_gpio_pin_get(GPIO_TypeDef *p_gpiox, uint16_t pinx)
 {
     if (p_gpiox->IDR & pinx)
     {
-        return 1;   /* pinxµÄ×´Ì¬Îª1 */
+        return 1;   /* pinxçš„çŠ¶æ€ä¸º1 */
     }
     else
     {
-        return 0;   /* pinxµÄ×´Ì¬Îª0 */
+        return 0;   /* pinxçš„çŠ¶æ€ä¸º0 */
     }
 }
 
 /**
- * @brief       Ö´ĞĞ: WFIÖ¸Áî(Ö´ĞĞÍê¸ÃÖ¸Áî½øÈëµÍ¹¦ºÄ×´Ì¬, µÈ´ıÖĞ¶Ï»½ĞÑ)
- * @param       ÎŞ
- * @retval      ÎŞ
+ * @brief       æ‰§è¡Œ: WFIæŒ‡ä»¤(æ‰§è¡Œå®Œè¯¥æŒ‡ä»¤è¿›å…¥ä½åŠŸè€—çŠ¶æ€, ç­‰å¾…ä¸­æ–­å”¤é†’)
+ * @param       æ— 
+ * @retval      æ— 
  */
 void sys_wfi_set(void)
 {
@@ -260,9 +260,9 @@ void sys_wfi_set(void)
 }
 
 /**
- * @brief       ¹Ø±ÕËùÓĞÖĞ¶Ï(µ«ÊÇ²»°üÀ¨faultºÍNMIÖĞ¶Ï)
- * @param       ÎŞ
- * @retval      ÎŞ
+ * @brief       å…³é—­æ‰€æœ‰ä¸­æ–­(ä½†æ˜¯ä¸åŒ…æ‹¬faultå’ŒNMIä¸­æ–­)
+ * @param       æ— 
+ * @retval      æ— 
  */
 void sys_intx_disable(void)
 {
@@ -270,9 +270,9 @@ void sys_intx_disable(void)
 }
 
 /**
- * @brief       ¿ªÆôËùÓĞÖĞ¶Ï
- * @param       ÎŞ
- * @retval      ÎŞ
+ * @brief       å¼€å¯æ‰€æœ‰ä¸­æ–­
+ * @param       æ— 
+ * @retval      æ— 
  */
 void sys_intx_enable(void)
 {
@@ -280,35 +280,35 @@ void sys_intx_enable(void)
 }
 
 /**
- * @brief       ÉèÖÃÕ»¶¥µØÖ·
- * @note        ×ó²àµÄºìX, ÊôÓÚMDKÎó±¨, Êµ¼ÊÊÇÃ»ÎÊÌâµÄ
- * @param       addr: Õ»¶¥µØÖ·
- * @retval      ÎŞ
+ * @brief       è®¾ç½®æ ˆé¡¶åœ°å€
+ * @note        å·¦ä¾§çš„çº¢X, å±äºMDKè¯¯æŠ¥, å®é™…æ˜¯æ²¡é—®é¢˜çš„
+ * @param       addr: æ ˆé¡¶åœ°å€
+ * @retval      æ— 
  */
 void sys_msr_msp(uint32_t addr)
 {
-    __set_MSP(addr);    /* ÉèÖÃÕ»¶¥µØÖ· */
+    __set_MSP(addr);    /* è®¾ç½®æ ˆé¡¶åœ°å€ */
 }
 
 /**
- * @brief       ½øÈë´ı»úÄ£Ê½
- * @param       ÎŞ
- * @retval      ÎŞ
+ * @brief       è¿›å…¥å¾…æœºæ¨¡å¼
+ * @param       æ— 
+ * @retval      æ— 
  */
 void sys_standby(void)
 {
-    RCC->APB1ENR |= 1 << 28;    /* Ê¹ÄÜµçÔ´Ê±ÖÓ */
-    PWR->CSR |= 1 << 8;         /* ÉèÖÃWKUPÓÃÓÚ»½ĞÑ */
-    PWR->CR |= 1 << 2;          /* Çå³ıWKUP ±êÖ¾ */
-    PWR->CR |= 1 << 1;          /* PDDS = 1, ÔÊĞí½øÈëÉî¶ÈË¯ÃßÄ£Ê½(PDDS) */
-    SCB->SCR |= 1 << 2;         /* Ê¹ÄÜSLEEPDEEPÎ» (SYS->CTRL) */
-    sys_wfi_set();              /* Ö´ĞĞWFIÖ¸Áî, ½øÈë´ı»úÄ£Ê½ */
+    RCC->APB1ENR |= 1 << 28;    /* ä½¿èƒ½ç”µæºæ—¶é’Ÿ */
+    PWR->CSR |= 1 << 8;         /* è®¾ç½®WKUPç”¨äºå”¤é†’ */
+    PWR->CR |= 1 << 2;          /* æ¸…é™¤WKUP æ ‡å¿— */
+    PWR->CR |= 1 << 1;          /* PDDS = 1, å…è®¸è¿›å…¥æ·±åº¦ç¡çœ æ¨¡å¼(PDDS) */
+    SCB->SCR |= 1 << 2;         /* ä½¿èƒ½SLEEPDEEPä½ (SYS->CTRL) */
+    sys_wfi_set();              /* æ‰§è¡ŒWFIæŒ‡ä»¤, è¿›å…¥å¾…æœºæ¨¡å¼ */
 }
 
 /**
- * @brief       ÏµÍ³Èí¸´Î»
- * @param       ÎŞ
- * @retval      ÎŞ
+ * @brief       ç³»ç»Ÿè½¯å¤ä½
+ * @param       æ— 
+ * @retval      æ— 
  */
 void sys_soft_reset(void)
 {
@@ -316,33 +316,33 @@ void sys_soft_reset(void)
 }
 
 /**
- * @brief       Ê±ÖÓÉèÖÃº¯Êı
- * @param       plln: Ö÷PLL±¶ÆµÏµÊı(PLL±¶Æµ), È¡Öµ·¶Î§: 64~432.
- * @param       pllm: Ö÷PLLºÍÒôÆµPLLÔ¤·ÖÆµÏµÊı(½øPLLÖ®Ç°µÄ·ÖÆµ), È¡Öµ·¶Î§: 2~63.
- * @param       pllp: Ö÷PLLµÄp·ÖÆµÏµÊı(PLLÖ®ºóµÄ·ÖÆµ), ·ÖÆµºó×÷ÎªÏµÍ³Ê±ÖÓ, È¡Öµ·¶Î§: 2, 4, 6, 8.(½öÏŞÕâ4¸öÖµ)
- * @param       pllq: Ö÷PLLµÄq·ÖÆµÏµÊı(PLLÖ®ºóµÄ·ÖÆµ), È¡Öµ·¶Î§: 2~15.
+ * @brief       æ—¶é’Ÿè®¾ç½®å‡½æ•°
+ * @param       plln: ä¸»PLLå€é¢‘ç³»æ•°(PLLå€é¢‘), å–å€¼èŒƒå›´: 64~432.
+ * @param       pllm: ä¸»PLLå’ŒéŸ³é¢‘PLLé¢„åˆ†é¢‘ç³»æ•°(è¿›PLLä¹‹å‰çš„åˆ†é¢‘), å–å€¼èŒƒå›´: 2~63.
+ * @param       pllp: ä¸»PLLçš„påˆ†é¢‘ç³»æ•°(PLLä¹‹åçš„åˆ†é¢‘), åˆ†é¢‘åä½œä¸ºç³»ç»Ÿæ—¶é’Ÿ, å–å€¼èŒƒå›´: 2, 4, 6, 8.(ä»…é™è¿™4ä¸ªå€¼)
+ * @param       pllq: ä¸»PLLçš„qåˆ†é¢‘ç³»æ•°(PLLä¹‹åçš„åˆ†é¢‘), å–å€¼èŒƒå›´: 2~15.
  * @note
  *
- *              Fvco: VCOÆµÂÊ
- *              Fsys: ÏµÍ³Ê±ÖÓÆµÂÊ, Ò²ÊÇÖ÷PLLµÄp·ÖÆµÊä³öÊ±ÖÓÆµÂÊ
- *              Fq:   Ö÷PLLµÄq·ÖÆµÊä³öÊ±ÖÓÆµÂÊ
- *              Fs:   Ö÷PLLÊäÈëÊ±ÖÓÆµÂÊ, ¿ÉÒÔÊÇHSI, HSEµÈ.
+ *              Fvco: VCOé¢‘ç‡
+ *              Fsys: ç³»ç»Ÿæ—¶é’Ÿé¢‘ç‡, ä¹Ÿæ˜¯ä¸»PLLçš„påˆ†é¢‘è¾“å‡ºæ—¶é’Ÿé¢‘ç‡
+ *              Fq:   ä¸»PLLçš„qåˆ†é¢‘è¾“å‡ºæ—¶é’Ÿé¢‘ç‡
+ *              Fs:   ä¸»PLLè¾“å…¥æ—¶é’Ÿé¢‘ç‡, å¯ä»¥æ˜¯HSI, HSEç­‰.
  *              Fvco = Fs * (plln / pllm);
  *              Fsys = Fvco / pllp = Fs * (plln / (pllm * pllp));
  *              Fq   = Fvco / pllq = Fs * (plln / (pllm * pllq));
  *
- *              Íâ²¿¾§ÕñÎª 8MµÄÊ±ºò, ÍÆ¼öÖµ: plln = 336, pllm = 8, pllp = 2, pllq = 7.
- *              µÃµ½:Fvco = 8 * (336 / 8) = 336Mhz
+ *              å¤–éƒ¨æ™¶æŒ¯ä¸º 8Mçš„æ—¶å€™, æ¨èå€¼: plln = 336, pllm = 8, pllp = 2, pllq = 7.
+ *              å¾—åˆ°:Fvco = 8 * (336 / 8) = 336Mhz
  *                   Fsys = pll_p_ck = 336 / 2 = 168Mhz
  *                   Fq   = pll_q_ck = 336 / 7 = 48Mhz
  *
- *              F407Ä¬ÈÏĞèÒªÅäÖÃµÄÆµÂÊÈçÏÂ:
- *              CPUÆµÂÊ(HCLK) = pll_p_ck = 168Mhz
+ *              F407é»˜è®¤éœ€è¦é…ç½®çš„é¢‘ç‡å¦‚ä¸‹:
+ *              CPUé¢‘ç‡(HCLK) = pll_p_ck = 168Mhz
  *              AHB1/2/3(rcc_hclk1/2/3) = 168Mhz
  *              APB1(rcc_pclk1) = pll_p_ck / 4 = 42Mhz
  *              APB1(rcc_pclk2) = pll_p_ck / 2 = 84Mhz
  *
- * @retval      ´íÎó´úÂë: 0, ³É¹¦; 1, HSE´íÎó; 2, PLL1´íÎó; 3, PLL2´íÎó; 4, ÇĞ»»Ê±ÖÓ´íÎó;
+ * @retval      é”™è¯¯ä»£ç : 0, æˆåŠŸ; 1, HSEé”™è¯¯; 2, PLL1é”™è¯¯; 3, PLL2é”™è¯¯; 4, åˆ‡æ¢æ—¶é’Ÿé”™è¯¯;
  */
 uint8_t sys_clock_set(uint32_t plln, uint32_t pllm, uint32_t pllp, uint32_t pllq)
 {
@@ -350,62 +350,62 @@ uint8_t sys_clock_set(uint32_t plln, uint32_t pllm, uint32_t pllp, uint32_t pllq
     uint8_t retval = 0;
     uint8_t swsval = 0;
 
-    RCC->CR |= 1 << 16; /* HSEON = 1, ¿ªÆôHSE */
+    RCC->CR |= 1 << 16; /* HSEON = 1, å¼€å¯HSE */
 
     while (((RCC->CR & (1 << 17)) == 0) && (retry < 0X7FFF))
     {
-        retry++;        /* µÈ´ıHSE RDY */
+        retry++;        /* ç­‰å¾…HSE RDY */
     }
 
     if (retry == 0X7FFF)
     {
-        retval = 1;     /* HSEÎŞ·¨¾ÍĞ÷ */
+        retval = 1;     /* HSEæ— æ³•å°±ç»ª */
     }
     else
     {
-        RCC->APB1ENR |= 1 << 28;                /* µçÔ´½Ó¿ÚÊ±ÖÓÊ¹ÄÜ */
-        PWR->CR |= 3 << 14;                     /* ¸ßĞÔÄÜÄ£Ê½,Ê±ÖÓ¿Éµ½168Mhz */
+        RCC->APB1ENR |= 1 << 28;                /* ç”µæºæ¥å£æ—¶é’Ÿä½¿èƒ½ */
+        PWR->CR |= 3 << 14;                     /* é«˜æ€§èƒ½æ¨¡å¼,æ—¶é’Ÿå¯åˆ°168Mhz */
         
-        RCC->PLLCFGR |= 0X3F & pllm;            /* ÉèÖÃÖ÷PLLÔ¤·ÖÆµÏµÊı,  PLLM[5:0]: 2~63 */
-        RCC->PLLCFGR |= plln << 6;              /* ÉèÖÃÖ÷PLL±¶ÆµÏµÊı,    PLLN[8:0]: 192~432 */
-        RCC->PLLCFGR |= ((pllp >> 1) - 1) << 16;/* ÉèÖÃÖ÷PLLµÄp·ÖÆµÏµÊı, PLLP[1:0]: 0~3, ´ú±í2~8·ÖÆµ */
-        RCC->PLLCFGR |= pllq << 24;             /* ÉèÖÃÖ÷PLLµÄq·ÖÆµÏµÊı, PLLQ[3:0]: 2~15 */
-        RCC->PLLCFGR |= 1 << 22;                /* ÉèÖÃÖ÷PLLµÄÊ±ÖÓÔ´À´×ÔHSE */
+        RCC->PLLCFGR |= 0X3F & pllm;            /* è®¾ç½®ä¸»PLLé¢„åˆ†é¢‘ç³»æ•°,  PLLM[5:0]: 2~63 */
+        RCC->PLLCFGR |= plln << 6;              /* è®¾ç½®ä¸»PLLå€é¢‘ç³»æ•°,    PLLN[8:0]: 192~432 */
+        RCC->PLLCFGR |= ((pllp >> 1) - 1) << 16;/* è®¾ç½®ä¸»PLLçš„påˆ†é¢‘ç³»æ•°, PLLP[1:0]: 0~3, ä»£è¡¨2~8åˆ†é¢‘ */
+        RCC->PLLCFGR |= pllq << 24;             /* è®¾ç½®ä¸»PLLçš„qåˆ†é¢‘ç³»æ•°, PLLQ[3:0]: 2~15 */
+        RCC->PLLCFGR |= 1 << 22;                /* è®¾ç½®ä¸»PLLçš„æ—¶é’Ÿæºæ¥è‡ªHSE */
 
-        RCC->CFGR |= 0 << 4;                    /* HPRE[3:0]  = 0, AHB  ²»·ÖÆµ, rcc_hclk1/2/3 = pll_p_ck */
-        RCC->CFGR |= 5 << 10;                   /* PPRE1[2:0] = 5, APB1 4·ÖÆµ   rcc_pclk1 = pll_p_ck / 4 */
-        RCC->CFGR |= 4 << 13;                   /* PPRE2[2:0] = 4, APB2 2·ÖÆµ   rcc_pclk2 = pll_p_ck / 2 */
+        RCC->CFGR |= 0 << 4;                    /* HPRE[3:0]  = 0, AHB  ä¸åˆ†é¢‘, rcc_hclk1/2/3 = pll_p_ck */
+        RCC->CFGR |= 5 << 10;                   /* PPRE1[2:0] = 5, APB1 4åˆ†é¢‘   rcc_pclk1 = pll_p_ck / 4 */
+        RCC->CFGR |= 4 << 13;                   /* PPRE2[2:0] = 4, APB2 2åˆ†é¢‘   rcc_pclk2 = pll_p_ck / 2 */
 
-        RCC->CR |= 1 << 24;                     /* ´ò¿ªÖ÷PLL */
+        RCC->CR |= 1 << 24;                     /* æ‰“å¼€ä¸»PLL */
 
         retry = 0;
-        while ((RCC->CR & (1 << 25)) == 0)      /* µÈ´ıPLL×¼±¸ºÃ */
+        while ((RCC->CR & (1 << 25)) == 0)      /* ç­‰å¾…PLLå‡†å¤‡å¥½ */
         {
             retry++;
 
             if (retry > 0X1FFFFF)
             {
-                retval = 2;                     /* Ö÷PLLÎŞ·¨¾ÍĞ÷ */
+                retval = 2;                     /* ä¸»PLLæ— æ³•å°±ç»ª */
                 break;
             }
         }
 
-        FLASH->ACR |= 1 << 8;                   /* Ö¸ÁîÔ¤È¡Ê¹ÄÜ */
-        FLASH->ACR |= 1 << 9;                   /* Ö¸ÁîcacheÊ¹ÄÜ */
-        FLASH->ACR |= 1 << 10;                  /* Êı¾İcacheÊ¹ÄÜ */
-        FLASH->ACR |= 5 << 0;                   /* 5¸öCPUµÈ´ıÖÜÆÚ */
+        FLASH->ACR |= 1 << 8;                   /* æŒ‡ä»¤é¢„å–ä½¿èƒ½ */
+        FLASH->ACR |= 1 << 9;                   /* æŒ‡ä»¤cacheä½¿èƒ½ */
+        FLASH->ACR |= 1 << 10;                  /* æ•°æ®cacheä½¿èƒ½ */
+        FLASH->ACR |= 5 << 0;                   /* 5ä¸ªCPUç­‰å¾…å‘¨æœŸ */
         
-        RCC->CFGR |= 2 << 0;                    /* Ñ¡ÔñÖ÷PLL×÷ÎªÏµÍ³Ê±ÖÓ */
+        RCC->CFGR |= 2 << 0;                    /* é€‰æ‹©ä¸»PLLä½œä¸ºç³»ç»Ÿæ—¶é’Ÿ */
         
         retry = 0;
-        while (swsval != 3)                     /* µÈ´ı³É¹¦½«ÏµÍ³Ê±ÖÓÔ´ÇĞ»»Îªpll_p_ck */
+        while (swsval != 3)                     /* ç­‰å¾…æˆåŠŸå°†ç³»ç»Ÿæ—¶é’Ÿæºåˆ‡æ¢ä¸ºpll_p_ck */
         {
-            swsval = (RCC->CFGR & 0X0C) >> 2;   /* »ñÈ¡SWS[1:0]µÄ×´Ì¬, ÅĞ¶ÏÊÇ·ñÇĞ»»³É¹¦ */
+            swsval = (RCC->CFGR & 0X0C) >> 2;   /* è·å–SWS[1:0]çš„çŠ¶æ€, åˆ¤æ–­æ˜¯å¦åˆ‡æ¢æˆåŠŸ */
             retry++;
 
             if (retry > 0X1FFFFF)
             {
-                retval = 4; /* ÎŞ·¨ÇĞ»»Ê±ÖÓ */
+                retval = 4; /* æ— æ³•åˆ‡æ¢æ—¶é’Ÿ */
                 break;
             }
         }
@@ -415,23 +415,23 @@ uint8_t sys_clock_set(uint32_t plln, uint32_t pllm, uint32_t pllp, uint32_t pllq
 }
 
 /**
- * @brief       ÏµÍ³Ê±ÖÓ³õÊ¼»¯º¯Êı
- * @param       plln: PLL1±¶ÆµÏµÊı(PLL±¶Æµ), È¡Öµ·¶Î§: 4~512.
- * @param       pllm: PLL1Ô¤·ÖÆµÏµÊı(½øPLLÖ®Ç°µÄ·ÖÆµ), È¡Öµ·¶Î§: 2~63.
- * @param       pllp: PLL1µÄp·ÖÆµÏµÊı(PLLÖ®ºóµÄ·ÖÆµ), ·ÖÆµºó×÷ÎªÏµÍ³Ê±ÖÓ, È¡Öµ·¶Î§: 2~128.(ÇÒ±ØĞëÊÇ2µÄ±¶Êı)
- * @param       pllq: PLL1µÄq·ÖÆµÏµÊı(PLLÖ®ºóµÄ·ÖÆµ), È¡Öµ·¶Î§: 1~128.
- * @retval      ÎŞ
+ * @brief       ç³»ç»Ÿæ—¶é’Ÿåˆå§‹åŒ–å‡½æ•°
+ * @param       plln: PLL1å€é¢‘ç³»æ•°(PLLå€é¢‘), å–å€¼èŒƒå›´: 4~512.
+ * @param       pllm: PLL1é¢„åˆ†é¢‘ç³»æ•°(è¿›PLLä¹‹å‰çš„åˆ†é¢‘), å–å€¼èŒƒå›´: 2~63.
+ * @param       pllp: PLL1çš„påˆ†é¢‘ç³»æ•°(PLLä¹‹åçš„åˆ†é¢‘), åˆ†é¢‘åä½œä¸ºç³»ç»Ÿæ—¶é’Ÿ, å–å€¼èŒƒå›´: 2~128.(ä¸”å¿…é¡»æ˜¯2çš„å€æ•°)
+ * @param       pllq: PLL1çš„qåˆ†é¢‘ç³»æ•°(PLLä¹‹åçš„åˆ†é¢‘), å–å€¼èŒƒå›´: 1~128.
+ * @retval      æ— 
  */
 void sys_stm32_clock_init(uint32_t plln, uint32_t pllm, uint32_t pllp, uint32_t pllq)
 {
-    RCC->CR = 0x00000001;           /* ÉèÖÃHISON, ¿ªÆôÄÚ²¿¸ßËÙRCÕñµ´£¬ÆäËûÎ»È«ÇåÁã */
-    RCC->CFGR = 0x00000000;         /* CFGRÇåÁã */
-    RCC->PLLCFGR = 0x00000000;      /* PLLCFGRÇåÁã */
-    RCC->CIR = 0x00000000;          /* CIRÇåÁã */
+    RCC->CR = 0x00000001;           /* è®¾ç½®HISON, å¼€å¯å†…éƒ¨é«˜é€ŸRCæŒ¯è¡ï¼Œå…¶ä»–ä½å…¨æ¸…é›¶ */
+    RCC->CFGR = 0x00000000;         /* CFGRæ¸…é›¶ */
+    RCC->PLLCFGR = 0x00000000;      /* PLLCFGRæ¸…é›¶ */
+    RCC->CIR = 0x00000000;          /* CIRæ¸…é›¶ */
     
-    sys_clock_set(plln, pllm, pllp, pllq);  /* ÉèÖÃÊ±ÖÓ */
+    sys_clock_set(plln, pllm, pllp, pllq);  /* è®¾ç½®æ—¶é’Ÿ */
 
-    /* ÅäÖÃÖĞ¶ÏÏòÁ¿Æ«ÒÆ */
+    /* é…ç½®ä¸­æ–­å‘é‡åç§» */
 #ifdef  VECT_TAB_RAM
     sys_nvic_set_vector_table(SRAM_BASE, 0x0);
 #else

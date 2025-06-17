@@ -10,14 +10,14 @@
 #define SQRT3_BY_2  	0.86602540378f
 
 #define RAMPSTEP 			0.01
-#define MAXSPEED 			5					//µ¥Î» rad/s  2*2pi/60=2*2*180/60=12¶È/s
+#define MAXSPEED 			5					//å•ä½ rad/s  2*2pi/60=2*2*180/60=12åº¦/s
 #define Ts 						0.001			//1ms
-#define Vref 					12				//µçÔ´µçÑ¹12v
-#define Vrefby2 			6					//µçÔ´µçÑ¹12v
+#define Vref 					12				//ç”µæºç”µå‹12v
+#define Vrefby2 			6					//ç”µæºç”µå‹12v
 
 #define _constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
 
-// µçÁ÷²ÉÑù½á¹¹Ìå
+// ç”µæµé‡‡æ ·ç»“æ„ä½“
 typedef struct {
     float ia;
     float ib;
@@ -25,51 +25,51 @@ typedef struct {
 } PhaseCurrent_t;
 
 
-// µçÁ÷²ÉÑù½á¹¹Ìå
+// ç”µæµé‡‡æ ·ç»“æ„ä½“
 typedef struct {
     float va;
     float vb;
     float vc;
 } PhaseVoltage_t;
 
-// µçÁ÷²ÉÑù½á¹¹Ìå
+// ç”µæµé‡‡æ ·ç»“æ„ä½“
 typedef struct {
     uint16_t ccra;
     uint16_t ccrb;
     uint16_t ccrc;
 } PhaseCcr_t;
 
-// µçÑ¹ÏòÁ¿½á¹¹Ìå
+// ç”µå‹å‘é‡ç»“æ„ä½“
 typedef struct {
     float vd;
     float vq;
 } VoltageDQ_t;
 
-// µçÁ÷ÏòÁ¿½á¹¹Ìå
+// ç”µæµå‘é‡ç»“æ„ä½“
 typedef struct {
     float id;
     float iq;
 } CurrentDQ_t;
 
-// µçÑ¹ÏòÁ¿½á¹¹Ìå
+// ç”µå‹å‘é‡ç»“æ„ä½“
 typedef struct {
     float valpha;
     float vbeta;
 } Voltageabeta_t;
 
-// µçÁ÷ÏòÁ¿½á¹¹Ìå
+// ç”µæµå‘é‡ç»“æ„ä½“
 typedef struct {
     float ialpha;
     float ibeta;
 } Currentabeta_t;
 
-// ±àÂëÆ÷·´À¡½á¹¹Ìå
+// ç¼–ç å™¨åé¦ˆç»“æ„ä½“
 typedef struct {
-    float angle_elec;  // µç½Ç¶È
-    float speed_rpm;   // ×ªËÙ£¨¿ÉÑ¡£©
+    float angle_elec;  // ç”µè§’åº¦
+    float speed_rpm;   // è½¬é€Ÿï¼ˆå¯é€‰ï¼‰
 } MotorFeedback_t;
 
-// PI ¿ØÖÆÆ÷½á¹¹Ìå
+// PI æ§åˆ¶å™¨ç»“æ„ä½“
 typedef struct {
     float kp;
     float ki;
@@ -77,35 +77,35 @@ typedef struct {
     float output_limit;
 } PI_Controller_t;
 
-// »¬Ä£¹Û²âÆ÷²ÎÊı½á¹¹
+// æ»‘æ¨¡è§‚æµ‹å™¨å‚æ•°ç»“æ„
 typedef struct {
-	//·½±ã²éÕÒÖğ¸öÁĞ³ö
-		uint16_t Poles;     	// µç»ú¼«¶ÔÊı
-		uint16_t KV;					//KVÖµ
-		float Maxcurrent;			//×î´ó¿É³ĞÊÜµçÁ÷
-		float Maxvoltage;			//×î´óµçÑ¹
+	//æ–¹ä¾¿æŸ¥æ‰¾é€ä¸ªåˆ—å‡º
+		uint16_t Poles;     	// ç”µæœºæå¯¹æ•°
+		uint16_t KV;					//KVå€¼
+		float Maxcurrent;			//æœ€å¤§å¯æ‰¿å—ç”µæµ
+		float Maxvoltage;			//æœ€å¤§ç”µå‹
 		float Phaseresitance;
 		float Wireresistance;
 		float WireLs;
 		float	PhaseLs;
 	
-    float Rs;           	// ¶¨×Óµç×è (¦¸)
-    float Ls;          	 	// ¶¨×Óµç¸Ğ (H)
-    float Kslf;        	 	// »¬Ä£ÔöÒæ
-    float Freq;         	// PWMÆµÂÊ (Hz)
-    float LPF_cutoff;   	// µÍÍ¨ÂË²¨Æ÷½ØÖ¹ÆµÂÊ (Hz)
-    float sat_boundary; 	// ±¥ºÍº¯Êı±ß½çÖµ
+    float Rs;           	// å®šå­ç”µé˜» (Î©)
+    float Ls;          	 	// å®šå­ç”µæ„Ÿ (H)
+    float Kslf;        	 	// æ»‘æ¨¡å¢ç›Š
+    float Freq;         	// PWMé¢‘ç‡ (Hz)
+    float LPF_cutoff;   	// ä½é€šæ»¤æ³¢å™¨æˆªæ­¢é¢‘ç‡ (Hz)
+    float sat_boundary; 	// é¥±å’Œå‡½æ•°è¾¹ç•Œå€¼
 } Motor_Params;
 
-// µç»ú¿ØÖÆ×´Ì¬»ú
+// ç”µæœºæ§åˆ¶çŠ¶æ€æœº
 typedef enum {
-    MOTOR_STOPPED,      // µç»úÍ£Ö¹
-    MOTOR_ALIGNMENT,    // Ô¤¶¨Î»
-    MOTOR_OPEN_LOOP,    // ¿ª»·Æô¶¯
-    MOTOR_CLOSED_LOOP   // ±Õ»·ÔËĞĞ
+    MOTOR_STOPPED,      // ç”µæœºåœæ­¢
+    MOTOR_ALIGNMENT,    // é¢„å®šä½
+    MOTOR_OPEN_LOOP,    // å¼€ç¯å¯åŠ¨
+    MOTOR_CLOSED_LOOP   // é—­ç¯è¿è¡Œ
 } Motor_State;
 
-// µç»ú¿ØÖÆ×´Ì¬»ú
+// ç”µæœºæ§åˆ¶çŠ¶æ€æœº
 typedef struct {
 	float targetspeed;
 	float targetposition;

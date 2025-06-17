@@ -3,83 +3,83 @@
 
 
 /**
- * @brief       ´®¿ÚTX DMA³õÊ¼»¯º¯Êı
- *   @note      ÕâÀïµÄ´«ÊäĞÎÊ½ÊÇ¹Ì¶¨µÄ, ÕâµãÒª¸ù¾İ²»Í¬µÄÇé¿öÀ´ĞŞ¸Ä
- *              ´Ó´æ´¢Æ÷ -> ÍâÉèÄ£Ê½/8Î»Êı¾İ¿í¶È/´æ´¢Æ÷ÔöÁ¿Ä£Ê½
+ * @brief       ä¸²å£TX DMAåˆå§‹åŒ–å‡½æ•°
+ *   @note      è¿™é‡Œçš„ä¼ è¾“å½¢å¼æ˜¯å›ºå®šçš„, è¿™ç‚¹è¦æ ¹æ®ä¸åŒçš„æƒ…å†µæ¥ä¿®æ”¹
+ *              ä»å­˜å‚¨å™¨ -> å¤–è®¾æ¨¡å¼/8ä½æ•°æ®å®½åº¦/å­˜å‚¨å™¨å¢é‡æ¨¡å¼
  *
- * @param       dma_streamx : DMAÊı¾İÁ÷,DMA1_Stream0~7/DMA2_Stream0~7
- * @param       ch         :  DMAÍ¨µÀÑ¡Ôñ,·¶Î§:1~115(Ïê¼û<<STM32H7xx²Î¿¼ÊÖ²á>>16.3.2½Ú,Table 116)
- * @param       par         : ÍâÉèµØÖ·
- * @param       mar         : ´æ´¢Æ÷µØÖ·
- * @retval      ÎŞ
+ * @param       dma_streamx : DMAæ•°æ®æµ,DMA1_Stream0~7/DMA2_Stream0~7
+ * @param       ch         :  DMAé€šé“é€‰æ‹©,èŒƒå›´:1~115(è¯¦è§<<STM32H7xxå‚è€ƒæ‰‹å†Œ>>16.3.2èŠ‚,Table 116)
+ * @param       par         : å¤–è®¾åœ°å€
+ * @param       mar         : å­˜å‚¨å™¨åœ°å€
+ * @retval      æ— 
  */
 void dma_usart_tx_config(DMA_Stream_TypeDef *dma_streamx, uint8_t ch, uint32_t par, uint32_t mar)
 {
-    /* DMA»ù±¾ÅäÖÃ °üÀ¨Êı¾İÁ÷/Í¨µÀ/ÍâÉèµØÖ·/´æ´¢Æ÷µØÖ·µÈ */
+    /* DMAåŸºæœ¬é…ç½® åŒ…æ‹¬æ•°æ®æµ/é€šé“/å¤–è®¾åœ°å€/å­˜å‚¨å™¨åœ°å€ç­‰ */
     dma_basic_config(dma_streamx, ch, par, mar, 0);
 
-    /* DMAÌØ¶¨²ÎÊı¾ßÌåÅäÖÃ */
-    dma_streamx->CR |= 1 << 6;      /* ´æ´¢Æ÷µ½ÍâÉèÄ£Ê½ */
-    dma_streamx->CR |= 0 << 8;      /* ·ÇÑ­»·Ä£Ê½(¼´Ê¹ÓÃÆÕÍ¨Ä£Ê½) */
-    dma_streamx->CR |= 0 << 9;      /* ÍâÉè·ÇÔöÁ¿Ä£Ê½ */
-    dma_streamx->CR |= 1 << 10;     /* ´æ´¢Æ÷ÔöÁ¿Ä£Ê½ */
-    dma_streamx->CR |= 0 << 11;     /* ÍâÉèÊı¾İ³¤¶È:8Î» */
-    dma_streamx->CR |= 0 << 13;     /* ´æ´¢Æ÷Êı¾İ³¤¶È:8Î» */
-    dma_streamx->CR |= 1 << 16;     /* ÖĞµÈÓÅÏÈ¼¶ */
-    dma_streamx->CR |= 0 << 21;     /* ÍâÉèÍ»·¢µ¥´Î´«Êä */
-    dma_streamx->CR |= 0 << 23;     /* ´æ´¢Æ÷Í»·¢µ¥´Î´«Êä */
+    /* DMAç‰¹å®šå‚æ•°å…·ä½“é…ç½® */
+    dma_streamx->CR |= 1 << 6;      /* å­˜å‚¨å™¨åˆ°å¤–è®¾æ¨¡å¼ */
+    dma_streamx->CR |= 0 << 8;      /* éå¾ªç¯æ¨¡å¼(å³ä½¿ç”¨æ™®é€šæ¨¡å¼) */
+    dma_streamx->CR |= 0 << 9;      /* å¤–è®¾éå¢é‡æ¨¡å¼ */
+    dma_streamx->CR |= 1 << 10;     /* å­˜å‚¨å™¨å¢é‡æ¨¡å¼ */
+    dma_streamx->CR |= 0 << 11;     /* å¤–è®¾æ•°æ®é•¿åº¦:8ä½ */
+    dma_streamx->CR |= 0 << 13;     /* å­˜å‚¨å™¨æ•°æ®é•¿åº¦:8ä½ */
+    dma_streamx->CR |= 1 << 16;     /* ä¸­ç­‰ä¼˜å…ˆçº§ */
+    dma_streamx->CR |= 0 << 21;     /* å¤–è®¾çªå‘å•æ¬¡ä¼ è¾“ */
+    dma_streamx->CR |= 0 << 23;     /* å­˜å‚¨å™¨çªå‘å•æ¬¡ä¼ è¾“ */
     
-    //dma_streamx->FCR = 0X21;      /* FIFO¿ØÖÆ¼Ä´æÆ÷ */
+    //dma_streamx->FCR = 0X21;      /* FIFOæ§åˆ¶å¯„å­˜å™¨ */
 }
 
 /**
- * @brief       DMA»ù±¾ÅäÖÃ
- *   @note      ÕâÀï½ö¶ÔDMAÍê³ÉÒ»Ğ©»ù´¡ĞÔµÄÅäÖÃ, °üÀ¨: DMAÊ±ÖÓÊ¹ÄÜ / ÉèÖÃÍâÉèµØÖ· ºÍ ´æ´¢Æ÷µØÖ·
- *              ÆäËûÅäÖÃ²ÎÊı(CCR¼Ä´æÆ÷), ĞèÓÃ»§×Ô¼ºÁíÍâÊµÏÖ
+ * @brief       DMAåŸºæœ¬é…ç½®
+ *   @note      è¿™é‡Œä»…å¯¹DMAå®Œæˆä¸€äº›åŸºç¡€æ€§çš„é…ç½®, åŒ…æ‹¬: DMAæ—¶é’Ÿä½¿èƒ½ / è®¾ç½®å¤–è®¾åœ°å€ å’Œ å­˜å‚¨å™¨åœ°å€
+ *              å…¶ä»–é…ç½®å‚æ•°(CCRå¯„å­˜å™¨), éœ€ç”¨æˆ·è‡ªå·±å¦å¤–å®ç°
  *
- * @param       dma_streamx : DMA¼°Êı¾İÁ÷, DMA1_Stream0 ~ DMA1_Stream7, DMA2_Stream0 ~ DMA1_Stream7
- * @param       ch          : Í¨µÀx, 0~7
- *                            ¾ßÌåÄ³¸öÍâÉè¶ÔÓ¦ÄÄ¸öDMA, ÄÄ¸öÊı¾İÁ÷, ÄÄ¸öÍ¨µÀ, Çë²Î¿¼<<STM32F4xxÖĞÎÄ²Î¿¼ÊÖ²á>> 9.3.3½Ú
- *                            ±ØĞëÉèÖÃÕıÈ·µÄDMA¼°Í¨µÀ, ²ÅÄÜÕı³£Ê¹ÓÃ! 
- * @param       par         : ÍâÉèµØÖ·
- * @param       m0ar        : ´æ´¢Æ÷0µØÖ·
- * @param       m1ar        : ´æ´¢Æ÷1µØÖ·, Ê¹ÓÃË«»º´æµÄÊ±ºò²Å»áÓÃµ½
- * @retval      ÎŞ
+ * @param       dma_streamx : DMAåŠæ•°æ®æµ, DMA1_Stream0 ~ DMA1_Stream7, DMA2_Stream0 ~ DMA1_Stream7
+ * @param       ch          : é€šé“x, 0~7
+ *                            å…·ä½“æŸä¸ªå¤–è®¾å¯¹åº”å“ªä¸ªDMA, å“ªä¸ªæ•°æ®æµ, å“ªä¸ªé€šé“, è¯·å‚è€ƒ<<STM32F4xxä¸­æ–‡å‚è€ƒæ‰‹å†Œ>> 9.3.3èŠ‚
+ *                            å¿…é¡»è®¾ç½®æ­£ç¡®çš„DMAåŠé€šé“, æ‰èƒ½æ­£å¸¸ä½¿ç”¨! 
+ * @param       par         : å¤–è®¾åœ°å€
+ * @param       m0ar        : å­˜å‚¨å™¨0åœ°å€
+ * @param       m1ar        : å­˜å‚¨å™¨1åœ°å€, ä½¿ç”¨åŒç¼“å­˜çš„æ—¶å€™æ‰ä¼šç”¨åˆ°
+ * @retval      æ— 
  */
 void dma_basic_config(DMA_Stream_TypeDef *dma_streamx,uint32_t ch, uint32_t par, uint32_t m0ar, uint32_t m1ar)
 {
-    if (dma_streamx > DMA1_Stream7)     /* ´óÓÚ DMA1_Stream7, ÔòÎªDMA2µÄÍ¨µÀÁË */
+    if (dma_streamx > DMA1_Stream7)     /* å¤§äº DMA1_Stream7, åˆ™ä¸ºDMA2çš„é€šé“äº† */
     {
-        RCC->AHB1ENR |= 1 << 22;        /* ¿ªÆôDMA2Ê±ÖÓ */
+        RCC->AHB1ENR |= 1 << 22;        /* å¼€å¯DMA2æ—¶é’Ÿ */
     }
     else
     {
-        RCC->AHB1ENR |= 1 << 21;        /* ¿ªÆôDMA1Ê±ÖÓ */
+        RCC->AHB1ENR |= 1 << 21;        /* å¼€å¯DMA1æ—¶é’Ÿ */
     }
 
-    delay_ms(5);                        /* µÈ´ıDMAÊ±ÖÓÎÈ¶¨ */
+    delay_ms(5);                        /* ç­‰å¾…DMAæ—¶é’Ÿç¨³å®š */
 
-    dma_streamx->CR = (ch & 7) << 25;   /* Êı¾İÁ÷Í¨µÀÑ¡Ôñ, 0 ~ 7 */
-    dma_streamx->PAR = par;             /* DMA ÍâÉèµØÖ· */
-    dma_streamx->M0AR = m0ar;           /* DMA ´æ´¢Æ÷0µØÖ· */
-    dma_streamx->M1AR = m1ar;           /* DMA ´æ´¢Æ÷1µØÖ· */
-    dma_streamx->NDTR = 0;              /* DMA ´«Êä³¤¶ÈÇåÁã, ºóĞøÔÚdma_enableº¯ÊıÉèÖÃ */
+    dma_streamx->CR = (ch & 7) << 25;   /* æ•°æ®æµé€šé“é€‰æ‹©, 0 ~ 7 */
+    dma_streamx->PAR = par;             /* DMA å¤–è®¾åœ°å€ */
+    dma_streamx->M0AR = m0ar;           /* DMA å­˜å‚¨å™¨0åœ°å€ */
+    dma_streamx->M1AR = m1ar;           /* DMA å­˜å‚¨å™¨1åœ°å€ */
+    dma_streamx->NDTR = 0;              /* DMA ä¼ è¾“é•¿åº¦æ¸…é›¶, åç»­åœ¨dma_enableå‡½æ•°è®¾ç½® */
 }
 
 /**
- * @brief       ¿ªÆôÒ»´ÎDMA´«Êä
- * @param       dma_streamx : DMAÊı¾İÁ÷,DMA1_Stream0~7/DMA2_Stream0~7
- * @param       ndtr        : Êı¾İ´«ÊäÁ¿
- * @retval      ÎŞ
+ * @brief       å¼€å¯ä¸€æ¬¡DMAä¼ è¾“
+ * @param       dma_streamx : DMAæ•°æ®æµ,DMA1_Stream0~7/DMA2_Stream0~7
+ * @param       ndtr        : æ•°æ®ä¼ è¾“é‡
+ * @retval      æ— 
  */
 void dma_enable(DMA_Stream_TypeDef *dma_streamx, uint16_t ndtr)
 {
-    dma_streamx->CR &= ~(1 << 0);   /* ¹Ø±ÕDMA´«Êä */
+    dma_streamx->CR &= ~(1 << 0);   /* å…³é—­DMAä¼ è¾“ */
 
-    while (dma_streamx->CR & 0X1);  /* È·±£DMA¿ÉÒÔ±»ÉèÖÃ */
+    while (dma_streamx->CR & 0X1);  /* ç¡®ä¿DMAå¯ä»¥è¢«è®¾ç½® */
 
-    dma_streamx->NDTR = ndtr;       /* Òª´«ÊäµÄÊı¾İÏîÊıÄ¿ */
-    dma_streamx->CR |= 1 << 0;      /* ¿ªÆôDMA´«Êä */
+    dma_streamx->NDTR = ndtr;       /* è¦ä¼ è¾“çš„æ•°æ®é¡¹æ•°ç›® */
+    dma_streamx->CR |= 1 << 0;      /* å¼€å¯DMAä¼ è¾“ */
 }
 
 

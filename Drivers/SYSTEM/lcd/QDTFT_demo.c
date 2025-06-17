@@ -11,17 +11,17 @@ void Redraw_Mainmenu(void)
 
 	Lcd_Clear(GRAY0);
 	
-	Gui_DrawFont_GBK16(16,0,BLUE,GRAY0,"È«¶¯µç×Ó¼¼Êõ");
-	Gui_DrawFont_GBK16(16,20,RED,GRAY0,"Òº¾§²âÊÔ³ÌĞò");
+	Gui_DrawFont_GBK16(16,0,BLUE,GRAY0,"å…¨åŠ¨ç”µå­æŠ€æœ¯");
+	Gui_DrawFont_GBK16(16,20,RED,GRAY0,"æ¶²æ™¶æµ‹è¯•ç¨‹åº");
 
 	DisplayButtonUp(15,38,113,58); //x1,y1,x2,y2
-	Gui_DrawFont_GBK16(16,40,YELLOW,GRAY0,"ÑÕÉ«Ìî³ä²âÊÔ");
+	Gui_DrawFont_GBK16(16,40,YELLOW,GRAY0,"é¢œè‰²å¡«å……æµ‹è¯•");
 
 	DisplayButtonUp(15,68,113,88); //x1,y1,x2,y2
-	Gui_DrawFont_GBK16(16,70,BLUE,GRAY0,"ÎÄ×ÖÏÔÊ¾²âÊÔ");
+	Gui_DrawFont_GBK16(16,70,BLUE,GRAY0,"æ–‡å­—æ˜¾ç¤ºæµ‹è¯•");
 
 	DisplayButtonUp(15,98,113,118); //x1,y1,x2,y2
-	Gui_DrawFont_GBK16(16,100,RED,GRAY0,"Í¼Æ¬ÏÔÊ¾²âÊÔ");
+	Gui_DrawFont_GBK16(16,100,RED,GRAY0,"å›¾ç‰‡æ˜¾ç¤ºæµ‹è¯•");
 	delay_ms(1500);
 }
 
@@ -44,13 +44,13 @@ void Num_Test(void)
 void Font_Test(void)
 {
 	Lcd_Clear(GRAY0);
-	Gui_DrawFont_GBK16(16,10,BLUE,GRAY0,"ÎÄ×ÖÏÔÊ¾²âÊÔ");
+	Gui_DrawFont_GBK16(16,10,BLUE,GRAY0,"æ–‡å­—æ˜¾ç¤ºæµ‹è¯•");
 
 	delay_ms(1000);
 	Lcd_Clear(GRAY0);
-	Gui_DrawFont_GBK16(16,30,YELLOW,GRAY0,"µç×Ó¼¼Êõ");
-	Gui_DrawFont_GBK16(16,50,BLUE,GRAY0,"×¨×¢Òº¾§Åú·¢");
-	Gui_DrawFont_GBK16(16,70,RED,GRAY0, "È«³Ì¼¼ÊõÖ§³Ö");
+	Gui_DrawFont_GBK16(16,30,YELLOW,GRAY0,"ç”µå­æŠ€æœ¯");
+	Gui_DrawFont_GBK16(16,50,BLUE,GRAY0,"ä¸“æ³¨æ¶²æ™¶æ‰¹å‘");
+	Gui_DrawFont_GBK16(16,70,RED,GRAY0, "å…¨ç¨‹æŠ€æœ¯æ”¯æŒ");
 	Gui_DrawFont_GBK16(0,100,BLUE,GRAY0,"Tel:11111111111");
 	Gui_DrawFont_GBK16(0,130,RED,GRAY0, "QQ:11111111");	
 	delay_ms(1800);	
@@ -74,21 +74,21 @@ void Color_Test(void)
 	}		
 }
 
-//È¡Ä£·½Ê½ Ë®Æ½É¨Ãè ´Ó×óµ½ÓÒ µÍÎ»ÔÚÇ°
-void showimage(const unsigned char *p) //ÏÔÊ¾40*40 QQÍ¼Æ¬
+//å–æ¨¡æ–¹å¼ æ°´å¹³æ‰«æ ä»å·¦åˆ°å³ ä½ä½åœ¨å‰
+void showimage(const unsigned char *p) //æ˜¾ç¤º40*40 QQå›¾ç‰‡
 {
   	int i,j,k; 
 	unsigned char picH,picL;
-	Lcd_Clear(WHITE); //ÇåÆÁ  
+	Lcd_Clear(WHITE); //æ¸…å±  
 	
 	for(k=0;k<4;k++)
 	{
 	   	for(j=0;j<3;j++)
 		{	
-			Lcd_SetRegion(40*j+2,40*k,40*j+39,40*k+39);		//×ø±êÉèÖÃ
+			Lcd_SetRegion(40*j+2,40*k,40*j+39,40*k+39);		//åæ ‡è®¾ç½®
 		    for(i=0;i<40*40;i++)
 			 {	
-			 	picL=*(p+i*2);	//Êı¾İµÍÎ»ÔÚÇ°
+			 	picL=*(p+i*2);	//æ•°æ®ä½ä½åœ¨å‰
 				picH=*(p+i*2+1);				
 				LCD_WriteData_16Bit(picH<<8|picL);  						
 			 }	
@@ -97,13 +97,13 @@ void showimage(const unsigned char *p) //ÏÔÊ¾40*40 QQÍ¼Æ¬
 }
 void QDTFT_Test_Demo(void)
 {
-	LCD_LED_SET;//Í¨¹ıIO¿ØÖÆ±³¹âÁÁ				
-	Redraw_Mainmenu();//»æÖÆÖ÷²Ëµ¥(²¿·ÖÄÚÈİÓÉÓÚ·Ö±æÂÊ³¬³öÎïÀíÖµ¿ÉÄÜÎŞ·¨ÏÔÊ¾)
-	Color_Test();//¼òµ¥´¿É«Ìî³ä²âÊÔ
-	Num_Test();//ÊıÂë¹Ü×ÖÌå²âÊÔ
-	Font_Test();//ÖĞÓ¢ÎÄÏÔÊ¾²âÊÔ		
-	showimage(gImage_qq);//Í¼Æ¬ÏÔÊ¾Ê¾Àı
+	LCD_LED_SET;//é€šè¿‡IOæ§åˆ¶èƒŒå…‰äº®				
+	Redraw_Mainmenu();//ç»˜åˆ¶ä¸»èœå•(éƒ¨åˆ†å†…å®¹ç”±äºåˆ†è¾¨ç‡è¶…å‡ºç‰©ç†å€¼å¯èƒ½æ— æ³•æ˜¾ç¤º)
+	Color_Test();//ç®€å•çº¯è‰²å¡«å……æµ‹è¯•
+	Num_Test();//æ•°ç ç®¡å­—ä½“æµ‹è¯•
+	Font_Test();//ä¸­è‹±æ–‡æ˜¾ç¤ºæµ‹è¯•		
+	showimage(gImage_qq);//å›¾ç‰‡æ˜¾ç¤ºç¤ºä¾‹
 	delay_ms(1200);
-	LCD_LED_CLR;//IO¿ØÖÆ±³¹âÃğ	
+	LCD_LED_CLR;//IOæ§åˆ¶èƒŒå…‰ç­	
 	
 }

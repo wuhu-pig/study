@@ -1,13 +1,13 @@
 
-//16λBMP 40X40 QQͼ��ȡģ����
-//Image2LCDȡģѡ������
-//ˮƽɨ��
-//16λ
+//16位BMP 40X40 QQ图像取模数据
+//Image2LCD取模选项设置
+//水平扫描
+//16位
 //40X40
-//������ͼ��ͷ����
-//��������
-//�Զ�����
-//��λ��ǰ
+//不包含图像头数据
+//自左至右
+//自顶至底
+//低位在前
 const unsigned char gImage_qq[3200] = { /*0X00,0X10,0X28,0X00,0X28,0X00,0X01,0X1B,*/
 0XDB,0XDE,0X5D,0XEF,0X5D,0XEF,0X7D,0XEF,0X5D,0XEF,0X5D,0XEF,0X5D,0XEF,0X5D,0XEF,
 0X5D,0XEF,0X5D,0XEF,0X5D,0XEF,0X5D,0XEF,0X5D,0XEF,0X5D,0XEF,0X5D,0XEF,0XBE,0XF7,

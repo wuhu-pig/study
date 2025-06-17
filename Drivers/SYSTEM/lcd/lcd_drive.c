@@ -1,34 +1,34 @@
 /******************************************************************************
-//±¾³ÌĞòÊÊÓÃÓëSTM32F103C8
-//              GND   µçÔ´µØ
-//              VCC   ½Ó5V»ò3.3vµçÔ´
-//              SCL   ½ÓPD0£¨SCL£©
-//              SDA   ½ÓPD1£¨SDA£©
-//              RES   ½ÓPD2
-//              DC    ½ÓPD3
-//              CS    ½ÓPD4 
-//							BL		½ÓPD5
+//æœ¬ç¨‹åºé€‚ç”¨ä¸STM32F103C8
+//              GND   ç”µæºåœ°
+//              VCC   æ¥5Væˆ–3.3vç”µæº
+//              SCL   æ¥PD0ï¼ˆSCLï¼‰
+//              SDA   æ¥PD1ï¼ˆSDAï¼‰
+//              RES   æ¥PD2
+//              DC    æ¥PD3
+//              CS    æ¥PD4 
+//							BL		æ¥PD5
 *******************************************************************************/
 #include "./SYSTEM/sys/sys.h"
 #include "./SYSTEM/lcd/lcd_drive.h"
 #include "./SYSTEM/delay/delay.h"
 
-//Òº¾§IO³õÊ¼»¯ÅäÖÃ
+//æ¶²æ™¶IOåˆå§‹åŒ–é…ç½®
 void LCD_GPIO_Init(void)
 {
-		LCD_GPIO_CLK_ENABLE(); /* LCDÊ±ÖÓÊ¹ÄÜ */
+		LCD_GPIO_CLK_ENABLE(); /* LCDæ—¶é’Ÿä½¿èƒ½ */
 
     sys_gpio_set(LCD_GPIO_PORT, LCD_ALL_PIN,
-                 SYS_GPIO_MODE_OUT, SYS_GPIO_OTYPE_PP, SYS_GPIO_SPEED_FAST, SYS_GPIO_PUPD_PU);   /* LCDÒı½ÅÄ£Ê½ÉèÖÃ */
+                 SYS_GPIO_MODE_OUT, SYS_GPIO_OTYPE_PP, SYS_GPIO_SPEED_FAST, SYS_GPIO_PUPD_PU);   /* LCDå¼•è„šæ¨¡å¼è®¾ç½® */
 }
-//ÏòSPI×ÜÏß´«ÊäÒ»¸ö8Î»Êı¾İ
+//å‘SPIæ€»çº¿ä¼ è¾“ä¸€ä¸ª8ä½æ•°æ®
 void  SPI_WriteData(u8 Data)
 {
 	unsigned char i=0;
 	for(i=8;i>0;i--)
 	{
 			if(Data&0x80)	
-			LCD_SDA_SET; //Êä³öÊı¾İ
+			LCD_SDA_SET; //è¾“å‡ºæ•°æ®
 			else LCD_SDA_CLR;
 	   
       LCD_SCL_CLR;       
@@ -37,17 +37,17 @@ void  SPI_WriteData(u8 Data)
 	}
 }
 
-//ÏòÒº¾§ÆÁĞ´Ò»¸ö8Î»Ö¸Áî
+//å‘æ¶²æ™¶å±å†™ä¸€ä¸ª8ä½æŒ‡ä»¤
 void Lcd_WriteIndex(u8 Index)
 {
-   //SPI Ğ´ÃüÁîÊ±Ğò¿ªÊ¼
+   //SPI å†™å‘½ä»¤æ—¶åºå¼€å§‹
    LCD_CS_CLR;
    LCD_RS_CLR;
 	 SPI_WriteData(Index);
    LCD_CS_SET;
 }
 
-//ÏòÒº¾§ÆÁĞ´Ò»¸ö8Î»Êı¾İ
+//å‘æ¶²æ™¶å±å†™ä¸€ä¸ª8ä½æ•°æ®
 void Lcd_WriteData(u8 Data)
 {
    LCD_CS_CLR;
@@ -55,13 +55,13 @@ void Lcd_WriteData(u8 Data)
    SPI_WriteData(Data);
    LCD_CS_SET; 
 }
-//ÏòÒº¾§ÆÁĞ´Ò»¸ö16Î»Êı¾İ
+//å‘æ¶²æ™¶å±å†™ä¸€ä¸ª16ä½æ•°æ®
 void LCD_WriteData_16Bit(u16 Data)
 {
    LCD_CS_CLR;
    LCD_RS_SET;
-	 SPI_WriteData(Data>>8); 	//Ğ´Èë¸ß8Î»Êı¾İ
-	 SPI_WriteData(Data); 			//Ğ´ÈëµÍ8Î»Êı¾İ
+	 SPI_WriteData(Data>>8); 	//å†™å…¥é«˜8ä½æ•°æ®
+	 SPI_WriteData(Data); 			//å†™å…¥ä½8ä½æ•°æ®
    LCD_CS_SET; 
 }
 
@@ -199,10 +199,10 @@ void Lcd_Init(void)
 
 
 /*************************************************
-º¯ÊıÃû£ºLCD_Set_Region
-¹¦ÄÜ£ºÉèÖÃlcdÏÔÊ¾ÇøÓò£¬ÔÚ´ËÇøÓòĞ´µãÊı¾İ×Ô¶¯»»ĞĞ
-Èë¿Ú²ÎÊı£ºxyÆğµãºÍÖÕµã
-·µ»ØÖµ£ºÎŞ
+å‡½æ•°åï¼šLCD_Set_Region
+åŠŸèƒ½ï¼šè®¾ç½®lcdæ˜¾ç¤ºåŒºåŸŸï¼Œåœ¨æ­¤åŒºåŸŸå†™ç‚¹æ•°æ®è‡ªåŠ¨æ¢è¡Œ
+å…¥å£å‚æ•°ï¼šxyèµ·ç‚¹å’Œç»ˆç‚¹
+è¿”å›å€¼ï¼šæ— 
 *************************************************/
 void Lcd_SetRegion(u16 x_start,u16 y_start,u16 x_end,u16 y_end)
 {		
@@ -223,10 +223,10 @@ void Lcd_SetRegion(u16 x_start,u16 y_start,u16 x_end,u16 y_end)
 }
 
 /*************************************************
-º¯ÊıÃû£ºLCD_Set_XY
-¹¦ÄÜ£ºÉèÖÃlcdÏÔÊ¾ÆğÊ¼µã
-Èë¿Ú²ÎÊı£ºxy×ø±ê
-·µ»ØÖµ£ºÎŞ
+å‡½æ•°åï¼šLCD_Set_XY
+åŠŸèƒ½ï¼šè®¾ç½®lcdæ˜¾ç¤ºèµ·å§‹ç‚¹
+å…¥å£å‚æ•°ï¼šxyåæ ‡
+è¿”å›å€¼ï¼šæ— 
 *************************************************/
 void Lcd_SetXY(u16 x,u16 y)
 {
@@ -235,10 +235,10 @@ void Lcd_SetXY(u16 x,u16 y)
 
 	
 /*************************************************
-º¯ÊıÃû£ºLCD_DrawPoint
-¹¦ÄÜ£º»­Ò»¸öµã
-Èë¿Ú²ÎÊı£ºÎŞ
-·µ»ØÖµ£ºÎŞ
+å‡½æ•°åï¼šLCD_DrawPoint
+åŠŸèƒ½ï¼šç”»ä¸€ä¸ªç‚¹
+å…¥å£å‚æ•°ï¼šæ— 
+è¿”å›å€¼ï¼šæ— 
 *************************************************/
 void Gui_DrawPoint(u16 x,u16 y,u16 Data)
 {
@@ -248,24 +248,24 @@ void Gui_DrawPoint(u16 x,u16 y,u16 Data)
 }    
 
 /*****************************************
- º¯Êı¹¦ÄÜ£º¶ÁTFTÄ³Ò»µãµÄÑÕÉ«                          
- ³ö¿Ú²ÎÊı£ºcolor  µãÑÕÉ«Öµ                                 
+ å‡½æ•°åŠŸèƒ½ï¼šè¯»TFTæŸä¸€ç‚¹çš„é¢œè‰²                          
+ å‡ºå£å‚æ•°ï¼šcolor  ç‚¹é¢œè‰²å€¼                                 
 ******************************************/
 unsigned int Lcd_ReadPoint(u16 x,u16 y)
 {
   unsigned int Data;
   Lcd_SetXY(x,y);
 
-  //Lcd_ReadData();//¶ªµôÎŞÓÃ×Ö½Ú
+  //Lcd_ReadData();//ä¸¢æ‰æ— ç”¨å­—èŠ‚
   //Data=Lcd_ReadData();
   Lcd_WriteData(Data);
   return Data;
 }
 /*************************************************
-º¯ÊıÃû£ºLcd_Clear
-¹¦ÄÜ£ºÈ«ÆÁÇåÆÁº¯Êı
-Èë¿Ú²ÎÊı£ºÌî³äÑÕÉ«COLOR
-·µ»ØÖµ£ºÎŞ
+å‡½æ•°åï¼šLcd_Clear
+åŠŸèƒ½ï¼šå…¨å±æ¸…å±å‡½æ•°
+å…¥å£å‚æ•°ï¼šå¡«å……é¢œè‰²COLOR
+è¿”å›å€¼ï¼šæ— 
 *************************************************/
 void Lcd_Clear(u16 Color)               
 {	

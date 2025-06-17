@@ -1,6 +1,6 @@
 #include "pid.h"
 
-// ³õÊ¼»¯PID¿ØÖÆÆ÷
+// åˆå§‹åŒ–PIDæ§åˆ¶å™¨
 void PID_Init(PID_Controller *pid, float Kp, float Ki, float Kd, 
               float output_min, float output_max, float integral_max) {
     pid->Kp = Kp;
@@ -14,31 +14,31 @@ void PID_Init(PID_Controller *pid, float Kp, float Ki, float Kd,
     pid->integral_max = integral_max;
 }
 
-// ¸üĞÂPID¿ØÖÆÆ÷
+// æ›´æ–°PIDæ§åˆ¶å™¨
 float PID_Update(PID_Controller *pid, float setpoint, float measurement, float dt) {
-    // ¼ÆËãÎó²î
+    // è®¡ç®—è¯¯å·®
     float error = setpoint - measurement;
     
-    // ±ÈÀıÏî
+    // æ¯”ä¾‹é¡¹
     float proportional = pid->Kp * error;
     
-    // »ı·ÖÏî£¨´ø¿¹±¥ºÍ£©
+    // ç§¯åˆ†é¡¹ï¼ˆå¸¦æŠ—é¥±å’Œï¼‰
     pid->integral += pid->Ki * error * dt;
     
-    // ÏŞÖÆ»ı·ÖÏî
+    // é™åˆ¶ç§¯åˆ†é¡¹
     if (pid->integral > pid->integral_max) 
         pid->integral = pid->integral_max;
     else if (pid->integral < -pid->integral_max) 
         pid->integral = -pid->integral_max;
     
-    // Î¢·ÖÏî
+    // å¾®åˆ†é¡¹
     float derivative = pid->Kd * (error - pid->prev_error) / dt;
     pid->prev_error = error;
     
-    // ¼ÆËãÊä³ö
+    // è®¡ç®—è¾“å‡º
     pid->output = proportional + pid->integral + derivative;
     
-    // ÏŞÖÆÊä³ö
+    // é™åˆ¶è¾“å‡º
     if (pid->output > pid->output_max) 
         pid->output = pid->output_max;
     else if (pid->output < pid->output_min) 

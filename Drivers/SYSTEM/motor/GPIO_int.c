@@ -1,25 +1,25 @@
 //############################################################
 // FILE: GPIO_int.c
-// Created on: 2017Äê1ÔÂ18ÈÕ
+// Created on: 2017å¹´1æœˆ18æ—¥
 // Author: XQ
 // summary: GPIO_int
-// LED  495RE CANÍ¨Ñ¶IO£¬´®¿ÚÍ¨Ñ¶IO ¶¨Ê±Æ÷1µç»ú¿ØÖÆIO£¬AD¿Ú³õÊ¼»¯ £¬»ô¶ûIO£¬Õı½»±àÂëÆ÷µÄ¶¨Ê±Æ÷IO
-//±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//°æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿
-//DSP/STM32µç»ú¿ØÖÆ¿ª·¢°å
-//Ë¶Àúµç×Ó
-//ÍøÖ·: https://shuolidianzi.taobao.com
-//ĞŞ¸ÄÈÕÆÚ:2017/1/23
-//°æ±¾£ºV17.3-1
+// LED  495RE CANé€šè®¯IOï¼Œä¸²å£é€šè®¯IO å®šæ—¶å™¨1ç”µæœºæ§åˆ¶IOï¼ŒADå£åˆå§‹åŒ– ï¼Œéœå°”IOï¼Œæ­£äº¤ç¼–ç å™¨çš„å®šæ—¶å™¨IO
+//æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
+//ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶
+//DSP/STM32ç”µæœºæ§åˆ¶å¼€å‘æ¿
+//ç¡•å†ç”µå­
+//ç½‘å€: https://shuolidianzi.taobao.com
+//ä¿®æ”¹æ—¥æœŸ:2017/1/23
+//ç‰ˆæœ¬ï¼šV17.3-1
 //Author-QQ: 616264123
-//µç»ú¿ØÖÆQQÈº£º314306105
+//ç”µæœºæ§åˆ¶QQç¾¤ï¼š314306105
 //############################################################
 #include "GPIO_int.h"
 
-void Delay(u32 nCount)	 //¼òµ¥µÄÑÓÊ±º¯Êı
+void Delay(u32 nCount)	 //ç®€å•çš„å»¶æ—¶å‡½æ•°
 {
 	u16 t=10000;
-	for(; nCount != 0; nCount--)//´ËÖÖÑÓÊ±º¯ÊıÊÇºÍ0±È½Ï
+	for(; nCount != 0; nCount--)//æ­¤ç§å»¶æ—¶å‡½æ•°æ˜¯å’Œ0æ¯”è¾ƒ
 	for(;t!=0;t--);
 } 
 
@@ -94,7 +94,7 @@ void Init_PWMDAC_Gpio (void)
 void Init_Gpio_ADC(void)
  {
 	GPIO_InitTypeDef GPIO_InitStructure; 		
- //Ä¸ÏßÆ½¾ùµçÁ÷PA0, BÏàµçÁ÷PA1,  AÏàµçÁ÷PA2,  µçÎ»Æ÷PA3ËÙ¶ÈĞÅºÅÊäÈë, Ä¸ÏßµçÑ¹PB0, ¶Ë¿Ú³õÊ¼»¯ 
+ //æ¯çº¿å¹³å‡ç”µæµPA0, Bç›¸ç”µæµPA1,  Aç›¸ç”µæµPA2,  ç”µä½å™¨PA3é€Ÿåº¦ä¿¡å·è¾“å…¥, æ¯çº¿ç”µå‹PB0, ç«¯å£åˆå§‹åŒ– 
  
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
@@ -109,25 +109,25 @@ void Init_Gpio_TIM1_PWM(void)
  {
 	GPIO_InitTypeDef GPIO_InitStructure; 	
   
-/*Timer1 alternate function full remapping*/ //Timer1±¸ÓÃ¹¦ÄÜÍêÕûµÄÖØĞÂÓ³Éä 
+/*Timer1 alternate function full remapping*/ //Timer1å¤‡ç”¨åŠŸèƒ½å®Œæ•´çš„é‡æ–°æ˜ å°„ 
   GPIO_PinRemapConfig(GPIO_FullRemap_TIM1,ENABLE);
 	
 /* GPIOA,GPIOB, Configuration: Channel 1, 1N, 2, 2N, 3 and 3N Output */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10;//IR2136µÄ¸ß£¬1£¬2£¬3
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8 | GPIO_Pin_9 | GPIO_Pin_10;//IR2136çš„é«˜ï¼Œ1ï¼Œ2ï¼Œ3
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_Init(GPIOA, &GPIO_InitStructure); 
 
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;//IR2136µÍ£¬1N£¬2N£¬3N
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;//IR2136ä½ï¼Œ1Nï¼Œ2Nï¼Œ3N
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_Init(GPIOB, &GPIO_InitStructure); 
 	
-	/* Lock GPIOB Pin9 to Pin 13 *///ÒªËøµÍ¶Ë
+	/* Lock GPIOB Pin9 to Pin 13 *///è¦é”ä½ç«¯
   //GPIO_PinLockConfig(GPIOB, GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15);	 
  // GPIO_StructInit(&GPIO_InitStructure); 
 	
-		/*PB12¶Ë¿Ú×÷ÎªÉ²³µÊäÈë¶Ë¿Ú */ 
+		/*PB12ç«¯å£ä½œä¸ºåˆ¹è½¦è¾“å…¥ç«¯å£ */ 
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
   GPIO_Init(GPIOB, &GPIO_InitStructure);

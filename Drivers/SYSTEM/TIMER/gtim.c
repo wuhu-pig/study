@@ -67,15 +67,15 @@ void RunSystimer(void)
 	   }
 }
 /**
- * @brief       Í¨ÓÃ¶¨Ê±Æ÷TIMXÖÐ¶Ï·þÎñº¯Êý
- * @param       ÎÞ
- * @retval      ÎÞ
+ * @brief       é€šç”¨å®šæ—¶å™¨TIMXä¸­æ–­æœåŠ¡å‡½æ•°
+ * @param       æ— 
+ * @retval      æ— 
  */
 void GTIM_TIMX_INT_IRQHandler(void)
 { 
-    if (GTIM_TIMX_INT->SR & 0X0001)   /* Òç³öÖÐ¶Ï */
+    if (GTIM_TIMX_INT->SR & 0X0001)   /* æº¢å‡ºä¸­æ–­ */
     {
-				GTIM_TIMX_INT->SR &= ~(1 << 0); /* Çå³ýÖÐ¶Ï±êÖ¾Î» */
+				GTIM_TIMX_INT->SR &= ~(1 << 0); /* æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½ */
         
 				TaskTimePare.IntClock_1ms=1;
 //				LED1_TOGGLE();
@@ -88,25 +88,25 @@ void GTIM_TIMX_INT_IRQHandler(void)
 } 
 
 /**
- * @brief       Í¨ÓÃ¶¨Ê±Æ÷TIMX¶¨Ê±ÖÐ¶Ï³õÊ¼»¯º¯Êý
+ * @brief       é€šç”¨å®šæ—¶å™¨TIMXå®šæ—¶ä¸­æ–­åˆå§‹åŒ–å‡½æ•°
  * @note
- *              Í¨ÓÃ¶¨Ê±Æ÷µÄÊ±ÖÓÀ´×ÔAPB1,µ±PPRE1¡Ý2·ÖÆµµÄÊ±ºò
- *              Í¨ÓÃ¶¨Ê±Æ÷µÄÊ±ÖÓÎªAPB1Ê±ÖÓµÄ2±¶, ¶øAPB1Îª42M, ËùÒÔ¶¨Ê±Æ÷Ê±ÖÓ = 84Mhz
- *              ¶¨Ê±Æ÷Òç³öÊ±¼ä¼ÆËã·½·¨: Tout = ((arr + 1) * (psc + 1)) / Ft us.
- *              Ft=¶¨Ê±Æ÷¹¤×÷ÆµÂÊ,µ¥Î»:Mhz
+ *              é€šç”¨å®šæ—¶å™¨çš„æ—¶é’Ÿæ¥è‡ªAPB1,å½“PPRE1â‰¥2åˆ†é¢‘çš„æ—¶å€™
+ *              é€šç”¨å®šæ—¶å™¨çš„æ—¶é’Ÿä¸ºAPB1æ—¶é’Ÿçš„2å€, è€ŒAPB1ä¸º42M, æ‰€ä»¥å®šæ—¶å™¨æ—¶é’Ÿ = 84Mhz
+ *              å®šæ—¶å™¨æº¢å‡ºæ—¶é—´è®¡ç®—æ–¹æ³•: Tout = ((arr + 1) * (psc + 1)) / Ft us.
+ *              Ft=å®šæ—¶å™¨å·¥ä½œé¢‘çŽ‡,å•ä½:Mhz
  *
- * @param       arr: ×Ô¶¯ÖØ×°Öµ¡£
- * @param       psc: Ê±ÖÓÔ¤·ÖÆµÊý
- * @retval      ÎÞ
+ * @param       arr: è‡ªåŠ¨é‡è£…å€¼ã€‚
+ * @param       psc: æ—¶é’Ÿé¢„åˆ†é¢‘æ•°
+ * @retval      æ— 
  */
 void gtim_timx_int_init(uint16_t arr, uint16_t psc)
 {
     GTIM_TIMX_INT_CLK_ENABLE();
-    GTIM_TIMX_INT->ARR = arr;           /* Éè¶¨¼ÆÊýÆ÷×Ô¶¯ÖØ×°Öµ */
-    GTIM_TIMX_INT->PSC = psc;           /* ÉèÖÃÔ¤·ÖÆµÆ÷  */
-    GTIM_TIMX_INT->DIER |= 1 << 0;      /* ÔÊÐí¸üÐÂÖÐ¶Ï */
-    GTIM_TIMX_INT->CR1 |= 1 << 0;       /* Ê¹ÄÜ¶¨Ê±Æ÷TIMX */
-    sys_nvic_init(1, 3, GTIM_TIMX_INT_IRQn, 2); /* ÇÀÕ¼1£¬×ÓÓÅÏÈ¼¶3£¬×é2 */
+    GTIM_TIMX_INT->ARR = arr;           /* è®¾å®šè®¡æ•°å™¨è‡ªåŠ¨é‡è£…å€¼ */
+    GTIM_TIMX_INT->PSC = psc;           /* è®¾ç½®é¢„åˆ†é¢‘å™¨  */
+    GTIM_TIMX_INT->DIER |= 1 << 0;      /* å…è®¸æ›´æ–°ä¸­æ–­ */
+    GTIM_TIMX_INT->CR1 |= 1 << 0;       /* ä½¿èƒ½å®šæ—¶å™¨TIMX */
+    sys_nvic_init(1, 3, GTIM_TIMX_INT_IRQn, 2); /* æŠ¢å 1ï¼Œå­ä¼˜å…ˆçº§3ï¼Œç»„2 */
 }
 
 

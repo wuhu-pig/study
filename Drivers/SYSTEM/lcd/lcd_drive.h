@@ -1,16 +1,16 @@
 //////////////////////////////////////////////////////////////////////////////////	 
-//±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//  ¹¦ÄÜÃèÊö   : 1.8´çLCD 4½Ó¿ÚÑÝÊ¾Àý³Ì(STM32ÏµÁÐ)
+//æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
+//  åŠŸèƒ½æè¿°   : 1.8å¯¸LCD 4æŽ¥å£æ¼”ç¤ºä¾‹ç¨‹(STM32ç³»åˆ—)
 /******************************************************************************
-//±¾³ÌÐòÊÊÓÃÓëSTM32F103C8
-//              GND   µçÔ´µØ
-//              VCC   ½Ó5V»ò3.3vµçÔ´
-//              SCL   ½ÓPD0£¨SCL£©
-//              SDA   ½ÓPD1£¨SDA£©
-//              RES   ½ÓPD2
-//              DC    ½ÓPD3
-//              CS    ½ÓPD4 
-//							BL		½ÓPD5
+//æœ¬ç¨‹åºé€‚ç”¨ä¸ŽSTM32F103C8
+//              GND   ç”µæºåœ°
+//              VCC   æŽ¥5Væˆ–3.3vç”µæº
+//              SCL   æŽ¥PD0ï¼ˆSCLï¼‰
+//              SDA   æŽ¥PD1ï¼ˆSDAï¼‰
+//              RES   æŽ¥PD2
+//              DC    æŽ¥PD3
+//              CS    æŽ¥PD4 
+//							BL		æŽ¥PD5
 *******************************************************************************/
 
 #define X_MAX_PIXEL	        128
@@ -22,13 +22,13 @@
 #define WHITE	0xffff
 #define BLACK	0x0000
 #define YELLOW  0xFFE0
-#define GRAY0   0xEF7D   	//»ÒÉ«0 3165 00110 001011 00101
-#define GRAY1   0x8410      	//»ÒÉ«1      00000 000000 00000
-#define GRAY2   0x4208      	//»ÒÉ«2  1111111111011111
+#define GRAY0   0xEF7D   	//ç°è‰²0 3165 00110 001011 00101
+#define GRAY1   0x8410      	//ç°è‰²1      00000 000000 00000
+#define GRAY2   0x4208      	//ç°è‰²2  1111111111011111
 #define u8 uint8_t
 #define u16 uint16_t
-/* Òý½Å ¶¨Òå */
-#define LCD_GPIO_CLK_ENABLE()          do{ RCC->AHB1ENR |= 1 << 3; }while(0)   /* PD¿ÚÊ±ÖÓÊ¹ÄÜ */
+/* å¼•è„š å®šä¹‰ */
+#define LCD_GPIO_CLK_ENABLE()          do{ RCC->AHB1ENR |= 1 << 3; }while(0)   /* PDå£æ—¶é’Ÿä½¿èƒ½ */
 
 #define LCD_GPIO_PORT                  		GPIOD
 #define LCD_GPIO_SCL_PIN                  SYS_GPIO_PIN0
@@ -50,7 +50,7 @@
 
 //#define LCD_CS_SET(x) LCD_CTRL->ODR=(LCD_CTRL->ODR&~LCD_CS)|(x ? LCD_CS:0)
 
-//Òº¾§¿ØÖÆ¿ÚÖÃ1²Ù×÷Óï¾äºê¶¨Òå
+//æ¶²æ™¶æŽ§åˆ¶å£ç½®1æ“ä½œè¯­å¥å®å®šä¹‰
 #define	LCD_SCL_SET  	sys_gpio_pin_set(LCD_GPIO_PORT, LCD_GPIO_SCL_PIN, 1)   
 #define	LCD_SDA_SET  	sys_gpio_pin_set(LCD_GPIO_PORT, LCD_GPIO_SDA_PIN, 1)   
 #define	LCD_CS_SET  	sys_gpio_pin_set(LCD_GPIO_PORT, LCD_GPIO_CS_PIN, 1)   
@@ -59,7 +59,7 @@
 #define	LCD_LED_SET  	sys_gpio_pin_set(LCD_GPIO_PORT, LCD_GPIO_BLK_PIN, 1)     
 #define	LCD_RS_SET  	sys_gpio_pin_set(LCD_GPIO_PORT, LCD_GPIO_DC_PIN, 1)  
 #define	LCD_RST_SET  	sys_gpio_pin_set(LCD_GPIO_PORT, LCD_GPIO_RES_PIN, 1)  
-//Òº¾§¿ØÖÆ¿ÚÖÃ0²Ù×÷Óï¾äºê¶¨Òå
+//æ¶²æ™¶æŽ§åˆ¶å£ç½®0æ“ä½œè¯­å¥å®å®šä¹‰
 #define	LCD_SCL_CLR  	sys_gpio_pin_set(LCD_GPIO_PORT, LCD_GPIO_SCL_PIN, 0)     
 #define	LCD_SDA_CLR  	sys_gpio_pin_set(LCD_GPIO_PORT, LCD_GPIO_SDA_PIN, 0)    
 #define	LCD_CS_CLR  	sys_gpio_pin_set(LCD_GPIO_PORT, LCD_GPIO_CS_PIN, 0)    

@@ -13,19 +13,19 @@ extern "C" {
 #define ONE_BY_SQRT3 0.57735026919f
 #define SQRT3_BY_2  0.86602540378f
 
-// ¿ìËÙatan2º¯Êı£¨±È±ê×¼atan2¿ì5±¶£©
+// å¿«é€Ÿatan2å‡½æ•°ï¼ˆæ¯”æ ‡å‡†atan2å¿«5å€ï¼‰
 float fast_atan2(float y, float x);
 
-// Clarke±ä»»£¨ÈıÏà¡ú¦Á¦Â£©
+// Clarkeå˜æ¢ï¼ˆä¸‰ç›¸â†’Î±Î²ï¼‰
 void Clarke_Transform(float Ia, float Ib, float Ic, float *Ialpha, float *Ibeta);
 
-// Park±ä»»£¨¦Á¦Â¡údq£©
+// Parkå˜æ¢ï¼ˆÎ±Î²â†’dqï¼‰
 void Park_Transform(float Ialpha, float Ibeta, float theta, float *Id, float *Iq);
 
-// ÄæPark±ä»»£¨dq¡ú¦Á¦Â£©
+// é€†Parkå˜æ¢ï¼ˆdqâ†’Î±Î²ï¼‰
 void Inv_Park_Transform(float Vd, float Vq, float theta, float *Valpha, float *Vbeta);
 
-// SVPWMÉú³É
+// SVPWMç”Ÿæˆ
 void SVPWM_Generate(float Valpha, float Vbeta, float Vdc, 
                     float *Ta, float *Tb, float *Tc);
 

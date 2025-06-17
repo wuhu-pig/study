@@ -8,44 +8,44 @@ extern "C" {
 #include <stdint.h>
 #include <math.h>
 
-// »¬Ä£¹Û²âÆ÷²ÎÊı½á¹¹
+// æ»‘æ¨¡è§‚æµ‹å™¨å‚æ•°ç»“æ„
 typedef struct {
-    float Rs;           // ¶¨×Óµç×è (¦¸)
-    float Ls;           // ¶¨×Óµç¸Ğ (H)
-    float Kslf;         // »¬Ä£ÔöÒæ
-    float Freq;         // PWMÆµÂÊ (Hz)
-    uint16_t POLES;     // µç»ú¼«¶ÔÊı
-    float LPF_cutoff;   // µÍÍ¨ÂË²¨Æ÷½ØÖ¹ÆµÂÊ (Hz)
-    float sat_boundary; // ±¥ºÍº¯Êı±ß½çÖµ
+    float Rs;           // å®šå­ç”µé˜» (Î©)
+    float Ls;           // å®šå­ç”µæ„Ÿ (H)
+    float Kslf;         // æ»‘æ¨¡å¢ç›Š
+    float Freq;         // PWMé¢‘ç‡ (Hz)
+    uint16_t POLES;     // ç”µæœºæå¯¹æ•°
+    float LPF_cutoff;   // ä½é€šæ»¤æ³¢å™¨æˆªæ­¢é¢‘ç‡ (Hz)
+    float sat_boundary; // é¥±å’Œå‡½æ•°è¾¹ç•Œå€¼
 } SMO_Params;
 
-// »¬Ä£¹Û²âÆ÷×´Ì¬½á¹¹
+// æ»‘æ¨¡è§‚æµ‹å™¨çŠ¶æ€ç»“æ„
 typedef struct {
-    float Ialpha_est;   // ¦ÁÖáµçÁ÷¹À¼ÆÖµ
-    float Ibeta_est;    // ¦ÂÖáµçÁ÷¹À¼ÆÖµ
-    float EMF_alpha;    // ¦ÁÖá·´µç¶¯ÊÆ¹À¼ÆÖµ
-    float EMF_beta;     // ¦ÂÖá·´µç¶¯ÊÆ¹À¼ÆÖµ
-    float theta;        // ×ª×ÓÎ»ÖÃ£¨µç½Ç¶È£¬»¡¶È£©
-    float speed;        // ×ªËÙ£¨RPM£©
-    float EMF_alpha_fil; // ÂË²¨ºóµÄ¦ÁÖá·´µç¶¯ÊÆ
-    float EMF_beta_fil;  // ÂË²¨ºóµÄ¦ÂÖá·´µç¶¯ÊÆ
-    float theta_prev;    // Ç°Ò»´Î×ª×ÓÎ»ÖÃ
+    float Ialpha_est;   // Î±è½´ç”µæµä¼°è®¡å€¼
+    float Ibeta_est;    // Î²è½´ç”µæµä¼°è®¡å€¼
+    float EMF_alpha;    // Î±è½´åç”µåŠ¨åŠ¿ä¼°è®¡å€¼
+    float EMF_beta;     // Î²è½´åç”µåŠ¨åŠ¿ä¼°è®¡å€¼
+    float theta;        // è½¬å­ä½ç½®ï¼ˆç”µè§’åº¦ï¼Œå¼§åº¦ï¼‰
+    float speed;        // è½¬é€Ÿï¼ˆRPMï¼‰
+    float EMF_alpha_fil; // æ»¤æ³¢åçš„Î±è½´åç”µåŠ¨åŠ¿
+    float EMF_beta_fil;  // æ»¤æ³¢åçš„Î²è½´åç”µåŠ¨åŠ¿
+    float theta_prev;    // å‰ä¸€æ¬¡è½¬å­ä½ç½®
 } SMO_Handle;
 
-// ³õÊ¼»¯»¬Ä£¹Û²âÆ÷
+// åˆå§‹åŒ–æ»‘æ¨¡è§‚æµ‹å™¨
 void SMO_Init(SMO_Handle *h);
 
-// »¬Ä£¹Û²âÆ÷¸üĞÂ
+// æ»‘æ¨¡è§‚æµ‹å™¨æ›´æ–°
 void SMO_Update(SMO_Handle *h, SMO_Params *params, 
                 float Ia, float Ib, float Ualpha, float Ubeta);
 
-// »ñÈ¡×ª×ÓÎ»ÖÃºÍËÙ¶È
+// è·å–è½¬å­ä½ç½®å’Œé€Ÿåº¦
 void SMO_GetPosition(SMO_Handle *h, SMO_Params *params);
 
-// ·´µç¶¯ÊÆµÍÍ¨ÂË²¨
+// åç”µåŠ¨åŠ¿ä½é€šæ»¤æ³¢
 void SMO_EMF_Filter(SMO_Handle *h, SMO_Params *params);
 
-// ±¥ºÍº¯Êı£¨¼õÉÙ¶¶Õñ£©
+// é¥±å’Œå‡½æ•°ï¼ˆå‡å°‘æŠ–æŒ¯ï¼‰
 float sat(float x, float boundary);
 
 #ifdef __cplusplus

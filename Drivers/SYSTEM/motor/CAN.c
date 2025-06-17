@@ -1,17 +1,17 @@
 //############################################################
 // FILE: CAN.c
-// Created on: 2017Äê1ÔÂ18ÈÕ
+// Created on: 2017å¹´1æœˆ18æ—¥
 // Author: XQ
 // summary: ThreeHall
-//±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//°æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿
-//DSP/STM32µç»ú¿ØÖÆ¿ª·¢°å
-//Ë¶Àúµç×Ó
-//ÍøÖ·: https://shuolidianzi.taobao.com
-//ĞŞ¸ÄÈÕÆÚ:2017/1/23
-//°æ±¾£ºV17.3-1
+//æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
+//ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶
+//DSP/STM32ç”µæœºæ§åˆ¶å¼€å‘æ¿
+//ç¡•å†ç”µå­
+//ç½‘å€: https://shuolidianzi.taobao.com
+//ä¿®æ”¹æ—¥æœŸ:2017/1/23
+//ç‰ˆæœ¬ï¼šV17.3-1
 //Author-QQ: 616264123
-//µç»ú¿ØÖÆQQÈº£º314306105
+//ç”µæœºæ§åˆ¶QQç¾¤ï¼š314306105
 //############################################################
 
 #include "CAN.h"
@@ -30,12 +30,12 @@ void CAN_Config(void)
   NVIC_InitTypeDef NVIC_InitStructure;
   
   NVIC_InitStructure.NVIC_IRQChannel = USB_LP_CAN1_RX0_IRQn;	   //CAN1 RX0?D??
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		   //?¨¤??¨®??¨¨??0
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;			   //¡Á¨®¨®??¨¨???a0
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;		   //?Ã ??Ã³??Ã¨??0
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;			   //Ã—Ã³Ã³??Ã¨???a0
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
   
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1, ENABLE);  // ÖØÒª
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1, ENABLE);  // é‡è¦
    
   CAN_DeInit(CAN1);
   CAN_StructInit(&CAN_InitStructure);
@@ -56,16 +56,16 @@ void CAN_Config(void)
 
   CAN_FilterInitStructure.CAN_FilterNumber=0;						 
   CAN_FilterInitStructure.CAN_FilterMode=CAN_FilterMode_IdMask;		 
-  																  																//1: 1y???¡Â¡Á¨¦x¦Ì?2??32????¡ä??¡Â1¡è¡Á¡Â?¨²¡À¨º¨º?¡¤?¨¢D¡À¨ª?¡ê¨º??¡ê
-  CAN_FilterInitStructure.CAN_FilterScale=CAN_FilterScale_32bit;	 																	//0¡êo1y???¡Â???¨ª?a2??16??¡ê? 1¡êo1y???¡Â???¨ª?a¦Ì£¤??32???¡ê 
+  																  																//1: 1y???Ã·Ã—Ã©xÎ¼?2??32????â€²??Ã·1Â¤Ã—Ã·?ÃºÂ±ÃªÃª?Â·?Ã¡DÂ±Ã­?ï¿¡Ãª??ï¿¡
+  CAN_FilterInitStructure.CAN_FilterScale=CAN_FilterScale_32bit;	 																	//0ï¿¡o1y???Ã·???Ã­?a2??16??ï¿¡? 1ï¿¡o1y???Ã·???Ã­?aÎ¼ï¿¥??32???ï¿¡ 
   CAN_FilterInitStructure.CAN_FilterIdHigh=((CANSRPare.ext_Rece_ID <<3)>>16) &0xffff ;  // 32  0x6420    0x05A0<<5					
   CAN_FilterInitStructure.CAN_FilterIdLow=(CANSRPare.ext_Rece_ID <<3)| CAN_ID_EXT ;  // 0x2461  
   CAN_FilterInitStructure.CAN_FilterMaskIdHigh=0xFFFF ;
   CAN_FilterInitStructure.CAN_FilterMaskIdLow=0XFFF8;
   CAN_FilterInitStructure.CAN_FilterFIFOAssignment=0;				 
-  																	//??¡À?¡ä?¡¤?¦Ì???1?¨¢a¦Ì?FIFO?D?¡ê 0¡êo1y???¡Â¡À?1?¨¢a¦Ì?FIFO0¡ê? 1¡êo1y???¡Â¡À?1?¨¢a¦Ì?FIFO1?¡ê
+  																	//??Â±?â€²?Â·?Î¼???1?Ã¡aÎ¼?FIFO?D?ï¿¡ 0ï¿¡o1y???Ã·Â±?1?Ã¡aÎ¼?FIFO0ï¿¡? 1ï¿¡o1y???Ã·Â±?1?Ã¡aÎ¼?FIFO1?ï¿¡
   CAN_FilterInitStructure.CAN_FilterActivation=ENABLE;				 
-  																	//?¨°??CAN_FMR??¡ä??¡Â¦Ì?FINIT??¨¦¨¨??1o¨®¡ê?2??¨¹DT???¨¤¨®|¦Ì?1y???¡Â??¡ä??¡Â																	//x(CAN_FxR[0:1])?¡ê 0¡êo1y???¡Â¡À???¨®?¡ê? 1¡êo1y???¡Â¡À??¡è???¡ê
+  																	//?Ã²??CAN_FMR??â€²??Ã·Î¼?FINIT??Ã©Ã¨??1oÃ³ï¿¡?2??Ã¼DT???Ã Ã³|Î¼?1y???Ã·??â€²??Ã·																	//x(CAN_FxR[0:1])?ï¿¡ 0ï¿¡o1y???Ã·Â±???Ã³?ï¿¡? 1ï¿¡o1y???Ã·Â±??Â¤???ï¿¡
   CAN_FilterInit(&CAN_FilterInitStructure);
  
   TxMessage.StdId = 0 ;    //      18FA0171
@@ -107,7 +107,7 @@ void CAN_Sendlen(void)
         for(i=0;i<8;i++)						
         TxMessage.Data[i] =  CANSRPare.Can_Send_data[i];	
      
-       CAN_Transmit(CAN1, &TxMessage);         //transmit_mailbox   ÖØÒª 
+       CAN_Transmit(CAN1, &TxMessage);         //transmit_mailbox   é‡è¦ 
        }  
 }
 

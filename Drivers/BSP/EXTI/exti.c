@@ -1,23 +1,23 @@
 /**
  ****************************************************************************************************
  * @file        exti.c
- * @author      ����ԭ���Ŷ�(ALIENTEK)
+ * @author      正点原子团队(ALIENTEK)
  * @version     V1.0
  * @date        2021-12-30
- * @brief       �ⲿ�ж� ��������
- * @license     Copyright (c) 2020-2032, �������������ӿƼ����޹�˾
+ * @brief       外部中断 驱动代码
+ * @license     Copyright (c) 2020-2032, 广州市星翼电子科技有限公司
  ****************************************************************************************************
  * @attention
  *
- * ʵ��ƽ̨:����ԭ�� STM32F407������
- * ������Ƶ:www.yuanzige.com
- * ������̳:www.openedv.com
- * ��˾��ַ:www.alientek.com
- * �����ַ:openedv.taobao.com
+ * 实验平台:正点原子 STM32F407开发板
+ * 在线视频:www.yuanzige.com
+ * 技术论坛:www.openedv.com
+ * 公司网址:www.alientek.com
+ * 购买地址:openedv.taobao.com
  *
- * �޸�˵��
+ * 修改说明
  * V1.0 20211230
- * ��һ�η���
+ * 第一次发布
  *
  ****************************************************************************************************
  */
@@ -31,87 +31,87 @@
 
 
 /**
- * @brief       KEY0 �ⲿ�жϷ������
- * @param       ��
- * @retval      ��
+ * @brief       KEY0 外部中断服务程序
+ * @param       无
+ * @retval      无
  */
 void KEY0_INT_IRQHandler(void)
 {
-    delay_ms(20);                   /* ���� */
-    EXTI->PR = KEY0_INT_GPIO_PIN;   /* ���KEY0�����ж��� ���жϱ�־λ */
+    delay_ms(20);                   /* 消抖 */
+    EXTI->PR = KEY0_INT_GPIO_PIN;   /* 清除KEY0所在中断线 的中断标志位 */
 
     if (KEY0 == 0)
     {
-        LED0_TOGGLE();              /* LED0 ״̬ȡ�� */ 
-        LED1_TOGGLE();              /* LED1 ״̬ȡ�� */ 
+        LED0_TOGGLE();              /* LED0 状态取反 */ 
+        LED1_TOGGLE();              /* LED1 状态取反 */ 
     }
 }
 
 /**
- * @brief       KEY1 �ⲿ�жϷ������
- * @param       ��
- * @retval      ��
+ * @brief       KEY1 外部中断服务程序
+ * @param       无
+ * @retval      无
  */
 void KEY1_INT_IRQHandler(void)
 { 
-    delay_ms(20);                   /* ���� */
-    EXTI->PR = KEY1_INT_GPIO_PIN;   /* ���KEY1�����ж��� ���жϱ�־λ */
+    delay_ms(20);                   /* 消抖 */
+    EXTI->PR = KEY1_INT_GPIO_PIN;   /* 清除KEY1所在中断线 的中断标志位 */
 
     if (KEY1 == 0)
     {
-        LED0_TOGGLE();              /* LED0 ״̬ȡ�� */ 
+        LED0_TOGGLE();              /* LED0 状态取反 */ 
     }
 }
 
 /**
- * @brief       KEY2 �ⲿ�жϷ������
- * @param       ��
- * @retval      ��
+ * @brief       KEY2 外部中断服务程序
+ * @param       无
+ * @retval      无
  */
 void KEY2_INT_IRQHandler(void)
 {
-    delay_ms(20);                   /* ���� */
-    EXTI->PR = KEY2_INT_GPIO_PIN;   /* ���KEY2�����ж��� ���жϱ�־λ */
+    delay_ms(20);                   /* 消抖 */
+    EXTI->PR = KEY2_INT_GPIO_PIN;   /* 清除KEY2所在中断线 的中断标志位 */
 
     if (KEY2 == 0)
     {
-        LED1_TOGGLE();              /* LED1 ״̬ȡ�� */ 
+        LED1_TOGGLE();              /* LED1 状态取反 */ 
     }
 }
 
 /**
- * @brief       WK_UP �ⲿ�жϷ������
- * @param       ��
- * @retval      ��
+ * @brief       WK_UP 外部中断服务程序
+ * @param       无
+ * @retval      无
  */
 void WKUP_INT_IRQHandler(void)
 { 
-    delay_ms(20);                   /* ���� */
-    EXTI->PR = WKUP_INT_GPIO_PIN;   /* ���WKUP�����ж��� ���жϱ�־λ */
+    delay_ms(20);                   /* 消抖 */
+    EXTI->PR = WKUP_INT_GPIO_PIN;   /* 清除WKUP所在中断线 的中断标志位 */
 
     if (WK_UP == 1)
     {
-        BEEP_TOGGLE();              /* LED2 ״̬ȡ�� */ 
+        BEEP_TOGGLE();              /* LED2 状态取反 */ 
     }
 }
 
 /**
- * @brief       �ⲿ�жϳ�ʼ������
- * @param       ��
- * @retval      ��
+ * @brief       外部中断初始化程序
+ * @param       无
+ * @retval      无
  */
 void extix_init(void)
 {
     key_init();
-    sys_nvic_ex_config(KEY0_INT_GPIO_PORT, KEY0_INT_GPIO_PIN, SYS_GPIO_FTIR);   /* KEY0����Ϊ�½��ش����ж� */
-    sys_nvic_ex_config(KEY1_INT_GPIO_PORT, KEY1_INT_GPIO_PIN, SYS_GPIO_FTIR);   /* KEY1����Ϊ�½��ش����ж� */
-    sys_nvic_ex_config(KEY2_INT_GPIO_PORT, KEY2_INT_GPIO_PIN, SYS_GPIO_FTIR);   /* KEY2����Ϊ�½��ش����ж� */
-    sys_nvic_ex_config(WKUP_INT_GPIO_PORT, WKUP_INT_GPIO_PIN, SYS_GPIO_RTIR);   /* WKUP����Ϊ�����ش����ж� */
+    sys_nvic_ex_config(KEY0_INT_GPIO_PORT, KEY0_INT_GPIO_PIN, SYS_GPIO_FTIR);   /* KEY0配置为下降沿触发中断 */
+    sys_nvic_ex_config(KEY1_INT_GPIO_PORT, KEY1_INT_GPIO_PIN, SYS_GPIO_FTIR);   /* KEY1配置为下降沿触发中断 */
+    sys_nvic_ex_config(KEY2_INT_GPIO_PORT, KEY2_INT_GPIO_PIN, SYS_GPIO_FTIR);   /* KEY2配置为下降沿触发中断 */
+    sys_nvic_ex_config(WKUP_INT_GPIO_PORT, WKUP_INT_GPIO_PIN, SYS_GPIO_RTIR);   /* WKUP配置为上升沿触发中断 */
 
-    sys_nvic_init( 0, 2, KEY0_INT_IRQn, 2); /* ��ռ0�������ȼ�2����2 */
-    sys_nvic_init( 1, 2, KEY1_INT_IRQn, 2); /* ��ռ1�������ȼ�2����2 */
-    sys_nvic_init( 2, 2, KEY2_INT_IRQn, 2); /* ��ռ2�������ȼ�2����2 */
-    sys_nvic_init( 3, 2, WKUP_INT_IRQn, 2); /* ��ռ3�������ȼ�2����2 */
+    sys_nvic_init( 0, 2, KEY0_INT_IRQn, 2); /* 抢占0，子优先级2，组2 */
+    sys_nvic_init( 1, 2, KEY1_INT_IRQn, 2); /* 抢占1，子优先级2，组2 */
+    sys_nvic_init( 2, 2, KEY2_INT_IRQn, 2); /* 抢占2，子优先级2，组2 */
+    sys_nvic_init( 3, 2, WKUP_INT_IRQn, 2); /* 抢占3，子优先级2，组2 */
 
 }
 

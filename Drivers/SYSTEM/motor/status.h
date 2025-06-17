@@ -110,7 +110,7 @@ typedef enum
     STATUS_FLEXCAN_BUFF_OUT_OF_RANGE       = 0x1100U,  /*!< The specified MB index is out of the configurable range */
     STATUS_FLEXCAN_NO_TRANSFER_IN_PROGRESS = 0x1101U,  /*!< There is no transmission or reception in progress */
 	STATUS_FLEXCAN_NO_CONFIG_pinmux        =  0x1102,   /*!< There is no configration of Flexcan_pinmux in progress */
-	STATUS_FLEXCAN_OVERRUN_IDFILTER_FIFOCFG        =  0x1103   /*! flexcanmailboxÅäÖÃ³¬³ö·¶Î§*/
+	STATUS_FLEXCAN_OVERRUN_IDFILTER_FIFOCFG        =  0x1103   /*! flexcanmailboxé–°å¶‡ç–†ç“’å‘­åš­é‘¼å†¨æ´¿*/
  
 } status_t;
 

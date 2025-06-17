@@ -8,32 +8,32 @@ extern "C" {
 #include "smo.h"
 #include "pid.h"
 
-// µç»ú¿ØÖÆ×´Ì¬»ú
+// ç”µæœºæ§åˆ¶çŠ¶æ€æœº
 typedef enum {
-    MOTOR_STOPPED,      // µç»úÍ£Ö¹
-    MOTOR_ALIGNMENT,    // Ô¤¶¨Î»
-    MOTOR_OPEN_LOOP,    // ¿ª»·Æô¶¯
-    MOTOR_CLOSED_LOOP   // ±Õ»·ÔËĞĞ
+    MOTOR_STOPPED,      // ç”µæœºåœæ­¢
+    MOTOR_ALIGNMENT,    // é¢„å®šä½
+    MOTOR_OPEN_LOOP,    // å¼€ç¯å¯åŠ¨
+    MOTOR_CLOSED_LOOP   // é—­ç¯è¿è¡Œ
 } Motor_State;
 
-// µç»ú¿ØÖÆ½á¹¹
+// ç”µæœºæ§åˆ¶ç»“æ„
 typedef struct {
-    Motor_State state;          // µ±Ç°×´Ì¬
-    uint32_t start_time;        // Æô¶¯Ê±¼ä
-    float open_loop_angle;      // ¿ª»·½Ç¶È
-    float open_loop_freq;       // ¿ª»·ÆµÂÊ
-    float open_loop_voltage;    // ¿ª»·µçÑ¹
-    SMO_Handle smo;             // »¬Ä£¹Û²âÆ÷
-    SMO_Params smo_params;      // SMO²ÎÊı
-    PID_Controller pid_speed;   // ËÙ¶È»·PID
-    PID_Controller pid_id;      // dÖáµçÁ÷»·PID
-    PID_Controller pid_iq;      // qÖáµçÁ÷»·PID
+    Motor_State state;          // å½“å‰çŠ¶æ€
+    uint32_t start_time;        // å¯åŠ¨æ—¶é—´
+    float open_loop_angle;      // å¼€ç¯è§’åº¦
+    float open_loop_freq;       // å¼€ç¯é¢‘ç‡
+    float open_loop_voltage;    // å¼€ç¯ç”µå‹
+    SMO_Handle smo;             // æ»‘æ¨¡è§‚æµ‹å™¨
+    SMO_Params smo_params;      // SMOå‚æ•°
+    PID_Controller pid_speed;   // é€Ÿåº¦ç¯PID
+    PID_Controller pid_id;      // dè½´ç”µæµç¯PID
+    PID_Controller pid_iq;      // qè½´ç”µæµç¯PID
 } Motor_Control;
 
-// ³õÊ¼»¯µç»ú¿ØÖÆ
+// åˆå§‹åŒ–ç”µæœºæ§åˆ¶
 void MotorControl_Init(Motor_Control *mc);
 
-// µç»ú¿ØÖÆÖ÷Ñ­»·
+// ç”µæœºæ§åˆ¶ä¸»å¾ªç¯
 void MotorControl_Update(Motor_Control *mc, 
                          float Ia, float Ib, float Ic, 
                          float Vdc, uint32_t timestamp);

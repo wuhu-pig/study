@@ -1,17 +1,17 @@
 //############################################################
 // FILE:  Task_function.h
-// Created on: 2017Äê1ÔÂ5ÈÕ
+// Created on: 2017å¹´1æœˆ5æ—¥
 // Author: XQ
 // summary: Header file  and definition
-//±¾³ÌĞòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßĞí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//°æÈ¨ËùÓĞ£¬µÁ°æ±Ø¾¿
-//DSP/STM32µç»ú¿ØÖÆ¿ª·¢°å
-//Ë¶Àúµç×Ó
-//ÍøÖ·: https://shuolidianzi.taobao.com
-//ĞŞ¸ÄÈÕÆÚ:2017/1/23
-//°æ±¾£ºV17.3-1
+//æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºå…¶å®ƒä»»ä½•ç”¨é€”
+//ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶
+//DSP/STM32ç”µæœºæ§åˆ¶å¼€å‘æ¿
+//ç¡•å†ç”µå­
+//ç½‘å€: https://shuolidianzi.taobao.com
+//ä¿®æ”¹æ—¥æœŸ:2017/1/23
+//ç‰ˆæœ¬ï¼šV17.3-1
 //Author-QQ: 616264123
-//µç»ú¿ØÖÆQQÈº£º314306105
+//ç”µæœºæ§åˆ¶QQç¾¤ï¼š314306105
 //############################################################
 
 #ifndef Task_function_H
@@ -21,8 +21,8 @@
 #include "stm32f10x.h" 
 
 typedef struct {
-	    uint8_t    Control_Mode;  // ¿ØÖÆÄ£Ê½  VF=1    ´Ë±àÂë¿ª»·=2      ´Ë±àÂëFOC=3      Èı»ô¶û=4
-	    uint8_t    TripFlagDMC;   //  ¹ıÁ÷ ±£»¤±êÖ¾
+	    uint8_t    Control_Mode;  // æ§åˆ¶æ¨¡å¼  VF=1    æ­¤ç¼–ç å¼€ç¯=2      æ­¤ç¼–ç FOC=3      ä¸‰éœå°”=4
+	    uint8_t    TripFlagDMC;   //  è¿‡æµ ä¿æŠ¤æ ‡å¿—
 	    uint8_t    drive_car;
 	    uint8_t    olddrive_car;
 	    uint8_t    clear_PWMtripz;
@@ -33,7 +33,7 @@ typedef struct {
 
 #define  logic_DEFAULTS  {0,0,0,0,0,0,0,0}
  
-void knob_control(void);   // ĞıÅ¥µçÎ»Æ÷¿ØÖÆ ËÙ¶ÈĞÅºÅ
+void knob_control(void);   // æ—‹é’®ç”µä½å™¨æ§åˆ¶ é€Ÿåº¦ä¿¡å·
 
 #endif  // end of Task_function_H definition
 

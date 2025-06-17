@@ -1,17 +1,17 @@
 //############################################################
 // FILE: ThreeHall.c
-// Created on: 2017Äê1ÔÂ18ÈÕ
+// Created on: 2017å¹´1æœˆ18æ—¥
 // Author: XQ
 // summary: ThreeHall
-//±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//°æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿
-//DSP/STM32µç»ú¿ØÖÆ¿ª·¢°å
-//Ë¶Àúµç×Ó
-//ÍøÖ·: https://shuolidianzi.taobao.com
-//ÐÞ¸ÄÈÕÆÚ:2017/1/24
-//°æ±¾£ºV17.3-1
+//æœ¬ç¨‹åºåªä¾›å­¦ä¹ ä½¿ç”¨ï¼Œæœªç»ä½œè€…è®¸å¯ï¼Œä¸å¾—ç”¨äºŽå…¶å®ƒä»»ä½•ç”¨é€”
+//ç‰ˆæƒæ‰€æœ‰ï¼Œç›—ç‰ˆå¿…ç©¶
+//DSP/STM32ç”µæœºæŽ§åˆ¶å¼€å‘æ¿
+//ç¡•åŽ†ç”µå­
+//ç½‘å€: https://shuolidianzi.taobao.com
+//ä¿®æ”¹æ—¥æœŸ:2017/1/24
+//ç‰ˆæœ¬ï¼šV17.3-1
 //Author-QQ: 616264123
-//µç»ú¿ØÖÆQQÈº£º314306105
+//ç”µæœºæŽ§åˆ¶QQç¾¤ï¼š314306105
 //############################################################
 #include "ThreeHall.h"
 
@@ -20,7 +20,7 @@ extern   Hall   Hall_Three;
   uint16_t   HallK1=355; 		//Offset filter coefficient K1: 0.05/(T+0.05);
   uint16_t   HallK2=669 ;  	//Offset filter coefficient K2: T/(T+0.05);
   
-	int16_t   init_angle=-8980 ;  //   4¶Ô¼¶ 42BLµç»ú 13620  »ô¶ûµÄ³õÊ¼½Ç¶È  0---65536  0---360¶È
+	int16_t   init_angle=-8980 ;  //   4å¯¹çº§ 42BLç”µæœº 13620  éœå°”çš„åˆå§‹è§’åº¦  0---65536  0---360åº¦
 
  void  ThreeHallPara_init(void )
 {
@@ -38,14 +38,14 @@ extern   Hall   Hall_Three;
    Hall_Three.Hall_angle[4]=43691;  // 2/3
    Hall_Three.Hall_angle[5]=54613;  // 5/6
    	
-   Hall_Three.step_angle_error =0;   //  *10  IQ(1/6) /(  x/(60 * 10e6 *Fkg))     10 7374 1824       20 9715 0000       2097152   349525 *6000      60¶È/(60 000000¡Á0.0001)
+   Hall_Three.step_angle_error =0;   //  *10  IQ(1/6) /(  x/(60 * 10e6 *Fkg))     10 7374 1824       20 9715 0000       2097152   349525 *6000      60åº¦/(60 000000Ã—0.0001)
    Hall_Three.Poles=4;
-   Hall_Three.initial_angle=init_angle;  // 182 = 1 ¶È   -50*182=9100   +78*182 =13620
-	 Hall_Three.speed_coeff=(1000*60)/(2*Hall_Three.Poles ); // 2ºÁÃë¼ÆËãÒ»´Î½Ç¶È²îÖµ 1000/2ms=500   =7500
+   Hall_Three.initial_angle=init_angle;  // 182 = 1 åº¦   -50*182=9100   +78*182 =13620
+	 Hall_Three.speed_coeff=(1000*60)/(2*Hall_Three.Poles ); // 2æ¯«ç§’è®¡ç®—ä¸€æ¬¡è§’åº¦å·®å€¼ 1000/2ms=500   =7500
 }
 
 
-void ThreeHallanglecale(void)  // Ò»¸öPWMÖÜÆÚÖ´ÐÐÒ»´Î
+void ThreeHallanglecale(void)  // ä¸€ä¸ªPWMå‘¨æœŸæ‰§è¡Œä¸€æ¬¡
 {
 	   if (GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_13)==1) 
      Hall_Three.HallUVW[0]=1;
@@ -277,7 +277,7 @@ void ThreeHallanglecale(void)  // Ò»¸öPWMÖÜÆÚÖ´ÐÐÒ»´Î
       Hall_Three.OldHall_State=Hall_Three.Hall_State ;
 }
 
-void Hall_Three_Speedcale(void)  // 2msÖ´ÐÐÒ»´Î
+void Hall_Three_Speedcale(void)  // 2msæ‰§è¡Œä¸€æ¬¡
 {
   if( Hall_Three.Move_State==1)
   {
@@ -294,7 +294,7 @@ void Hall_Three_Speedcale(void)  // 2msÖ´ÐÐÒ»´Î
 	else    // Hall_Three.Move_State=0 
 		 Hall_Three.Speed_ele_angleIQ=0;
  	 Hall_Three.Speed_ele_angleIQFitter= _IQ10mpy(HallK1, Hall_Three.Speed_ele_angleIQFitter)+_IQ10mpy(HallK2,  Hall_Three.Speed_ele_angleIQ);
-   Hall_Three.Speed_RPM = (Hall_Three.Speed_ele_angleIQ*Hall_Three.speed_coeff)>>16; // ×î´ó½Ç¶È 2piÊÇÒ»È¦ 65536
+   Hall_Three.Speed_RPM = (Hall_Three.Speed_ele_angleIQ*Hall_Three.speed_coeff)>>16; // æœ€å¤§è§’åº¦ 2piæ˜¯ä¸€åœˆ 65536
 	 Hall_Three.old_ele_angleIQ = Hall_Three.ele_angleIQ ;
 }
  

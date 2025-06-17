@@ -6,7 +6,7 @@
 #define I2C_TIMEOUT                10000
 
 /***************************************************************
- * ÄÚ²¿º¯Êı£ºµÈ´ı I2C ±êÖ¾Î»
+ * å†…éƒ¨å‡½æ•°ï¼šç­‰å¾… I2C æ ‡å¿—ä½
  ***************************************************************/
 static uint8_t I2C2_WaitFlag(volatile uint32_t* reg, uint32_t flag, uint8_t set) {
     uint32_t timeout = I2C_TIMEOUT;
@@ -23,7 +23,7 @@ static uint8_t I2C2_WaitFlag(volatile uint32_t* reg, uint32_t flag, uint8_t set)
 }
 
 /***************************************************************
- * Éú³É START ĞÅºÅ²¢·¢ËÍµØÖ·
+ * ç”Ÿæˆ START ä¿¡å·å¹¶å‘é€åœ°å€
  ***************************************************************/
 void I2C2_Start(uint8_t address, uint8_t direction) {
     if (!I2C2_WaitFlag(&I2C2->SR2, I2C_SR2_BUSY, 0)) return;
@@ -31,7 +31,7 @@ void I2C2_Start(uint8_t address, uint8_t direction) {
     I2C2->CR1 |= I2C_CR1_START;
     if (!I2C2_WaitFlag(&I2C2->SR1, I2C_SR1_SB, 1)) return;
 
-    (void)I2C2->SR1; // Çå³ıSB
+    (void)I2C2->SR1; // æ¸…é™¤SB
     I2C2->DR = (address << 1) | direction;
 
     if (!I2C2_WaitFlag(&I2C2->SR1, I2C_SR1_ADDR, 1)) return;
@@ -40,7 +40,7 @@ void I2C2_Start(uint8_t address, uint8_t direction) {
 }
 
 /***************************************************************
- * Ğ´ÈëÒ»¸ö×Ö½ÚÊı¾İ
+ * å†™å…¥ä¸€ä¸ªå­—èŠ‚æ•°æ®
  ***************************************************************/
 void I2C2_Write(uint8_t data) {
     if (!I2C2_WaitFlag(&I2C2->SR1, I2C_SR1_TXE, 1)) return;
@@ -49,7 +49,7 @@ void I2C2_Write(uint8_t data) {
 }
 
 /***************************************************************
- * ¶ÁÈ¡Ò»¸ö×Ö½Ú²¢·¢ËÍ ACK
+ * è¯»å–ä¸€ä¸ªå­—èŠ‚å¹¶å‘é€ ACK
  ***************************************************************/
 uint8_t I2C2_Read_ACK(void) {
     I2C2->CR1 |= I2C_CR1_ACK;
@@ -58,7 +58,7 @@ uint8_t I2C2_Read_ACK(void) {
 }
 
 /***************************************************************
- * ¶ÁÈ¡Ò»¸ö×Ö½Ú²¢·¢ËÍ NACK + STOP
+ * è¯»å–ä¸€ä¸ªå­—èŠ‚å¹¶å‘é€ NACK + STOP
  ***************************************************************/
 uint8_t I2C2_Read_NACK(void) {
     uint8_t data;
@@ -70,74 +70,74 @@ uint8_t I2C2_Read_NACK(void) {
 }
 
 /***************************************************************
- * ·¢ËÍ STOP ĞÅºÅ
+ * å‘é€ STOP ä¿¡å·
  ***************************************************************/
 void I2C2_Stop(void) {
     I2C2->CR1 |= I2C_CR1_STOP;
-    delay_us(10); // ¸ø´Ó»úÒ»µãÍ£Ö¹´¦ÀíÊ±¼ä
+    delay_us(10); // ç»™ä»æœºä¸€ç‚¹åœæ­¢å¤„ç†æ—¶é—´
 }
 
 /***************************************************************
- * I2C2 ³õÊ¼»¯£¨Ê¹ÓÃ PF0=SDA£¬PF1=SCL£©
+ * I2C2 åˆå§‹åŒ–ï¼ˆä½¿ç”¨ PF0=SDAï¼ŒPF1=SCLï¼‰
  ***************************************************************/
 void AS5600_Init(void) {
-    // ¿ªÆôÊ±ÖÓ
+    // å¼€å¯æ—¶é’Ÿ
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOFEN;
     RCC->APB1ENR |= RCC_APB1ENR_I2C2EN;
 
-    // ÉèÖÃ PF0 ºÍ PF1 Îª¸´ÓÃ¹¦ÄÜ AF4£¨I2C2£©
-    GPIOF->MODER   |= (2 << (0 * 2)) | (2 << (1 * 2));  // ¸´ÓÃ¹¦ÄÜ
-    GPIOF->OTYPER  |= (1 << 0) | (1 << 1);              // ¿ªÂ©Êä³ö
-    GPIOF->OSPEEDR |= (3 << (0 * 2)) | (3 << (1 * 2));  // ¸ßËÙ
-    GPIOF->PUPDR   |= (1 << (0 * 2)) | (1 << (1 * 2));  // ÉÏÀ­
+    // è®¾ç½® PF0 å’Œ PF1 ä¸ºå¤ç”¨åŠŸèƒ½ AF4ï¼ˆI2C2ï¼‰
+    GPIOF->MODER   |= (2 << (0 * 2)) | (2 << (1 * 2));  // å¤ç”¨åŠŸèƒ½
+    GPIOF->OTYPER  |= (1 << 0) | (1 << 1);              // å¼€æ¼è¾“å‡º
+    GPIOF->OSPEEDR |= (3 << (0 * 2)) | (3 << (1 * 2));  // é«˜é€Ÿ
+    GPIOF->PUPDR   |= (1 << (0 * 2)) | (1 << (1 * 2));  // ä¸Šæ‹‰
     GPIOF->AFR[0]  |= (4 << (0 * 4)) | (4 << (1 * 4));  // AF4 = I2C2
 
-    // I2C ÉèÖÃ
-    I2C2->CR1 &= ~I2C_CR1_PE;   // ½ûÖ¹ I2C
-    I2C2->CR2 = 42;             // ÍâÉèÊ±ÖÓ£¨MHz£©ÓëÄãÖ÷ÆµÒ»ÖÂ
-    I2C2->CCR = 210;            // ±ê×¼Ä£Ê½£¨100kHz£©
-    I2C2->TRISE = 43;           // ×î´óÉÏÉıÊ±¼ä
-    I2C2->CR1 |= I2C_CR1_PE;    // Ê¹ÄÜ I2C
+    // I2C è®¾ç½®
+    I2C2->CR1 &= ~I2C_CR1_PE;   // ç¦æ­¢ I2C
+    I2C2->CR2 = 42;             // å¤–è®¾æ—¶é’Ÿï¼ˆMHzï¼‰ä¸ä½ ä¸»é¢‘ä¸€è‡´
+    I2C2->CCR = 210;            // æ ‡å‡†æ¨¡å¼ï¼ˆ100kHzï¼‰
+    I2C2->TRISE = 43;           // æœ€å¤§ä¸Šå‡æ—¶é—´
+    I2C2->CR1 |= I2C_CR1_PE;    // ä½¿èƒ½ I2C
 }
 
 /***************************************************************
- * ¶ÁÈ¡ AS5600 Ô­Ê¼½Ç¶È£¨·µ»Ø 0~4095£©
+ * è¯»å– AS5600 åŸå§‹è§’åº¦ï¼ˆè¿”å› 0~4095ï¼‰
  ***************************************************************/
 uint16_t AS5600_ReadRawAngle(void) {
     uint8_t high, low;
     uint16_t angle;
 
-    // µÚÒ»²½£ºĞ´¼Ä´æÆ÷µØÖ·
+    // ç¬¬ä¸€æ­¥ï¼šå†™å¯„å­˜å™¨åœ°å€
     I2C2_Start(AS5600_I2C_ADDR, I2C_DIRECTION_TRANSMITTER);
     I2C2_Write(AS5600_ANGLE_REGISTER);
     I2C2_Stop();
-    delay_us(10);  // ¸ø AS5600 ´¦ÀíÊ±¼ä
+    delay_us(10);  // ç»™ AS5600 å¤„ç†æ—¶é—´
 
-    // µÚ¶ş²½£º¶ÁÈ¡¸ßµÍ×Ö½Ú
+    // ç¬¬äºŒæ­¥ï¼šè¯»å–é«˜ä½å­—èŠ‚
     I2C2_Start(AS5600_I2C_ADDR, I2C_DIRECTION_RECEIVER);
     high = I2C2_Read_ACK();
     low  = I2C2_Read_NACK();
 
-    if (high == 0xFF && low == 0xFF) return 0xFFFF;  // Í¨ĞÅÊ§°Ü
+    if (high == 0xFF && low == 0xFF) return 0xFFFF;  // é€šä¿¡å¤±è´¥
     angle = ((uint16_t)high << 8) | low;
-    return angle & 0x0FFF;  // ±£ÁôµÍ 12 Î»
+    return angle & 0x0FFF;  // ä¿ç•™ä½ 12 ä½
 }
 
 /***************************************************************
- * »ñÈ¡½Ç¶È£¨×ª»»Îª 0~360.0¡ã£©
+ * è·å–è§’åº¦ï¼ˆè½¬æ¢ä¸º 0~360.0Â°ï¼‰
  ***************************************************************/
 float AS5600_ReadAngle_Degrees(void) {
     uint16_t raw = AS5600_ReadRawAngle();
-    if (raw == 0xFFFF) return -1.0f;  // ´íÎó±êÖ¾
+    if (raw == 0xFFFF) return -1.0f;  // é”™è¯¯æ ‡å¿—
     return (float)raw * 360.0f / 4096.0f;
 }
 
 /***************************************************************
- * »ñÈ¡½Ç¶È£¨×ª»»Îª -¦Ğ~¦Ğ£©
+ * è·å–è§’åº¦ï¼ˆè½¬æ¢ä¸º -Ï€~Ï€ï¼‰
  ***************************************************************/
 float AS5600_ReadAngle_Radians(void) {
     uint16_t raw = AS5600_ReadRawAngle();
-    if (raw == 0xFFFF) return -10.0f;  // ´íÎó±êÖ¾
+    if (raw == 0xFFFF) return -10.0f;  // é”™è¯¯æ ‡å¿—
     float radians = ((float)raw / 4096.0f) * (2.0f * 3.1415926f);
     if (radians > 3.1415926f)
         radians -= 2.0f * 3.1415926f;
@@ -145,30 +145,30 @@ float AS5600_ReadAngle_Radians(void) {
 }
 
 
-#define OLED_I2C_ADDR 0x3C  // SSD1306 7Î»µØÖ·£¨0x3C»ò0x3D£¬ÊÓ¾ßÌåÓ²¼ş£©
+#define OLED_I2C_ADDR 0x3C  // SSD1306 7ä½åœ°å€ï¼ˆ0x3Cæˆ–0x3Dï¼Œè§†å…·ä½“ç¡¬ä»¶ï¼‰
 
-// I2C1 ³õÊ¼»¯£¨PB6=SCL, PB7=SDA£©
+// I2C1 åˆå§‹åŒ–ï¼ˆPB6=SCL, PB7=SDAï¼‰
 void I2C1_Init(void) {
-    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;  // Ê¹ÄÜGPIOBÊ±ÖÓ
-    RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;   // Ê¹ÄÜI2C1Ê±ÖÓ
+    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;  // ä½¿èƒ½GPIOBæ—¶é’Ÿ
+    RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;   // ä½¿èƒ½I2C1æ—¶é’Ÿ
 
-    // ÅäÖÃPB6ºÍPB7Îª¸´ÓÃ¹¦ÄÜ AF4 (I2C1)
+    // é…ç½®PB6å’ŒPB7ä¸ºå¤ç”¨åŠŸèƒ½ AF4 (I2C1)
     GPIOB->MODER &= ~((3 << (6 * 2)) | (3 << (7 * 2)));
-    GPIOB->MODER |= (2 << (6 * 2)) | (2 << (7 * 2));   // ¸´ÓÃÄ£Ê½
-    GPIOB->OTYPER |= (1 << 6) | (1 << 7);              // ¿ªÂ©Êä³ö
-    GPIOB->OSPEEDR |= (3 << (6 * 2)) | (3 << (7 * 2)); // ¸ßËÙ
-    GPIOB->PUPDR |= (1 << (6 * 2)) | (1 << (7 * 2));   // ÉÏÀ­
+    GPIOB->MODER |= (2 << (6 * 2)) | (2 << (7 * 2));   // å¤ç”¨æ¨¡å¼
+    GPIOB->OTYPER |= (1 << 6) | (1 << 7);              // å¼€æ¼è¾“å‡º
+    GPIOB->OSPEEDR |= (3 << (6 * 2)) | (3 << (7 * 2)); // é«˜é€Ÿ
+    GPIOB->PUPDR |= (1 << (6 * 2)) | (1 << (7 * 2));   // ä¸Šæ‹‰
     GPIOB->AFR[0] &= ~((0xF << (6 * 4)) | (0xF << (7 * 4)));
     GPIOB->AFR[0] |= (4 << (6 * 4)) | (4 << (7 * 4));  // AF4 = I2C1
 
-    I2C1->CR1 &= ~I2C_CR1_PE;        // ¹Ø±ÕI2C1
-    I2C1->CR2 = 42;                  // APB1Ê±ÖÓ42MHz
-    I2C1->CCR = 210;                 // ±ê×¼Ä£Ê½ 100kHz (42MHz/210/2=100kHz)
+    I2C1->CR1 &= ~I2C_CR1_PE;        // å…³é—­I2C1
+    I2C1->CR2 = 42;                  // APB1æ—¶é’Ÿ42MHz
+    I2C1->CCR = 210;                 // æ ‡å‡†æ¨¡å¼ 100kHz (42MHz/210/2=100kHz)
     I2C1->TRISE = 43;                // TRISE = freq + 1
-    I2C1->CR1 |= I2C_CR1_PE;         // Ê¹ÄÜI2C1
+    I2C1->CR1 |= I2C_CR1_PE;         // ä½¿èƒ½I2C1
 }
 
-// µÈ´ı±êÖ¾Î»º¯Êı£¬set=1µÈ´ı±êÖ¾Î»ÖÃÎ»£¬set=0µÈ´ı±êÖ¾Î»ÇåÁã
+// ç­‰å¾…æ ‡å¿—ä½å‡½æ•°ï¼Œset=1ç­‰å¾…æ ‡å¿—ä½ç½®ä½ï¼Œset=0ç­‰å¾…æ ‡å¿—ä½æ¸…é›¶
 static uint8_t I2C1_WaitFlag(volatile uint32_t* reg, uint32_t flag, uint8_t set) {
     uint32_t timeout = 10000;
     if (set) {
@@ -183,101 +183,101 @@ static uint8_t I2C1_WaitFlag(volatile uint32_t* reg, uint32_t flag, uint8_t set)
     return 1;
 }
 
-// I2C1 ·¢ËÍÆğÊ¼ĞÅºÅ²¢·¢ËÍÉè±¸µØÖ·+¶ÁĞ´Î»
+// I2C1 å‘é€èµ·å§‹ä¿¡å·å¹¶å‘é€è®¾å¤‡åœ°å€+è¯»å†™ä½
 uint8_t I2C1_Start(uint8_t address, uint8_t direction) {
-    if (!I2C1_WaitFlag(&I2C1->SR2, I2C_SR2_BUSY, 0)) return 0;  // µÈ´ı×ÜÏß¿ÕÏĞ
+    if (!I2C1_WaitFlag(&I2C1->SR2, I2C_SR2_BUSY, 0)) return 0;  // ç­‰å¾…æ€»çº¿ç©ºé—²
 
-    I2C1->CR1 |= I2C_CR1_START;                                // ·¢ËÍSTART
-    if (!I2C1_WaitFlag(&I2C1->SR1, I2C_SR1_SB, 1)) return 0;  // µÈ´ıSBÖÃÎ»
+    I2C1->CR1 |= I2C_CR1_START;                                // å‘é€START
+    if (!I2C1_WaitFlag(&I2C1->SR1, I2C_SR1_SB, 1)) return 0;  // ç­‰å¾…SBç½®ä½
 
-    (void)I2C1->SR1;                                          // ¶ÁSR1Çå³ıSB±êÖ¾
-    I2C1->DR = (address << 1) | direction;                    // ·¢ËÍµØÖ·
+    (void)I2C1->SR1;                                          // è¯»SR1æ¸…é™¤SBæ ‡å¿—
+    I2C1->DR = (address << 1) | direction;                    // å‘é€åœ°å€
 
-    if (!I2C1_WaitFlag(&I2C1->SR1, I2C_SR1_ADDR, 1)) return 0; // µÈ´ıADDRÖÃÎ»
-    (void)I2C1->SR1;                                          // ¶ÁSR1Çå³ıADDR±êÖ¾
-    (void)I2C1->SR2;                                          // ¶ÁSR2Íê³ÉµØÖ·½×¶Î
+    if (!I2C1_WaitFlag(&I2C1->SR1, I2C_SR1_ADDR, 1)) return 0; // ç­‰å¾…ADDRç½®ä½
+    (void)I2C1->SR1;                                          // è¯»SR1æ¸…é™¤ADDRæ ‡å¿—
+    (void)I2C1->SR2;                                          // è¯»SR2å®Œæˆåœ°å€é˜¶æ®µ
     return 1;
 }
 
-// I2C1 ·¢ËÍÊı¾İ×Ö½Ú
+// I2C1 å‘é€æ•°æ®å­—èŠ‚
 uint8_t I2C1_Write(uint8_t data) {
-    if (!I2C1_WaitFlag(&I2C1->SR1, I2C_SR1_TXE, 1)) return 0;  // µÈ´ıTXEÖÃÎ»
-    I2C1->DR = data;                                          // ·¢ËÍÊı¾İ
-    if (!I2C1_WaitFlag(&I2C1->SR1, I2C_SR1_BTF, 1)) return 0; // µÈ´ıBTFÖÃÎ»
+    if (!I2C1_WaitFlag(&I2C1->SR1, I2C_SR1_TXE, 1)) return 0;  // ç­‰å¾…TXEç½®ä½
+    I2C1->DR = data;                                          // å‘é€æ•°æ®
+    if (!I2C1_WaitFlag(&I2C1->SR1, I2C_SR1_BTF, 1)) return 0; // ç­‰å¾…BTFç½®ä½
     return 1;
 }
 
-// I2C1 ·¢ËÍÍ£Ö¹ĞÅºÅ
+// I2C1 å‘é€åœæ­¢ä¿¡å·
 void I2C1_Stop(void) {
     I2C1->CR1 |= I2C_CR1_STOP;
     delay_us(10);
 }
 
-// OLED Ğ´ÃüÁî
+// OLED å†™å‘½ä»¤
 void OLED_WriteCommand(uint8_t cmd) {
-    I2C1_Start(OLED_I2C_ADDR, 0);       // Ğ´Ä£Ê½
-    I2C1_Write(0x00);                   // ¿ØÖÆ×Ö½Ú 0x00 ±íÊ¾ÃüÁî
+    I2C1_Start(OLED_I2C_ADDR, 0);       // å†™æ¨¡å¼
+    I2C1_Write(0x00);                   // æ§åˆ¶å­—èŠ‚ 0x00 è¡¨ç¤ºå‘½ä»¤
     I2C1_Write(cmd);
     I2C1_Stop();
 }
 
-// OLED Ğ´Êı¾İ
+// OLED å†™æ•°æ®
 void OLED_WriteData(uint8_t data) {
-    I2C1_Start(OLED_I2C_ADDR, 0);       // Ğ´Ä£Ê½
-    I2C1_Write(0x40);                   // ¿ØÖÆ×Ö½Ú 0x40 ±íÊ¾Êı¾İ
+    I2C1_Start(OLED_I2C_ADDR, 0);       // å†™æ¨¡å¼
+    I2C1_Write(0x40);                   // æ§åˆ¶å­—èŠ‚ 0x40 è¡¨ç¤ºæ•°æ®
     I2C1_Write(data);
     I2C1_Stop();
 }
 
-// OLED ³õÊ¼»¯£¨SSD1306Ê¾·¶£©
+// OLED åˆå§‹åŒ–ï¼ˆSSD1306ç¤ºèŒƒï¼‰
 void OLED_Init(void) {
-    delay_ms(100);      // ÉÏµçÑÓÊ±
-    OLED_WriteCommand(0xAE); // ¹Ø±ÕÏÔÊ¾
-    OLED_WriteCommand(0x20); // ÉèÖÃÄÚ´æµØÖ·Ä£Ê½
-    OLED_WriteCommand(0x10); // Ò³µØÖ·Ä£Ê½
-    OLED_WriteCommand(0xB0); // ÉèÖÃÒ³ÆğÊ¼µØÖ·
-    OLED_WriteCommand(0xC8); // COMÊä³öÉ¨Ãè·½Ïò·´×ª
-    OLED_WriteCommand(0x00); // ÉèÖÃµÍÁĞµØÖ·
-    OLED_WriteCommand(0x10); // ÉèÖÃ¸ßÁĞµØÖ·
-    OLED_WriteCommand(0x40); // ÉèÖÃÆğÊ¼ĞĞµØÖ·
-    OLED_WriteCommand(0x81); // ÉèÖÃ¶Ô±È¶È
-    OLED_WriteCommand(0xFF); // ×î´ó¶Ô±È¶È
-    OLED_WriteCommand(0xA1); // ¶ÎÖØÓ³Éä
-    OLED_WriteCommand(0xA6); // Õı³£ÏÔÊ¾
-    OLED_WriteCommand(0xA8); // ¶àÂ·¸´ÓÃ±ÈÂÊ
+    delay_ms(100);      // ä¸Šç”µå»¶æ—¶
+    OLED_WriteCommand(0xAE); // å…³é—­æ˜¾ç¤º
+    OLED_WriteCommand(0x20); // è®¾ç½®å†…å­˜åœ°å€æ¨¡å¼
+    OLED_WriteCommand(0x10); // é¡µåœ°å€æ¨¡å¼
+    OLED_WriteCommand(0xB0); // è®¾ç½®é¡µèµ·å§‹åœ°å€
+    OLED_WriteCommand(0xC8); // COMè¾“å‡ºæ‰«ææ–¹å‘åè½¬
+    OLED_WriteCommand(0x00); // è®¾ç½®ä½åˆ—åœ°å€
+    OLED_WriteCommand(0x10); // è®¾ç½®é«˜åˆ—åœ°å€
+    OLED_WriteCommand(0x40); // è®¾ç½®èµ·å§‹è¡Œåœ°å€
+    OLED_WriteCommand(0x81); // è®¾ç½®å¯¹æ¯”åº¦
+    OLED_WriteCommand(0xFF); // æœ€å¤§å¯¹æ¯”åº¦
+    OLED_WriteCommand(0xA1); // æ®µé‡æ˜ å°„
+    OLED_WriteCommand(0xA6); // æ­£å¸¸æ˜¾ç¤º
+    OLED_WriteCommand(0xA8); // å¤šè·¯å¤ç”¨æ¯”ç‡
     OLED_WriteCommand(0x3F); // 1/64
-    OLED_WriteCommand(0xA4); // Êä³ö²»¸úËæRAMÄÚÈİ
-    OLED_WriteCommand(0xD3); // ÉèÖÃÏÔÊ¾Æ«ÒÆ
+    OLED_WriteCommand(0xA4); // è¾“å‡ºä¸è·ŸéšRAMå†…å®¹
+    OLED_WriteCommand(0xD3); // è®¾ç½®æ˜¾ç¤ºåç§»
     OLED_WriteCommand(0x00);
-    OLED_WriteCommand(0xD5); // ÉèÖÃÊ±ÖÓ·ÖÆµ
+    OLED_WriteCommand(0xD5); // è®¾ç½®æ—¶é’Ÿåˆ†é¢‘
     OLED_WriteCommand(0xF0);
-    OLED_WriteCommand(0xD9); // ÉèÖÃÔ¤³äµçÖÜÆÚ
+    OLED_WriteCommand(0xD9); // è®¾ç½®é¢„å……ç”µå‘¨æœŸ
     OLED_WriteCommand(0x22);
-    OLED_WriteCommand(0xDA); // ÉèÖÃCOMÒı½ÅÓ²¼şÅäÖÃ
+    OLED_WriteCommand(0xDA); // è®¾ç½®COMå¼•è„šç¡¬ä»¶é…ç½®
     OLED_WriteCommand(0x12);
-    OLED_WriteCommand(0xDB); // ÉèÖÃVCOMHµçÑ¹±¶ÂÊ
+    OLED_WriteCommand(0xDB); // è®¾ç½®VCOMHç”µå‹å€ç‡
     OLED_WriteCommand(0x20);
-    OLED_WriteCommand(0x8D); // ³äµç±ÃÉèÖÃ
+    OLED_WriteCommand(0x8D); // å……ç”µæ³µè®¾ç½®
     OLED_WriteCommand(0x14);
-    OLED_WriteCommand(0xAF); // ´ò¿ªÏÔÊ¾
+    OLED_WriteCommand(0xAF); // æ‰“å¼€æ˜¾ç¤º
 }
 
-// OLED ÇåÆÁ
+// OLED æ¸…å±
 void OLED_Clear(void) {
     for (uint8_t page = 0; page < 8; page++) {
-        OLED_WriteCommand(0xB0 + page); // ÉèÖÃÒ³µØÖ·
-        OLED_WriteCommand(0x00);        // ÉèÖÃµÍÁĞµØÖ·
-        OLED_WriteCommand(0x10);        // ÉèÖÃ¸ßÁĞµØÖ·
+        OLED_WriteCommand(0xB0 + page); // è®¾ç½®é¡µåœ°å€
+        OLED_WriteCommand(0x00);        // è®¾ç½®ä½åˆ—åœ°å€
+        OLED_WriteCommand(0x10);        // è®¾ç½®é«˜åˆ—åœ°å€
         for (uint8_t col = 0; col < 128; col++) {
-            OLED_WriteData(0x00);       // ÇåÁãÊı¾İ
+            OLED_WriteData(0x00);       // æ¸…é›¶æ•°æ®
         }
     }
 }
 
-// ¼òµ¥ÏÔÊ¾º¯Êı£ºÔÚOLEDµÚ0Ò³Ğ´Ò»¸ö×Ö½Ú£¨ÑİÊ¾£©
+// ç®€å•æ˜¾ç¤ºå‡½æ•°ï¼šåœ¨OLEDç¬¬0é¡µå†™ä¸€ä¸ªå­—èŠ‚ï¼ˆæ¼”ç¤ºï¼‰
 void OLED_ShowByte(uint8_t page, uint8_t col, uint8_t data) {
-    OLED_WriteCommand(0xB0 + page);       // Ò³µØÖ·
-    OLED_WriteCommand(0x00 + (col & 0x0F));    // µÍÁĞµØÖ·
-    OLED_WriteCommand(0x10 + ((col >> 4) & 0x0F));  // ¸ßÁĞµØÖ·
+    OLED_WriteCommand(0xB0 + page);       // é¡µåœ°å€
+    OLED_WriteCommand(0x00 + (col & 0x0F));    // ä½åˆ—åœ°å€
+    OLED_WriteCommand(0x10 + ((col >> 4) & 0x0F));  // é«˜åˆ—åœ°å€
     OLED_WriteData(data);
 }

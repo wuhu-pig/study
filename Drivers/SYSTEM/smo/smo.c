@@ -1,7 +1,7 @@
 #include "smo.h"
-#include "foc_math.h" // °üº¬ÊýÑ§¹¤¾ßº¯Êý
+#include "foc_math.h" // åŒ…å«æ•°å­¦å·¥å…·å‡½æ•°
 
-// ³õÊ¼»¯»¬Ä£¹Û²âÆ÷
+// åˆå§‹åŒ–æ»‘æ¨¡è§‚æµ‹å™¨
 void SMO_Init(SMO_Handle *h) {
     h->Ialpha_est = 0.0f;
     h->Ibeta_est = 0.0f;
@@ -14,7 +14,7 @@ void SMO_Init(SMO_Handle *h) {
     h->theta_prev = 0.0f;
 }
 
-// ±¥ºÍº¯Êý£¨¼õÉÙ¶¶Õñ£©
+// é¥±å’Œå‡½æ•°ï¼ˆå‡å°‘æŠ–æŒ¯ï¼‰
 float sat(float x, float boundary) {
     if (x > boundary) 
         return 1.0f;
@@ -24,23 +24,23 @@ float sat(float x, float boundary) {
         return x / boundary;
 }
 
-// »¬Ä£¹Û²âÆ÷¸üÐÂ
+// æ»‘æ¨¡è§‚æµ‹å™¨æ›´æ–°
 void SMO_Update(SMO_Handle *h, SMO_Params *params, 
                 float Ia, float Ib, float Ualpha, float Ubeta) {
-    // 1. ¼ÆËãµçÁ÷Îó²î
+    // 1. è®¡ç®—ç”µæµè¯¯å·®
     float e_alpha = Ia - h->Ialpha_est;
     float e_beta = Ib - h->Ibeta_est;
     
-    // 2. »¬Ä£¿ØÖÆÁ¿£¨Ê¹ÓÃ±¥ºÍº¯Êý¼õÉÙ¶¶Õñ£©
+    // 2. æ»‘æ¨¡æŽ§åˆ¶é‡ï¼ˆä½¿ç”¨é¥±å’Œå‡½æ•°å‡å°‘æŠ–æŒ¯ï¼‰
     float sat_alpha = sat(e_alpha, params->sat_boundary);
     float sat_beta = sat(e_beta, params->sat_boundary);
     
-    // 3. ·´µç¶¯ÊÆ¹À¼Æ
+    // 3. åç”µåŠ¨åŠ¿ä¼°è®¡
     h->EMF_alpha = params->Kslf * sat_alpha;
     h->EMF_beta = params->Kslf * sat_beta;
     
-    // 4. µçÁ÷¹Û²âÆ÷¸üÐÂ£¨ÀëÉ¢»¯Å·À­·¨£©
-    float Ts = 1.0f / params->Freq;  // ¿ØÖÆÖÜÆÚ
+    // 4. ç”µæµè§‚æµ‹å™¨æ›´æ–°ï¼ˆç¦»æ•£åŒ–æ¬§æ‹‰æ³•ï¼‰
+    float Ts = 1.0f / params->Freq;  // æŽ§åˆ¶å‘¨æœŸ
     
     h->Ialpha_est += Ts * 
         ( (Ualpha - params->Rs * h->Ialpha_est - h->EMF_alpha) / params->Ls );
@@ -49,44 +49,44 @@ void SMO_Update(SMO_Handle *h, SMO_Params *params,
         ( (Ubeta - params->Rs * h->Ibeta_est - h->EMF_beta) / params->Ls );
 }
 
-// ·´µç¶¯ÊÆµÍÍ¨ÂË²¨
+// åç”µåŠ¨åŠ¿ä½Žé€šæ»¤æ³¢
 void SMO_EMF_Filter(SMO_Handle *h, SMO_Params *params) {
     static float EMF_alpha_prev = 0;
     static float EMF_beta_prev = 0;
     
-    // ¼ÆËãÂË²¨ÏµÊý ¦Á = 2¦Ðf_cutoff * T
+    // è®¡ç®—æ»¤æ³¢ç³»æ•° Î± = 2Ï€f_cutoff * T
     float alpha = 2 * PI * params->LPF_cutoff / params->Freq;
     
-    // ÏÞÖÆÂË²¨ÏµÊýÔÚ0-1Ö®¼ä
+    // é™åˆ¶æ»¤æ³¢ç³»æ•°åœ¨0-1ä¹‹é—´
     if(alpha > 1.0f) alpha = 1.0f;
     if(alpha < 0.0f) alpha = 0.0f;
     
-    // Ó¦ÓÃÒ»½×µÍÍ¨ÂË²¨Æ÷
+    // åº”ç”¨ä¸€é˜¶ä½Žé€šæ»¤æ³¢å™¨
     h->EMF_alpha_fil = alpha * h->EMF_alpha + (1 - alpha) * EMF_alpha_prev;
     h->EMF_beta_fil = alpha * h->EMF_beta + (1 - alpha) * EMF_beta_prev;
     
-    // ±£´æµ±Ç°ÖµÓÃÓÚÏÂ´ÎÂË²¨
+    // ä¿å­˜å½“å‰å€¼ç”¨äºŽä¸‹æ¬¡æ»¤æ³¢
     EMF_alpha_prev = h->EMF_alpha_fil;
     EMF_beta_prev = h->EMF_beta_fil;
 }
 
-// »ñÈ¡×ª×ÓÎ»ÖÃºÍËÙ¶È
+// èŽ·å–è½¬å­ä½ç½®å’Œé€Ÿåº¦
 void SMO_GetPosition(SMO_Handle *h, SMO_Params *params) {
-    // 1. Ê¹ÓÃ·´ÕýÇÐ¼ÆËã×ª×ÓÎ»ÖÃ£¨µç½Ç¶È£©
-    // ×¢Òâ£ºÊ¹ÓÃÂË²¨ºóµÄ·´µç¶¯ÊÆ
+    // 1. ä½¿ç”¨åæ­£åˆ‡è®¡ç®—è½¬å­ä½ç½®ï¼ˆç”µè§’åº¦ï¼‰
+    // æ³¨æ„ï¼šä½¿ç”¨æ»¤æ³¢åŽçš„åç”µåŠ¨åŠ¿
     h->theta = fast_atan2(-h->EMF_alpha_fil, h->EMF_beta_fil);
     
-    // 2. ¹æ·¶»¯½Ç¶Èµ½[0, 2¦Ð]
+    // 2. è§„èŒƒåŒ–è§’åº¦åˆ°[0, 2Ï€]
     if(h->theta < 0) 
         h->theta += 2 * PI;
     
-    // 3. ËÙ¶È¹À¼Æ£¨ºóÏò²î·Ö·¨£©
-    // ¼ÆËãµç½ÇËÙ¶È£¨rad/s£©: ¦Ø_e = ¦¤¦È / ¦¤t
+    // 3. é€Ÿåº¦ä¼°è®¡ï¼ˆåŽå‘å·®åˆ†æ³•ï¼‰
+    // è®¡ç®—ç”µè§’é€Ÿåº¦ï¼ˆrad/sï¼‰: Ï‰_e = Î”Î¸ / Î”t
     float elec_omega = (h->theta - h->theta_prev) * params->Freq;
     
-    // ×ª»»Îª»úÐµ×ªËÙ£¨RPM£©: RPM = (¦Ø_e * 60) / (2¦Ð * ¼«¶ÔÊý)
+    // è½¬æ¢ä¸ºæœºæ¢°è½¬é€Ÿï¼ˆRPMï¼‰: RPM = (Ï‰_e * 60) / (2Ï€ * æžå¯¹æ•°)
     h->speed = elec_omega * 60.0f / (2 * PI * params->POLES);
     
-    // 4. ¸üÐÂ½Ç¶È¼ÇÒäÖµ
+    // 4. æ›´æ–°è§’åº¦è®°å¿†å€¼
     h->theta_prev = h->theta;
 }
